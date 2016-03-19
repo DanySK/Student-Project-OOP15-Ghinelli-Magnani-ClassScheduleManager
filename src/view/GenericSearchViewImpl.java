@@ -4,7 +4,7 @@ public class GenericSearchViewImpl implements GenericSearchView {
 
     @Override
     public void createBaseFrame() {
-        new SearchScheletonGUI();
+        new ScheletonGUI();
     }
 
     @Override
