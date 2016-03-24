@@ -11,8 +11,8 @@ public class MyTableModel extends AbstractTableModel {
     private List<String> base = new ArrayList<>();
     
     public MyTableModel() {
-        //da usare una lista di oggetti tipo JTextArea o JTextPane per avere una lista completa di oggetti in cui far scrivere poi all'interno di essi
-        base.add("Monday");
+        //da usare una lista di oggetti tipo JTextPane per avere una lista completa di oggetti in cui far scrivere poi all'interno di essi
+        base.add("Prova semplice stringa");
     }
 
     @Override

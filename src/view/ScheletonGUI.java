@@ -5,10 +5,16 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -27,22 +33,61 @@ public class ScheletonGUI extends JFrame {
     private static final long serialVersionUID = 6251123285697956614L;
     private JTable table = new JTable(new MyTableModel());
     private JScrollPane fullTable = new JScrollPane(this.table);
-    private JToolBar optionBar = new JToolBar();
-    private JButton search = new JButton("Search");
-    private JButton edit = new JButton("Edit");
-    private JButton open = new JButton("Open");
-    private JButton save = new JButton("Save");
+    private JMenuBar menuBar = new JMenuBar();
+    private JMenu menu = new JMenu("Menù");
+    private JMenu subMenu;
+    private JMenu subSubMenu;
+    private JMenuItem menuItem;
+    private JFileChooser fileChooser = new JFileChooser();
     
     ScheletonGUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Orario Lezioni");
         
-        this.optionBar.setFloatable(false);
-        this.optionBar.add(this.search);
-        this.optionBar.add(this.edit);
-        this.optionBar.add(this.open);
-        this.optionBar.add(this.save);
+        this.menuBar.add(menu);
+        this.menuItem = new JMenuItem("Open");
+        this.menuItem.addActionListener(e -> {
+            int retVal = this.fileChooser.showOpenDialog(this);
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                //controller.openFile(this.fileChooser.getSelectedFile());
+            }
+        });
+        this.menu.add(menuItem);
+        this.menuItem = new JMenuItem("Save");
+        this.menuItem.addActionListener(e -> {
+            int retVal = this.fileChooser.showSaveDialog(this);
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                //controller.saveFile(this.fileChooser.getSelectedFile());
+            }
+        });
+        this.menu.add(menuItem);
+        this.menuItem = new JMenuItem("Edit");
+        this.menuItem.addActionListener(e -> {
+            //da sistemare, pensare bene come si vuole editare
+        });
+        this.menu.add(menuItem);
+        
+        this.subMenu = new JMenu("Search");
+        this.subSubMenu = new JMenu("By Professor");
+        this.menuItem = new JMenuItem("Prof. Prova");//ricordarsi di aggiungere i professori dinamicamente
+        this.menuItem.addActionListener(e -> {
+            //da fare
+        });
+        this.subSubMenu.add(menuItem);
+        this.subMenu.add(subSubMenu);
+        this.menu.add(subMenu);
+        this.subSubMenu = new JMenu("By Class");
+        this.menuItem = new JMenuItem("Class prova");//mancano il resto delle classi
+        this.menuItem.addActionListener(e -> {
+            //da fare
+        });
+        this.subSubMenu.add(menuItem);
+        this.subMenu.add(subSubMenu);
+        this.menu.add(subMenu);//ovviamente mance il resto ma lo sistemo una volta pronto per bene quello che serve
+        
+        
+        
         
         this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); //metterla o toglierla sta opzione? pensarci bene
         this.table.setTableHeader(null);
@@ -65,7 +110,7 @@ public class ScheletonGUI extends JFrame {
         
         
         
-        this.getContentPane().add(this.optionBar, BorderLayout.NORTH);
+        this.getContentPane().add(this.menuBar, BorderLayout.NORTH);
         this.getContentPane().add(this.fullTable, BorderLayout.CENTER);
         this.getContentPane().add(legenda, BorderLayout.EAST);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
