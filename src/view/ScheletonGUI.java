@@ -84,7 +84,7 @@ public class ScheletonGUI extends JFrame {
         });
         this.subSubMenu.add(menuItem);
         this.subMenu.add(subSubMenu);
-        this.menu.add(subMenu);//ovviamente mance il resto ma lo sistemo una volta pronto per bene quello che serve
+        this.menu.add(subMenu);//ovviamente manca il resto ma lo sistemo una volta pronto per bene quello che serve
         
         
         
