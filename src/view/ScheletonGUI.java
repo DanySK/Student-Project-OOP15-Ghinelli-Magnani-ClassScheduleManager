@@ -31,19 +31,21 @@ public class ScheletonGUI extends JFrame {
      * 
      */
     private static final long serialVersionUID = 6251123285697956614L;
-    private JTable table = new JTable(new MyTableModel());
-    private JScrollPane fullTable = new JScrollPane(this.table);
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu menu = new JMenu("Menù");
-    private JMenu subMenu;
-    private JMenu subSubMenu;
-    private JMenuItem menuItem;
-    private JFileChooser fileChooser = new JFileChooser();
+    private JTable table = new JTable(new MyTableModel());//<
+    private JScrollPane fullTable = new JScrollPane(this.table);//      tutto per la tabella >
+    private JMenuBar menuBar = new JMenuBar();//<
+    private JMenu menu = new JMenu("Menù");//
+    private JMenu subMenu;//
+    private JMenu subSubMenu;//         tutto per il menù
+    private JMenuItem menuItem;//
+    private JFileChooser fileChooser = new JFileChooser();//>
     
     ScheletonGUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Orario Lezioni");
+        
+        
         
         this.menuBar.add(menu);
         this.menuItem = new JMenuItem("Open");
@@ -85,6 +87,7 @@ public class ScheletonGUI extends JFrame {
         this.subSubMenu.add(menuItem);
         this.subMenu.add(subSubMenu);
         this.menu.add(subMenu);//ovviamente manca il resto ma lo sistemo una volta pronto per bene quello che serve
+        
         
         
         
