@@ -24,12 +24,12 @@ public class AccademicYearsList {
      *          the new academic year
      */
     public void addAccademicYear(final AccademicYear year){
-        for(final AccademicYear y : this.years) {
-            if(y.equals(year)){
-                throw new IllegalArgumentException();
-            }
+        if (!this.years.contains(year)) {
+            this.years.add(year);
         }
-        this.years.add(year);
+        else {
+            throw new IllegalArgumentException();       
+        }
     }
     /**
      * Method that returns the list of years

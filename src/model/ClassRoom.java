@@ -25,4 +25,8 @@ public class ClassRoom {
     public String getClassRoom() {
         return this.name;
     }
+    
+    public boolean equals(final ClassRoom c){
+        return this.getClassRoom().equals(c.getClassRoom());
+    }
 }

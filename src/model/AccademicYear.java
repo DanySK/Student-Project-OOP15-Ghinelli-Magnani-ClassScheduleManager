@@ -25,5 +25,8 @@ public class AccademicYear {
     public String getAccademicYear(){
         return this.year;
     }
-
+    
+    public boolean equals(final AccademicYear y){
+        return this.getAccademicYear().equals(y.getAccademicYear());
+    }
 }

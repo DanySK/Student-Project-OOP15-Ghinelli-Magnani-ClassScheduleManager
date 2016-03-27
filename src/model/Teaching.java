@@ -25,4 +25,8 @@ public class Teaching {
     public String getTeaching(){
         return this.name;
     }
+    
+    public boolean equals(final Teaching t){
+        return this.getTeaching().equals(t.getTeaching());
+    }
 }

@@ -30,4 +30,8 @@ public class Professor {
     public String getProfessor() {
         return this.name + " " + this.surname;
     }
+    
+    public boolean equals(final Professor p){
+        return this.getProfessor().equals(p.getProfessor());
+    }
 }

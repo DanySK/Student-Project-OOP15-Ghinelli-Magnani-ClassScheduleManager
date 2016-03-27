@@ -25,12 +25,12 @@ public class TeachingsList {
      *          the new subject
      */
     public void addTeaching(final Teaching subject){
-        for(final Teaching t : this.teachings) {
-            if(t.equals(subject)){
-                throw new IllegalArgumentException();
-            }
+        if (!this.teachings.contains(subject)) {
+            this.teachings.add(subject);
         }
-        this.teachings.add(subject);
+        else {
+            throw new IllegalArgumentException();       
+        }
     }
     /**
      * Method that returns the list of teachings

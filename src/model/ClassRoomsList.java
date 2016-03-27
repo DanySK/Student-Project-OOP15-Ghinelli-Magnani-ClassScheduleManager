@@ -24,12 +24,12 @@ public class ClassRoomsList {
      *          the new academic classroom
      */
     public void addClassRoom(final ClassRoom classroom){
-        for(final ClassRoom c : this.classroomslist) {
-            if(c.equals(classroom)){
-                throw new IllegalArgumentException();
-            }
+        if (!this.classroomslist.contains(classroom)) {
+            this.classroomslist.add(classroom);
         }
-        this.classroomslist.add(classroom);
+        else {
+            throw new IllegalArgumentException();       
+        }
     }
     /**
      * Method that returns the list of classrooms

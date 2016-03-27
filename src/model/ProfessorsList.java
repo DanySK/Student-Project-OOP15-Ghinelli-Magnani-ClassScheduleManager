@@ -24,12 +24,12 @@ public class ProfessorsList {
      *          the new professor
      */
     public void addProfessor(final Professor prof){
-        for(final Professor p : this.professors) {
-            if(p.equals(prof)){
-                throw new IllegalArgumentException();
-            }
+        if (!this.professors.contains(prof)) {
+            this.professors.add(prof);
         }
-        this.professors.add(prof);
+        else {
+            throw new IllegalArgumentException();       
+        }
     }
     /**
      * Method that returns the list professors
