@@ -91,7 +91,7 @@ public class ScheletonGUI extends JFrame {
         
         
         
-        
+        this.table.setDefaultRenderer(Object.class, new MyRenderer());
         this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); //metterla o toglierla sta opzione? pensarci bene
         this.table.setTableHeader(null);
         this.table.setFillsViewportHeight(true); //da usare forse, capire bene di cosa si tratta
@@ -119,6 +119,10 @@ public class ScheletonGUI extends JFrame {
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
         this.setVisible(true);
         
+    }
+    
+    public JTable getTable() {
+        return this.table;
     }
 
 }

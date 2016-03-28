@@ -1,18 +1,19 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JTextPane;
 import javax.swing.table.AbstractTableModel;
 
 public class MyTableModel extends AbstractTableModel {
     
-    private List<String> base = new ArrayList<>();
+    private List<Object> base = new ArrayList<>();
     
-    public MyTableModel() {
-        //da usare una lista di oggetti tipo JTextPane per avere una lista completa di oggetti in cui far scrivere poi all'interno di essi
-        base.add("Prova semplice stringa");
+    MyTableModel() {
+        this.base.add(Arrays.asList("Prova di stringa1", "Prova di stringa2"));
     }
 
     @Override
