@@ -10,7 +10,7 @@ public class MyTable extends JTable implements ITable {
      */
     private static final long serialVersionUID = -1657558881615210816L;
     
-    
+    //probabilmente classe inutile, JTable potrebbe risultare molto semplice da modellare all'interno della classe MyView
 
     public MyTable(TableModel tm) {
         super(tm);

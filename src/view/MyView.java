@@ -24,7 +24,8 @@ public class MyView extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private JMenuBar menuBar = new JMenuBar();
-    private JTable table = new MyTable(new MyTableModel());
+    private MyTableModel model = new MyTableModel();
+    private JTable table = new MyTable(model);
     private JScrollPane fullTable = new JScrollPane(this.table);
     private JPanel legenda = new JPanel(new GridBagLayout());
 
@@ -57,14 +58,12 @@ public class MyView extends JFrame implements IView {
 
     @Override
     public void addData(List<Object> list) {
-        // TODO Auto-generated method stub
-
+        this.model.setModel(list);
     }
 
     @Override
     public void clearData() {
-        // TODO Auto-generated method stub
-
+        //pensare a come voler intendere tabella vuota
     }
 
 }
