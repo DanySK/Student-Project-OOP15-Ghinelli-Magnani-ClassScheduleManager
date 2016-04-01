@@ -6,7 +6,8 @@ package model;
 import java.io.Serializable;
 
 /** The Lesson class shapes the object that will identify an unique lesson
- * @author Marti
+ * 
+ * @author Martina Magnani
  *
  */
 public class Lesson implements Serializable {

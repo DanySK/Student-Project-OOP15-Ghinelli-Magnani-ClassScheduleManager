@@ -4,9 +4,9 @@
 package model;
 
 /**
- * @author Marti
  * The Professor class shapes the object that will identify the figure of Professor 
- *
+ * 
+ * @author Martina Magnani
  */
 public class Professor{
     private final String name;
@@ -22,8 +22,8 @@ public class Professor{
         if(name == null || surname == null){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        this.name = name;
-        this.surname = name;
+        this.name = name.substring(0,1).toUpperCase();
+        this.surname = surname.substring(1, surname.length()).toLowerCase();
     }
     /**
      * Method that returns the name and surname of the professor

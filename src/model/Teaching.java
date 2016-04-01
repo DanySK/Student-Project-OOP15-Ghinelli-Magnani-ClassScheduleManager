@@ -4,8 +4,9 @@
 package model;
 
 /**
- * @author Marti
  * The Teaching class shapes the object that will identify a university course 
+ * 
+ * @author Martina Magnani
  */
 public class Teaching{
     private final String name;
@@ -19,7 +20,7 @@ public class Teaching{
         if(name == null || year == null){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        this.name = name;
+        this.name = name.substring(0,1).toUpperCase();
         this.year = year;
     }
     /**

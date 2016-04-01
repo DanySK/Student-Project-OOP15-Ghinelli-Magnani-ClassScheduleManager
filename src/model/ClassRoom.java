@@ -5,7 +5,8 @@ package model;
 
 /**
  * Enumerator class used to represent available classroom inside the faculty of engineering and computer sciences in Cesena
- * @author Marti
+ * 
+ * @author Martina Magnani
  *
  */
 public enum ClassRoom {

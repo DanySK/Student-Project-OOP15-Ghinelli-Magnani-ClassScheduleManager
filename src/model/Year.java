@@ -5,7 +5,8 @@ package model;
 
 /**
  * Enumerator class that represents all the different types concerning courses.
- * @author Marti
+ * 
+ * @author Martina Magnani
  *
  */
 public enum Year {

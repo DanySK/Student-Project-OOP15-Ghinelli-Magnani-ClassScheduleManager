@@ -6,7 +6,7 @@ package model;
 /**
  * * The enum Day has the task of model the days of the week 
  * 
- * @author Marti
+ * @author Martina Magnani
  */
 public enum Day {
     /**
