@@ -8,7 +8,7 @@ package model;
  * The Professor class shapes the object that will identify the figure of Professor 
  *
  */
-public class Professor {
+public class Professor{
     private final String name;
     private final String surname;
     /**
@@ -19,6 +19,9 @@ public class Professor {
      *            surname of professor
      */
     public Professor(final String name, final String surname) {
+        if(name == null || surname == null){
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
         this.name = name;
         this.surname = name;
     }
@@ -56,12 +59,12 @@ public class Professor {
         if (name == null) {
             if (other.name != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!name.equalsIgnoreCase(other.name))
             return false;
         if (surname == null) {
             if (other.surname != null)
                 return false;
-        } else if (!surname.equals(other.surname))
+        } else if (!surname.equalsIgnoreCase(other.surname))
             return false;
         return true;
     }

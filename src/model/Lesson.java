@@ -36,6 +36,9 @@ public class Lesson implements Serializable {
      *          lesson duration
      */
     public Lesson(final Professor prof, final Teaching teaching, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+        if(prof == null || teaching == null || classroom == null || hour == null || day == null || duration == 0){
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
         this.prof = prof;
         this.teaching = teaching;
         this.classroom = classroom;
@@ -56,7 +59,7 @@ public class Lesson implements Serializable {
      * @return
      *          Teaching of the lesson
      */
-    public Teaching getTeaching() {
+    public Teaching getSubject() {
         return this.teaching;
     }
     /**

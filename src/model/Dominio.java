@@ -70,7 +70,13 @@ public class Dominio {
      *          the new lesson
      */
     public void addLesson(final Lesson lesson) {
-        if(!this.lessonsList.contains(lesson)){
+        if (!this.professorsList.contains(lesson.getProfessor())) {
+            this.professorsList.add(lesson.getProfessor());
+        }
+        if (!this.teachingsList.contains(lesson.getSubject())) {
+            this.teachingsList.add(lesson.getSubject());
+        }
+        if (!this.lessonsList.contains(lesson)) {
             this.lessonsList.add(lesson);
         }
         else {
@@ -116,10 +122,10 @@ public class Dominio {
             if(prof!=null && !l.getProfessor().equals(prof)){
                 continue;
             }
-            if(teaching.getTeaching()!=null && !l.getTeaching().getTeaching().equals(teaching)){
+            if(teaching.getTeaching()!=null && !l.getSubject().getTeaching().equals(teaching.getTeaching())){
                 continue;
             }
-            if(teaching.getYear()!=null && !l.getTeaching().getYear().equals(teaching.getYear())){
+            if(teaching.getYear()!=null && !l.getSubject().getYear().equals(teaching.getYear())){
                 continue;
             }
             if(classroom!=null && !l.getClassRoom().equals(classroom)){

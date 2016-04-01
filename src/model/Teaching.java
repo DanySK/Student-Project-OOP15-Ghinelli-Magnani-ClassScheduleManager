@@ -7,7 +7,7 @@ package model;
  * @author Marti
  * The Teaching class shapes the object that will identify a university course 
  */
-public class Teaching {
+public class Teaching{
     private final String name;
     private final Year year;
     /**
@@ -16,6 +16,9 @@ public class Teaching {
      *           the name of one of the university course
      */
     public Teaching(final String name, final Year year){
+        if(name == null || year == null){
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
         this.name = name;
         this.year = year;
     }
@@ -27,7 +30,11 @@ public class Teaching {
     public String getTeaching(){
         return this.name;
     }
-    
+    /**
+     * Method that returns the year in which this subject is taught
+     * @return
+     *         year
+     */
     public Year getYear(){
         return this.year;
     }
@@ -57,13 +64,14 @@ public class Teaching {
         if (name == null) {
             if (other.name != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!name.equalsIgnoreCase(other.name))
             return false;
         if (year != other.year)
             return false;
         return true;
     }
     
-    
-    
+    public String toString() {
+        return "Subject Name: " + this.name + " | " + this.year;
+    }
 }
