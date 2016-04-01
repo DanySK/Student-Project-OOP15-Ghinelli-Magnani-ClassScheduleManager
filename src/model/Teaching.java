@@ -9,13 +9,15 @@ package model;
  */
 public class Teaching {
     private final String name;
+    private final Year year;
     /**
      * Constructor of class Teaching
      * @param name
      *           the name of one of the university course
      */
-    public Teaching(final String name){
+    public Teaching(final String name, final Year year){
         this.name = name;
+        this.year = year;
     }
     /**
      * Method that returns the name of the university course
@@ -25,6 +27,10 @@ public class Teaching {
     public String getTeaching(){
         return this.name;
     }
+    
+    public Year getYear(){
+        return this.year;
+    }
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -33,6 +39,7 @@ public class Teaching {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((year == null) ? 0 : year.hashCode());
         return result;
     }
     /* (non-Javadoc)
@@ -52,8 +59,11 @@ public class Teaching {
                 return false;
         } else if (!name.equals(other.name))
             return false;
+        if (year != other.year)
+            return false;
         return true;
     }
+    
     
     
 }

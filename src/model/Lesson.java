@@ -16,7 +16,6 @@ public class Lesson implements Serializable {
     private static final long serialVersionUID = 1L;
     private final Professor prof;
     private final Teaching teaching;
-    private final AccademicYear year;
     private final ClassRoom classroom;
     private final Hour hour;
     private final Day day;
@@ -26,9 +25,7 @@ public class Lesson implements Serializable {
      * @param prof
      *          prof holding the lesson
      * @param teaching
-     *          teaching must lesson
-     * @param year
-     *          academic year in which is held the lesson 
+     *          teaching must lesson 
      * @param classroom
      *          class in which is held the lesson
      * @param hour
@@ -38,10 +35,9 @@ public class Lesson implements Serializable {
      * @param duration
      *          lesson duration
      */
-    public Lesson(final Professor prof, final Teaching teaching, final AccademicYear year, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+    public Lesson(final Professor prof, final Teaching teaching, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
         this.prof = prof;
         this.teaching = teaching;
-        this.year = year;
         this.classroom = classroom;
         this.hour = hour;
         this.day = day;
@@ -62,14 +58,6 @@ public class Lesson implements Serializable {
      */
     public Teaching getTeaching() {
         return this.teaching;
-    }
-    /**
-     * Getting method of the year
-     * @return
-     *          Academic Year
-     */
-    public AccademicYear getAccademicYear() {
-        return this.year;
     }
     /**
      * Getting method of the classroom
@@ -103,11 +91,38 @@ public class Lesson implements Serializable {
     public int getDuration() {
         return this.duration;
     }
-    
-    public boolean equals(final Lesson l){
-        return this.getClassRoom().equals(l.getClassRoom()) && this.getHour() == l.getHour() && this.getDay() == (l.getDay());
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((classroom == null) ? 0 : classroom.hashCode());
+        result = prime * result + ((day == null) ? 0 : day.hashCode());
+        result = prime * result + ((hour == null) ? 0 : hour.hashCode());
+        return result;
     }
-    
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Lesson other = (Lesson) obj;
+        if (classroom != other.classroom)
+            return false;
+        if (day != other.day)
+            return false;
+        if (hour != other.hour)
+            return false;
+        return true;
+    }
     /**
      * Method that represents the "lesson" 
      * @return 
@@ -115,8 +130,8 @@ public class Lesson implements Serializable {
      */
     public String toString() {
         return "Prof: " + this.prof + " | " 
-                + "Teaching: " + this.teaching + " | " 
-                + "Accademic Year: " + this.year + " | "
+                + "Teaching: " + this.teaching.getTeaching() + " | " 
+                + "Year: " + this.teaching.getYear() + " | "
                 + "ClassRoom: " + this.classroom + " | "
                 + "Day: " + this.day + " | "
                 + "Hour: " + this.hour + " | "
