@@ -4,29 +4,65 @@
 package model;
 
 /**
- * @author Marti
- * The class classroom model the object that will identify a classroom of a university 
+ * Enumerator class used to represent available classroom inside the faculty of engineering and computer sciences in Cesena
+ * 
+ * @author Martina Magnani
+ *
  */
-public class ClassRoom {
+public enum ClassRoom {
+    /**
+     * Aula Magna
+     */
+    AULA_MAGANA("Aula Magna"),
+    /**
+     * Aula A
+     */
+    AULA_A("Aula A"),
+    /**
+     * Aula B
+     */
+    AULA_B("Aula B"),
+    /**
+     * Aula C
+     */
+    AULA_C("Aula C"),
+    /**
+     * Aula D
+     */
+    AULA_D("Aula D"),
+    /**
+     * Aula E
+     */
+    AULA_E("Aula E"),
+    /**
+     * Aula in via Rasi
+     */
+    AULA_VIA_RASI("Aula in Via Rasi"),
+    /**
+     * Laboratorio Vela
+     */
+    LAB_VELA("Laboratorio Vela"),
+    /**
+     * Laboratorio 2
+     */
+    LAB_2("Laboratorio 2"),
+    /**
+     * Laboratorio 3
+     */
+    LAB_3("Laboratorio 3");
+    
     private final String name;
-    /**
-     * Constructor of class ClassRoom
-     * @param name
-     *          name of the class
-     */
-    public ClassRoom(final String name) {
-        this.name = name;
-    }
-    /**
-     * Method that returns the name of the class
-     * @return
-     *    the name of the class
-     */
-    public String getClassRoom() {
-        return this.name;
+    
+    private ClassRoom(final String s) {
+            name = s;
     }
     
-    public boolean equals(final ClassRoom c){
-        return this.getClassRoom().equals(c.getClassRoom());
+    /**
+     * 
+     * @return 
+     *          the complete name of the classroom.
+     */
+    public String getName() {
+            return name;
     }
 }

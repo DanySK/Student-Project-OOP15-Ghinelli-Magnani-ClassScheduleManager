@@ -4,9 +4,10 @@
 package model;
 
 /**
- * @author Marti
+
  * The enum Hour has the task of model college schedules 
- */
+ * @author Martina Magnani
+ * */
 public enum Hour {
     NOVE_DIECI("9/10"),
     DIECI_UNDICI("10/11"),
