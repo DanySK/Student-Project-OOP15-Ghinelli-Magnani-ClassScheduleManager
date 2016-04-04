@@ -3,12 +3,14 @@
  */
 package model;
 
+import model_interface.IProfessor;
+
 /**
  * The Professor class shapes the object that will identify the figure of Professor 
  * 
  * @author Martina Magnani
  */
-public class Professor{
+public class Professor implements IProfessor{
     private final String name;
     private final String surname;
     /**
@@ -26,11 +28,27 @@ public class Professor{
         this.surname = surname.substring(1, surname.length()).toLowerCase();
     }
     /**
-     * Method that returns the name and surname of the professor
+     * Method that returns the name of the professor
+     * @return
+     *          name of professor
+     */
+    public String getName() {
+        return this.name;
+    }
+    /**
+     * Method that returns the surname of the professor
+     * @return
+     *          surname of professor
+     */
+    public String getSurname() {
+        return this.surname;
+    }
+    /**
+     * 
      * @return 
      *          professor name and surname
      */
-    public String getProfessor() {
+    public String toString() {
         return this.name + " " + this.surname;
     }
     /* (non-Javadoc)
@@ -59,12 +77,12 @@ public class Professor{
         if (name == null) {
             if (other.name != null)
                 return false;
-        } else if (!name.equalsIgnoreCase(other.name))
+        } else if (!name.equals(other.name))
             return false;
         if (surname == null) {
             if (other.surname != null)
                 return false;
-        } else if (!surname.equalsIgnoreCase(other.surname))
+        } else if (!surname.equals(other.surname))
             return false;
         return true;
     }

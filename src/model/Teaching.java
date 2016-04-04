@@ -3,12 +3,14 @@
  */
 package model;
 
+import model_interface.ITeaching;
+
 /**
  * The Teaching class shapes the object that will identify a university course 
  * 
  * @author Martina Magnani
  */
-public class Teaching{
+public class Teaching implements ITeaching{
     private final String name;
     private final Year year;
     /**
@@ -24,21 +26,26 @@ public class Teaching{
         this.year = year;
     }
     /**
-     * Method that returns the name of the university course
+     * Method that returns the name of the subject
      * @return
-     *          name of the course
+     *          name
      */
-    public String getTeaching(){
+    public String getName() {
         return this.name;
+    }
+    /**
+     * Method that returns the Year of the subject
+     * @return
+     *          year
+     */
+    public Year getYear() {
+        return this.year;
     }
     /**
      * Method that returns the year in which this subject is taught
      * @return
      *         year
      */
-    public Year getYear(){
-        return this.year;
-    }
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -73,6 +80,6 @@ public class Teaching{
     }
     
     public String toString() {
-        return "Subject Name: " + this.name + " | " + this.year;
+        return this.name + " | " + this.year;
     }
 }

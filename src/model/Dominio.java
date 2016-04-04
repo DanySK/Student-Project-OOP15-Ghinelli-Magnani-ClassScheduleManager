@@ -6,6 +6,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model_interface.IDominio;
+
 /**
  * This class handles all the lists useful to the application that are: a list of professors, a list of subjects and a list of lessons.
  * In all lists can be added new (respective) objects through various "add" methods.
@@ -15,7 +17,7 @@ import java.util.List;
  * @author Martina Magnani
  *
  */
-public class Dominio {
+public class Dominio implements IDominio {
     private final List<Professor> professorsList;
     private final List<Teaching> teachingsList;
     private final List<Lesson> lessonsList;
@@ -32,13 +34,13 @@ public class Dominio {
      * @param prof
      *          the new professor
      */
-    public void addProfessor(final Professor prof){
-        if (!this.professorsList.contains(prof)) {
-            this.professorsList.add(prof);
+    public void addProfessor(final String name, final String surname){
+        for (final Professor p : this.professorsList) {
+            if (p.getName().equals(name) && p.getSurname().equals(surname)) {
+                throw new IllegalArgumentException();
+            }
         }
-        else {
-            throw new IllegalArgumentException();       
-        }
+        this.professorsList.add(new Professor(name, surname));
     }
     /**
      * Method that returns the list professors
@@ -53,13 +55,13 @@ public class Dominio {
      * @param subject
      *          the new subject
      */
-    public void addTeaching(final Teaching subject){
-        if (!this.teachingsList.contains(subject)) {
-            this.teachingsList.add(subject);
+    public void addTeaching(final String name, final Year year){
+        for (final Teaching t : this.teachingsList) {
+            if (t.getName().equals(name) && t.getYear().equals(year)) {
+                throw new IllegalArgumentException();
+            }
         }
-        else {
-            throw new IllegalArgumentException();       
-        }
+        this.teachingsList.add(new Teaching(name, year));
     }
     /**
      * Method that returns the list of teachings
@@ -74,31 +76,30 @@ public class Dominio {
      * @param lesson
      *          the new lesson
      */
-    public void addLesson(final Lesson lesson) {
-        if (!this.professorsList.contains(lesson.getProfessor())) {
-            this.professorsList.add(lesson.getProfessor());
-        }
-        if (!this.teachingsList.contains(lesson.getSubject())) {
-            this.teachingsList.add(lesson.getSubject());
-        }
-        if (!this.lessonsList.contains(lesson)) {
-            this.lessonsList.add(lesson);
+    public void addLesson(final Professor prof, final Teaching teaching, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+        if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching)) {
+            for (final Lesson l : this.lessonsList) {
+                if(l.getDay()==day && l.getClassRoom()==classroom && l.getHour()==hour){
+                    throw new IllegalArgumentException();
+                }
+            }
+            this.lessonsList.add(new Lesson(prof,teaching,classroom,hour,day,duration));
         }
         else {
             throw new IllegalArgumentException();       
         }
     }
     /**
-     * Method that delate a lesson in the list of lesson
+     * Method that delete a lesson in the list of lesson
      * @param lesson
-     *          the lesson to delate
+     *          the lesson to delete
      * @return
      *          true 
      *                  if the lesson has been eliminated
      *          false
      *                  if lesson does not exist
      */
-    public boolean delateLesson(final Lesson lesson) {
+    public boolean deleteLesson(final Lesson lesson) {
         if (this.lessonsList.contains(lesson)) {
             return this.lessonsList.remove(lesson);
         }
@@ -127,7 +128,7 @@ public class Dominio {
             if(prof!=null && !l.getProfessor().equals(prof)){
                 continue;
             }
-            if (teaching.getTeaching()!=null && !l.getSubject().getTeaching().equals(teaching.getTeaching())) {
+            if (teaching.getName()!=null && !l.getSubject().getName().equals(teaching.getName())) {
                 continue;
             }
             if (teaching.getYear()!=null && !l.getSubject().getYear().equals(teaching.getYear())) {

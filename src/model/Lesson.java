@@ -5,12 +5,14 @@ package model;
 
 import java.io.Serializable;
 
+import model_interface.ILesson;
+
 /** The Lesson class shapes the object that will identify an unique lesson
  * 
  * @author Martina Magnani
  *
  */
-public class Lesson implements Serializable {
+public class Lesson implements ILesson, Serializable {
     /**
      * 
      */
@@ -134,8 +136,7 @@ public class Lesson implements Serializable {
      */
     public String toString() {
         return "Prof: " + this.prof + " | " 
-                + "Teaching: " + this.teaching.getTeaching() + " | " 
-                + "Year: " + this.teaching.getYear() + " | "
+                + "Teaching: " + this.teaching.toString() + " | " 
                 + "ClassRoom: " + this.classroom + " | "
                 + "Day: " + this.day + " | "
                 + "Hour: " + this.hour + " | "
