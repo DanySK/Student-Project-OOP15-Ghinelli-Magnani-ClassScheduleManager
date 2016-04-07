@@ -1,5 +1,6 @@
 package view;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GraphicsConfiguration;
@@ -24,8 +25,9 @@ public class MyView extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private JMenuBar menuBar = new JMenuBar();
+    private MyMenu menu = new MyMenu();
     private MyTableModel model = new MyTableModel();
-    private JTable table = new MyTable(model);
+    private JTable table = new JTable(model);
     private JScrollPane fullTable = new JScrollPane(this.table);
     private JPanel legenda = new JPanel(new GridBagLayout());
 
@@ -35,17 +37,24 @@ public class MyView extends JFrame implements IView {
         this.setLayout(new BorderLayout());
         this.setTitle("Orario Lezioni");
         
-        this.menuBar.add(new MyMenu());
+        this.table.setDefaultRenderer(Object.class, new MyRenderer());
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.table.setTableHeader(null);
+        this.table.setFillsViewportHeight(true); //da usare forse, capire bene di cosa si tratta
+        this.table.setFocusable(false);
+        this.table.setRowSelectionAllowed(false);
+        
+        this.menuBar.add(this.menu);
         
         legenda.setBorder(new TitledBorder("Legenda"));
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        for (int i = 0; i < /*numero colori da usare*/; i++) {
+        for (int i = 0; i < 3/*numero colori da usare*/; i++) {
             JLabel color = new JLabel("  ");
             color.setOpaque(true);
-            color.setBackground(/*colore da usare*/);
+            color.setBackground(Color.CYAN/*colore da usare*/);
             legenda.add(color, cnst);
-            legenda.add(new JLabel(/*valore assegnato al colore*/), cnst);
+            legenda.add(new JLabel("Prova"/*valore assegnato al colore*/), cnst);
             cnst.gridy++;
         }
         
@@ -64,6 +73,11 @@ public class MyView extends JFrame implements IView {
     @Override
     public void clearData() {
         //pensare a come voler intendere tabella vuota
+    }
+
+    @Override
+    public void refreshSearchList() {
+        this.menu.refreshSearchList();
     }
 
 }

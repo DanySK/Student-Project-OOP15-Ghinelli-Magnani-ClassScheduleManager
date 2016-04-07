@@ -21,7 +21,7 @@ public class MyRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(final JTable table,
             final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         
-        cell.setText("Stringa di prova");//acchiappare il valore del determinato oggetto della lista passata al model
+        cell.setText("Stringa di prova");//acchiappare il valore del determinato oggetto della lista passata al model (essendo un object pensare bene a come identificarlo bene)
         cell.setBackground(Color.GREEN);//acchiappare il colore del determinato oggetto della lista passata al model
         final int h = cell.getPreferredSize().height;
         final int w = cell.getPreferredSize().width;

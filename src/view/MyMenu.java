@@ -1,9 +1,5 @@
 package view;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -51,10 +47,10 @@ public class MyMenu extends JMenu implements IMenu {
     public void refreshSearchList() {
         
         this.subMenu = new JMenu("Search");
-        for (int i = 0; i < /*lunghezza della collezione che contiene i tipi di ricerca*/; i++) {
-            this.subSubMenu = new JMenu("By " + /*il tipo di ricerca*/);
-            for (int y = 0; y < /*lunghezza della collezione di quella particolare ricerca*/; y++) {
-                this.menuItem = new JMenuItem(/*elemento della particolare collezione*/);
+        for (int i = 0; i < 3/*lunghezza della collezione che contiene i tipi di ricerca*/; i++) {
+            this.subSubMenu = new JMenu("By " + "Prova"/*il tipo di ricerca*/);
+            for (int y = 0; y < 3/*lunghezza della collezione di quella particolare ricerca*/; y++) {
+                this.menuItem = new JMenuItem("Prova"/*elemento della particolare collezione*/);//confrontarsi con il controller per gestire bene la faccenda di elementi mancanti
                         this.menuItem.addActionListener(e -> {
                             //MyTable.searchBy(tipo di ricerca, elemento della particolare collezione);
                         });
