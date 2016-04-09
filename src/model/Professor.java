@@ -24,8 +24,8 @@ public class Professor implements IProfessor{
         if(name == null || surname == null){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        this.name = name.substring(0,1).toUpperCase();
-        this.surname = surname.substring(1, surname.length()).toLowerCase();
+        this.name = name.substring(0,1).toUpperCase() + name.substring(1,name.length()).toLowerCase();
+        this.surname = surname.substring(0,1).toUpperCase() + surname.substring(1,surname.length()).toLowerCase();
     }
     /**
      * Method that returns the name of the professor
