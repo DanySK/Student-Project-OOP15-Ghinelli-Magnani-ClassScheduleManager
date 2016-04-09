@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,7 +26,8 @@ public class MyView extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private JMenuBar menuBar = new JMenuBar();
-    private MyMenu menu = new MyMenu();
+    private JMenu menu = new MenuBrutto();
+    private JMenu menu2 = new MenuAddBrutto(this);
     private MyTableModel model = new MyTableModel();
     private JTable table = new JTable(model);
     private JScrollPane fullTable = new JScrollPane(this.table);
@@ -44,7 +46,8 @@ public class MyView extends JFrame implements IView {
         this.table.setFocusable(false);
         this.table.setRowSelectionAllowed(false);
         
-        this.menuBar.add(this.menu);
+        this.menuBar.add(menu);
+        this.menuBar.add(menu2);
         
         legenda.setBorder(new TitledBorder("Legenda"));
         GridBagConstraints cnst = new GridBagConstraints();
@@ -77,7 +80,7 @@ public class MyView extends JFrame implements IView {
 
     @Override
     public void refreshSearchList() {
-        this.menu.refreshSearchList();
+        //this.menu.refreshSearchList();
     }
 
 }
