@@ -20,4 +20,5 @@ public interface ILesson {
     public Hour getHour();
     public Day getDay();
     public int getDuration();
+    public int getID();
 }

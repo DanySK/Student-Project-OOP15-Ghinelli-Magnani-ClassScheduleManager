@@ -11,8 +11,7 @@ import model_interface.IProfessor;
  * @author Martina Magnani
  */
 public class Professor implements IProfessor{
-    private final String name;
-    private final String surname;
+    private final String name_surname;
     /**
      * Constructor of class Professor
      * @param name
@@ -20,12 +19,11 @@ public class Professor implements IProfessor{
      * @param surname
      *            surname of professor
      */
-    public Professor(final String name, final String surname) {
-        if(name == null || surname == null){
+    public Professor(final String name) {
+        if(name == null){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        this.name = name.substring(0,1).toUpperCase() + name.substring(1,name.length()).toLowerCase();
-        this.surname = surname.substring(0,1).toUpperCase() + surname.substring(1,surname.length()).toLowerCase();
+        this.name_surname = name;
     }
     /**
      * Method that returns the name of the professor
@@ -33,15 +31,7 @@ public class Professor implements IProfessor{
      *          name of professor
      */
     public String getName() {
-        return this.name;
-    }
-    /**
-     * Method that returns the surname of the professor
-     * @return
-     *          surname of professor
-     */
-    public String getSurname() {
-        return this.surname;
+        return this.name_surname;
     }
     /**
      * 
@@ -49,7 +39,7 @@ public class Professor implements IProfessor{
      *          professor name and surname
      */
     public String toString() {
-        return this.name + " " + this.surname;
+        return this.name_surname;
     }
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -58,8 +48,7 @@ public class Professor implements IProfessor{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((surname == null) ? 0 : surname.hashCode());
+        result = prime * result + ((name_surname == null) ? 0 : name_surname.hashCode());
         return result;
     }
     /* (non-Javadoc)
@@ -74,17 +63,13 @@ public class Professor implements IProfessor{
         if (getClass() != obj.getClass())
             return false;
         Professor other = (Professor) obj;
-        if (name == null) {
-            if (other.name != null)
+        if (name_surname == null) {
+            if (other.name_surname != null)
                 return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (surname == null) {
-            if (other.surname != null)
-                return false;
-        } else if (!surname.equals(other.surname))
+        } else if (!name_surname.equals(other.name_surname))
             return false;
         return true;
     }
+  
     
 }

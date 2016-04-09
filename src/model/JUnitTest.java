@@ -14,7 +14,7 @@ import org.junit.Test;
 public class JUnitTest {
     
     final Dominio dominio = new Dominio();
-    
+    /*
     @Test
     public void test() {
         //Lista = vuota
@@ -35,6 +35,6 @@ public class JUnitTest {
         
         this.dominio.getProfessorsList().clear();
         assertTrue(this.dominio.getProfessorsList().isEmpty());
-    }
+    }*/
 
 }

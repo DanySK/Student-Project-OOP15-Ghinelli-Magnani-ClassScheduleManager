@@ -3,6 +3,7 @@
  */
 package model_interface;
 
+import model.Court;
 import model.Year;
 
 /**
@@ -12,4 +13,5 @@ import model.Year;
 public interface ITeaching {
     public String getName();
     public Year getYear();
+    public Court getCourt();
 }

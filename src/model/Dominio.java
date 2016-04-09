@@ -20,7 +20,9 @@ import model_interface.IDominio;
 public class Dominio implements IDominio {
     private final List<Professor> professorsList;
     private final List<Teaching> teachingsList;
+    private final List<ClassRoom> classroomsList;
     private final List<Lesson> lessonsList;
+    private int counter;
     /**
      * Constructor of class Dominio
      */
@@ -28,19 +30,24 @@ public class Dominio implements IDominio {
         this.professorsList = new ArrayList<>();
         this.teachingsList = new ArrayList<>();
         this.lessonsList = new ArrayList<>();
+        this.classroomsList = new ArrayList<>();
+        this.counter = 0;
     }
     /**
      * Method that adds a professor in the list professors
      * @param prof
      *          the new professor
      */
-    public void addProfessor(final String name, final String surname){
+    public void addProfessor(final String name) {
+        if (name==null) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
         for (final Professor p : this.professorsList) {
-            if (p.getName().equals(name) && p.getSurname().equals(surname)) {
+            if (p.getName().equals(name)) {
                 throw new IllegalArgumentException();
             }
         }
-        this.professorsList.add(new Professor(name, surname));
+        this.professorsList.add(new Professor(name));
     }
     /**
      * Method that returns the list professors
@@ -55,13 +62,16 @@ public class Dominio implements IDominio {
      * @param subject
      *          the new subject
      */
-    public void addTeaching(final String name, final Year year){
+    public void addTeaching(final String name, final Year year, final Court court){
+        if (name==null || year==null || court==null) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
         for (final Teaching t : this.teachingsList) {
-            if (t.getName().equals(name) && t.getYear().equals(year)) {
+            if (t.getName().equals(name)) {
                 throw new IllegalArgumentException();
             }
         }
-        this.teachingsList.add(new Teaching(name, year));
+        this.teachingsList.add(new Teaching(name, year, court));
     }
     /**
      * Method that returns the list of teachings
@@ -72,18 +82,41 @@ public class Dominio implements IDominio {
         return this.teachingsList;
     }
     /**
+     * Method that adds a classroom in the list classrooms
+     * @param prof
+     *          the new classroom
+     */
+    public void addClassroom(final String name){
+        if (name==null) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
+        for (final ClassRoom cl : this.classroomsList) {
+            if (cl.getName().equals(name)) {
+                throw new IllegalArgumentException();
+            }
+        }
+        this.classroomsList.add(new ClassRoom(name));
+    }
+    public List<ClassRoom> getClassroomsList() {
+        return this.classroomsList;
+    }
+    /**
      * Method that add a lesson in the list of lessons
      * @param lesson
      *          the new lesson
      */
-    public void addLesson(final Professor prof, final Teaching teaching, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
-        if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching)) {
+    public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+        if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
+        if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching) && this.classroomsList.contains(classroom)) {
             for (final Lesson l : this.lessonsList) {
-                if(l.getDay()==day && l.getClassRoom()==classroom && l.getHour()==hour){
+                if(l.getDay()==day && l.getClassRoom().equals(classroom) && l.getHour()==hour && l.getSemester()==semester){
                     throw new IllegalArgumentException();
                 }
             }
-            this.lessonsList.add(new Lesson(prof,teaching,classroom,hour,day,duration));
+            this.lessonsList.add(new Lesson(prof,teaching,semester,classroom,hour,day,duration, counter));
+            this.counter++;
         }
         else {
             throw new IllegalArgumentException();       
@@ -98,7 +131,7 @@ public class Dominio implements IDominio {
      *                  if the lesson has been eliminated
      *          false
      *                  if lesson does not exist
-     */
+     */ 
     public boolean deleteLesson(final Lesson lesson) {
         if (this.lessonsList.contains(lesson)) {
             return this.lessonsList.remove(lesson);
@@ -122,19 +155,25 @@ public class Dominio implements IDominio {
      *          parameter that if non-NULL indicates that I want the lessons conducted in this particular day
      * @return
      */
-    public List<Lesson> getLessons(final Professor prof, final Teaching teaching, final ClassRoom classroom, final Hour hour, final Day day) {
+    public List<Lesson> getLessons(final String prof, final String teaching, final Year year, final Court court, final Semester semester, final String classroom, final Hour hour, final Day day) {
         List<Lesson> finalList = new ArrayList<Lesson>();
         for (final Lesson l : this.lessonsList) {
-            if(prof!=null && !l.getProfessor().equals(prof)){
+            if (prof!=null && !l.getProfessor().getName().equals(prof)){
                 continue;
             }
-            if (teaching.getName()!=null && !l.getSubject().getName().equals(teaching.getName())) {
+            if (teaching!=null && !l.getSubject().getName().equals(teaching)) {
                 continue;
             }
-            if (teaching.getYear()!=null && !l.getSubject().getYear().equals(teaching.getYear())) {
+            if (year!=null && !l.getSubject().getYear().equals(year)) {
                 continue;
             }
-            if (classroom!=null && !l.getClassRoom().equals(classroom)) {
+            if (court!=null && !l.getSubject().getCourt().equals(Court.COMUNE) && !l.getSubject().getCourt().equals(court)) {
+                continue;
+            }
+            if (semester!=null && l.getSemester().equals(semester)) {
+                continue;
+            }
+            if (classroom!=null && !l.getClassRoom().getName().equals(classroom)) {
                 continue;
             }
             if (hour!=null && !l.getHour().equals(hour)) {
@@ -182,12 +221,12 @@ public class Dominio implements IDominio {
      *          list of enum classroom
      */
     public List<ClassRoom> getClassRoomActive(){
-        final List<ClassRoom> crActive = new ArrayList<>();
+        final List<ClassRoom> clActive = new ArrayList<>();
         for (final Lesson l : this.lessonsList) {
-            if (crActive == null || !crActive.contains(l.getClassRoom())) {
-                crActive.add(l.getClassRoom());
+            if (clActive == null || !clActive.contains(l.getClassRoom())) {
+                clActive.add(l.getClassRoom());
             }
         }
-        return crActive;
+        return clActive;
     }
 }

@@ -9,5 +9,4 @@ package model_interface;
  */
 public interface IProfessor {
     public String getName();
-    public String getSurname();
 }
