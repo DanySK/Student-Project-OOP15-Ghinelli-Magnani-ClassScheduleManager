@@ -3,6 +3,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +11,7 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -31,7 +33,11 @@ public class MyView extends JFrame implements IView {
     private MyTableModel model = new MyTableModel();
     private JTable table = new JTable(model);
     private JScrollPane fullTable = new JScrollPane(this.table);
+    private JPanel combo = new JPanel(new BorderLayout());
     private JPanel legenda = new JPanel(new GridBagLayout());
+    private JPanel editing = new JPanel();
+    private JButton keep = new JButton("Keep");
+    private JButton delete = new JButton("Delete");
 
     public MyView() {
         super();
@@ -49,21 +55,33 @@ public class MyView extends JFrame implements IView {
         this.menuBar.add(menu);
         this.menuBar.add(menu2);
         
-        legenda.setBorder(new TitledBorder("Legenda"));
+        this.legenda.setBorder(new TitledBorder("Legenda"));
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
         for (int i = 0; i < 3/*numero colori da usare*/; i++) {
-            JLabel color = new JLabel("  ");
+            final JLabel color = new JLabel("  ");
             color.setOpaque(true);
             color.setBackground(Color.CYAN/*colore da usare*/);
-            legenda.add(color, cnst);
-            legenda.add(new JLabel("Prova"/*valore assegnato al colore*/), cnst);
+            this.legenda.add(color, cnst);
+            this.legenda.add(new JLabel("Prova"/*valore assegnato al colore*/), cnst);
             cnst.gridy++;
         }
+        this.combo.add(legenda, BorderLayout.NORTH);
+        this.keep.addActionListener(e -> {
+            // da implementare
+        });
+        this.keep.setEnabled(false);
+        this.editing.add(keep);
+        this.delete.addActionListener(e -> {
+            // da implementare
+        });
+        this.delete.setEnabled(false);
+        this.editing.add(delete);
+        this.combo.add(editing, BorderLayout.CENTER);
         
-        this.getContentPane().add(this.menuBar, BorderLayout.NORTH);
-        this.getContentPane().add(this.fullTable, BorderLayout.CENTER);
-        this.getContentPane().add(legenda, BorderLayout.EAST);
+        this.getContentPane().add(menuBar, BorderLayout.NORTH);
+        this.getContentPane().add(fullTable, BorderLayout.CENTER);
+        this.getContentPane().add(combo, BorderLayout.EAST);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
         this.setVisible(true);
     }
