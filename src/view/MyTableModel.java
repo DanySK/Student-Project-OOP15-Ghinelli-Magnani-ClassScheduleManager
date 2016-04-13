@@ -16,25 +16,26 @@ public class MyTableModel extends AbstractTableModel {
      * 
      */
     private static final long serialVersionUID = 9137709835141518432L;
-    private List<Object> base = new ArrayList<>();
-    private static final int COL_NUM = 10;
+    private int nColumns = 9;
+    private int nRows = 5*4; // ci va aggiunto il numero delle classi
+    private Object[][] base;
 
     @Override
     public int getColumnCount() {
-        return COL_NUM;
+        return nColumns;
     }
 
     @Override
     public int getRowCount() {
-        return this.base.size() / COL_NUM;
+        return nRows;
     }
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return base.get(COL_NUM * rowIndex + columnIndex);
+        return base[rowIndex][columnIndex];
     }
     
-    public void setModel(final List<Object> list) {
+    public void setModel(final Object[][] list) { // da modificare anche il numero di colonne e di righe se serve
         if (list == null) {
                 throw new IllegalArgumentException("The TableModel can't be null!");
         }

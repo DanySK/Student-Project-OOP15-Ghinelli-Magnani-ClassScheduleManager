@@ -4,6 +4,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import view_utility.SearchModes;
+
 public class MenuBrutto extends JMenu {  //solo per quello base, per le aggiunte ne creo uno a parte, ovviamente dopo vanno messi iniseme ma queto è solo un prototipo brutto
 
     /**
@@ -40,8 +42,8 @@ public class MenuBrutto extends JMenu {  //solo per quello base, per le aggiunte
         this.add(menuItem);
         
         this.subMenu = new JMenu("Search");
-        for (int i = 0; i < 3/*lunghezza della collezione che contiene i tipi di ricerca*/; i++) {
-            this.subSubMenu = new JMenu("By " + "Prova"/*il tipo di ricerca*/);
+        for (int i = 0; i < SearchModes.values().length; i++) {
+            this.subSubMenu = new JMenu("By " + SearchModes.getName(i));
             for (int y = 0; y < 3/*lunghezza della collezione di quella particolare ricerca*/; y++) {
                 this.menuItem = new JMenuItem("Prova"/*elemento della particolare collezione*/); //confrontarsi con il controller per gestire bene la faccenda di elementi mancanti
                         this.menuItem.addActionListener(e -> {
