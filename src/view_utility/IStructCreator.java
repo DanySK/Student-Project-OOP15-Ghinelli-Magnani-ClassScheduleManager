@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface IStructCreator {
     
-    Object[][] getStruct(final int searchType, List<Object> list);
+    List<List<Object>> getStruct(final int searchType, List<Object> list);
 
 }

@@ -1,9 +1,10 @@
 package view;
 
+import java.util.List;
 
 public interface IView {
     
-    void addData(Object[][] list);
+    void addData(List<List<Object>> list);
     
     void clearData();
     

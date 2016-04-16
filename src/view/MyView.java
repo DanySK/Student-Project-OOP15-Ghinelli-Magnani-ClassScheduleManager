@@ -87,7 +87,7 @@ public class MyView extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final Object[][] list) {
+    public void addData(final List<List<Object>> list) {
         this.model.setModel(list);
     }
 

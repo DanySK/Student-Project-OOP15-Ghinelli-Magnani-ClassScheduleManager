@@ -1,12 +1,11 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
-
-import javax.swing.JTextPane;
 import javax.swing.table.AbstractTableModel;
+
+import model.Day;
+import model.Hour;
 
 public class MyTableModel extends AbstractTableModel {
     /*la lista presente qui contiene tutti gli elementi della tabella,
@@ -16,26 +15,25 @@ public class MyTableModel extends AbstractTableModel {
      * 
      */
     private static final long serialVersionUID = 9137709835141518432L;
-    private int nColumns = 9;
-    private int nRows = 5*4; // ci va aggiunto il numero delle classi
-    private Object[][] base;
+    private List<List<Object>> base = new ArrayList<>();
+    private static int nCOL = Hour.values().length + 1;
 
     @Override
     public int getColumnCount() {
-        return nColumns;
+        return nCOL;
     }
 
     @Override
     public int getRowCount() {
-        return nRows;
+        return base.size();
     }
 
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return base[rowIndex][columnIndex];
+        return base.get(rowIndex).get(columnIndex);
     }
     
-    public void setModel(final Object[][] list) { // da modificare anche il numero di colonne e di righe se serve
+    public void setModel(final List<List<Object>> list) { // da modificare anche il numero di colonne e di righe se serve
         if (list == null) {
                 throw new IllegalArgumentException("The TableModel can't be null!");
         }

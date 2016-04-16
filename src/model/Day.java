@@ -36,11 +36,11 @@ public enum Day {
             name = s;
     }
     /**
-     * 
+     * @param 
      * @return 
      *          string containing the name of the day.
      */
-    public String getName() {
-            return name;
+    public static String getName(final int i) {
+            return Day.values()[i].name;
     }
 }

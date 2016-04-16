@@ -13,7 +13,7 @@ public enum Hour {
     DIECI_UNDICI("10/11"),
     UNDICI_DODICI("11/12"),
     DODICI_TREDICI("12/13"),
-    TREDICI_QUATTORDICI("13/14"),
+    //TREDICI_QUATTORDICI("13/14"), questo orario non c'è mai, pausa pranzo
     QUATTORDICI_QUINDICI("14/15"),
     QUINDICI_SEDICI("15/16"),
     SEDICI_DICIASSETTE("16/17"),
@@ -30,10 +30,11 @@ public enum Hour {
     }
     /**
      * Method that return the required hour
+     * @param i
      * @return
      *         required hour 
      */
-    public String getHour(){
-        return this.hour;
+    public static String getHour(final int i) {
+        return Hour.values()[i].hour;
     }
 }
