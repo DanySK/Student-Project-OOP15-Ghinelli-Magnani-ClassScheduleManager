@@ -12,7 +12,7 @@ public class StructCreatorImpl implements IStructCreator {
 
     @Override
     public List<List<Object>> getStruct(final int searchType, final List<Object> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito
-        if (searchType == 0) { // da modificare in totale primo semestre in seguito
+        if (searchType == 0) { // vista totale usabile in più ricerche
             this.base = new ArrayList<>();
             int check = 0;
             for (int i = 0; i < Day.values().length * 3/*(lunghezza lista aule)*/ + Day.values().length; i++) {
@@ -24,13 +24,43 @@ public class StructCreatorImpl implements IStructCreator {
                      }
                      check++;
                  } else {
-                     this.base.get(i).add("Aula prova");
+                     this.base.get(i).add("Aula prova"); // dalla lista delle classi prendere con indice i - 1
                      for (int y = 1; y < 9; y++) {
                          this.base.get(i).add("");
                      }
                  }
-             }
-             return this.base;
+            }
+            
+            
+            
+            for (Object a/*lista di lezioni, non di object*/: list) {
+                // String day = a.getDay();
+                // String hour = a.getHour();
+                // String class = a.getClass();
+                int dayVal;
+                int hourVal;
+                int classVal;
+                for (int i = 0; i < Day.values().length; i++) {
+                    if (/*day.equals(Day.values()[i].getName())*/) {
+                        dayVal = i + 1;
+                    }
+                }
+                for (int i = 0; i < Hour.values().length; i++) {
+                    if (/*hour.equals(Hour.values()[i].getName())*/) {
+                        hourVal = i + 1;
+                    }
+                }
+                for (/* class a : classList*/) {
+                    if (/*a.equals(class)*/) {
+                        classVal = /*classList.indexOf(a)*/ + 1;
+                    }
+                }
+                this.base.get(classVal * dayVal + 1).set(hourVal, a);
+            }
+            
+            
+            
+            return this.base;
         }
         if (searchType == 1) {
             this.base = new ArrayList<>();
@@ -48,6 +78,31 @@ public class StructCreatorImpl implements IStructCreator {
                     }
                 }
             }
+            
+            
+            
+            for (Object a/*lista di lezioni, non di object*/: list) {
+                // String day = a.getDay();
+                // String hour = a.getHour();
+                // String class = a.getClass();
+                int dayVal;
+                int hourVal;
+                int classVal;
+                for (int i = 0; i < Day.values().length; i++) {
+                    if (/*day.equals(Day.values()[i].getName())*/) {
+                        dayVal = i + 1;
+                    }
+                }
+                for (int i = 0; i < Hour.values().length; i++) {
+                    if (/*hour.equals(Hour.values()[i].getName())*/) {
+                        hourVal = i + 1;
+                    }
+                }
+                this.base.get(dayVal + 1).set(hourVal, a);
+            }
+            
+            
+            
             return this.base;
         }
         return null;

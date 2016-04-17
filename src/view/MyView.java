@@ -30,6 +30,7 @@ public class MyView extends JFrame implements IView {
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menu = new MenuBrutto();
     private JMenu menu2 = new MenuAddBrutto(this);
+    private JMenu menu3 = new SemesterMenu();
     private MyTableModel model = new MyTableModel();
     private JTable table = new JTable(model);
     private JScrollPane fullTable = new JScrollPane(this.table);
@@ -54,6 +55,7 @@ public class MyView extends JFrame implements IView {
         
         this.menuBar.add(menu);
         this.menuBar.add(menu2);
+        this.menuBar.add(menu3);
         
         this.legenda.setBorder(new TitledBorder("Legenda"));
         GridBagConstraints cnst = new GridBagConstraints();
