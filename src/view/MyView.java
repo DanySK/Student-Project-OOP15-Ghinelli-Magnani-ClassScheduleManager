@@ -28,7 +28,7 @@ public class MyView extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu menu = new MenuBrutto();
+    private JMenu menu = new MenuBrutto(this);
     private JMenu menu2 = new MenuAddBrutto(this);
     private JMenu menu3 = new SemesterMenu();
     private MyTableModel model = new MyTableModel();
@@ -70,7 +70,9 @@ public class MyView extends JFrame implements IView {
         }
         this.combo.add(legenda, BorderLayout.NORTH);
         this.keep.addActionListener(e -> {
-            // da implementare
+            /*int colVal = this.table.getSelectedColumn();
+            int rowVal = this.table.getSelectedRow();
+            this.table.getValueAt(rowVal, colVal); macello incredibile, pensare bene a come agire ricordarsi instanceof(importante potrebbe risolvere molti problemi)*/
         });
         this.keep.setEnabled(false);
         this.editing.add(keep);
@@ -94,8 +96,10 @@ public class MyView extends JFrame implements IView {
     }
 
     @Override
-    public void clearData() {
-        //pensare a come voler intendere tabella vuota
+    public void editMode() {
+        this.keep.setEnabled(true);
+        this.delete.setEnabled(true);
+        this.table.setFocusable(true);
     }
 
     @Override

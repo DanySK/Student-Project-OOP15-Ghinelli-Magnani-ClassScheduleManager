@@ -6,7 +6,7 @@ public interface IView {
     
     void addData(List<List<Object>> list);
     
-    void clearData();
+    void editMode();
     
     void refreshSearchList();
 

@@ -7,6 +7,8 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import model.Lesson;
+
 public class MyRenderer extends DefaultTableCellRenderer {
 
     /**
@@ -20,9 +22,13 @@ public class MyRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(final JTable table,
             final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        if (value instanceof Lesson) {
+            //cell.setText(value.getName());
+            //cell.setBackground(value.getColor());
+        } else {
+            cell.setText(value.toString());
+        }
         
-        cell.setText("Stringa di prova");//acchiappare il valore del determinato oggetto della lista passata al model (essendo un object pensare bene a come identificarlo bene)
-        cell.setBackground(Color.GREEN);//acchiappare il colore del determinato oggetto della lista passata al model
         final int h = cell.getPreferredSize().height;
         final int w = cell.getPreferredSize().width;
         

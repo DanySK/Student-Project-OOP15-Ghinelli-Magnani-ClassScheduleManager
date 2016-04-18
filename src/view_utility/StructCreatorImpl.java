@@ -11,7 +11,7 @@ public class StructCreatorImpl implements IStructCreator {
     private List<List<Object>> base;
 
     @Override
-    public List<List<Object>> getStruct(final int searchType, final List<Object> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito
+    public List<List<Object>> getStruct(final int searchType, final List<Object> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito, oppure lasciare tutto insieme, da chiedere al prof, ricordasi che sto chiedendo informazioni direttamente alle enum del model
         if (searchType == 0) { // vista totale usabile in più ricerche
             this.base = new ArrayList<>();
             int check = 0;

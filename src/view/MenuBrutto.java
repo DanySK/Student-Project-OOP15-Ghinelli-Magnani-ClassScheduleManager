@@ -1,12 +1,13 @@
 package view;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import view_utility.SearchModes;
 
-public class MenuBrutto extends JMenu {  //solo per quello base, per le aggiunte ne creo uno a parte, ovviamente dopo vanno messi iniseme ma queto è solo un prototipo brutto
+public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
 
     /**
      * 
@@ -17,7 +18,7 @@ public class MenuBrutto extends JMenu {  //solo per quello base, per le aggiunte
     private JMenuItem menuItem;
     private JFileChooser fileChooser = new JFileChooser();
 
-    public MenuBrutto() {
+    public MenuBrutto(final IView frame) {
         super("Menu");
         this.menuItem = new JMenuItem("Open");
         this.menuItem.addActionListener(e -> {
@@ -37,7 +38,7 @@ public class MenuBrutto extends JMenu {  //solo per quello base, per le aggiunte
         this.add(menuItem);
         this.menuItem = new JMenuItem("Edit");
         this.menuItem.addActionListener(e -> {
-            //da sistemare, pensare bene come si vuole editare
+            frame.editMode();
         });
         this.add(menuItem);
         
