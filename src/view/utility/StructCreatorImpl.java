@@ -1,4 +1,4 @@
-package view_utility;
+package view.utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,12 @@ import model.Hour;
 public class StructCreatorImpl implements IStructCreator {
     
     private List<List<Object>> base;
+    private static final int TYPE1 = 0;
+    private static final int TYPE2 = 1;
 
     @Override
     public List<List<Object>> getStruct(final int searchType, final List<Object> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito, oppure lasciare tutto insieme, da chiedere al prof, ricordasi che sto chiedendo informazioni direttamente alle enum del model
-        if (searchType == 0) { // vista totale usabile in più ricerche
+        if (searchType == TYPE1) { // vista totale usabile in più ricerche
             this.base = new ArrayList<>();
             int check = 0;
             for (int i = 0; i < Day.values().length * 3/*(lunghezza lista aule)*/ + Day.values().length; i++) {
@@ -33,7 +35,7 @@ public class StructCreatorImpl implements IStructCreator {
             
             
             
-            for (Object a/*lista di lezioni, non di object*/: list) {
+            /*for (Object a (lista di lezioni, non di object): list) {
                 // String day = a.getDay();
                 // String hour = a.getHour();
                 // String class = a.getClass();
@@ -41,28 +43,29 @@ public class StructCreatorImpl implements IStructCreator {
                 int hourVal;
                 int classVal;
                 for (int i = 0; i < Day.values().length; i++) {
-                    if (/*day.equals(Day.values()[i].getName())*/) {
+                    if (day.equals(Day.values()[i].getName())) {
                         dayVal = i + 1;
                     }
                 }
                 for (int i = 0; i < Hour.values().length; i++) {
-                    if (/*hour.equals(Hour.values()[i].getName())*/) {
+                    if (hour.equals(Hour.values()[i].getName())) {
                         hourVal = i + 1;
                     }
                 }
-                for (/* class a : classList*/) {
-                    if (/*a.equals(class)*/) {
-                        classVal = /*classList.indexOf(a)*/ + 1;
+                for (class a : classList) {
+                    if (a.equals(class)) {
+                        classVal = classList.indexOf(a) + 1;
                     }
                 }
                 this.base.get(classVal * dayVal + 1).set(hourVal, a);
-            }
+            }*/
             
             
             
             return this.base;
         }
-        if (searchType == 1) {
+        
+        if (searchType == TYPE2) {
             this.base = new ArrayList<>();
             for (int i = 0; i < Day.values().length + 1; i++) {
                 this.base.add(new ArrayList<>());
@@ -81,7 +84,7 @@ public class StructCreatorImpl implements IStructCreator {
             
             
             
-            for (Object a/*lista di lezioni, non di object*/: list) {
+            /*for (Object a (lista di lezioni, non di object): list) {
                 // String day = a.getDay();
                 // String hour = a.getHour();
                 // String class = a.getClass();
@@ -89,17 +92,17 @@ public class StructCreatorImpl implements IStructCreator {
                 int hourVal;
                 int classVal;
                 for (int i = 0; i < Day.values().length; i++) {
-                    if (/*day.equals(Day.values()[i].getName())*/) {
+                    if (day.equals(Day.values()[i].getName())) {
                         dayVal = i + 1;
                     }
                 }
                 for (int i = 0; i < Hour.values().length; i++) {
-                    if (/*hour.equals(Hour.values()[i].getName())*/) {
+                    if (hour.equals(Hour.values()[i].getName())) {
                         hourVal = i + 1;
                     }
                 }
                 this.base.get(dayVal + 1).set(hourVal, a);
-            }
+            }*/
             
             
             

@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
@@ -16,7 +15,7 @@ public class MyRenderer extends DefaultTableCellRenderer {
      */
     private static final long serialVersionUID = 6439423550121913327L;
     
-    private JTextPane cell = new JTextPane();
+    private final JTextPane cell = new JTextPane();
     //considerare cell all'interno di un JScrollPane
     
     @Override

@@ -1,4 +1,4 @@
-package view_utility;
+package view.utility;
 
 public class Originator {
 

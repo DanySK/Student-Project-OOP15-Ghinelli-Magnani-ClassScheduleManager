@@ -1,4 +1,4 @@
-package view_utility;
+package view.utility;
 
 public enum SearchModes {
     // sole e uniche ricerche da fare

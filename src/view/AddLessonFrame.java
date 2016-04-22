@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import view_utility.AddFields;
+import view.utility.AddFields;
 
 public class AddLessonFrame extends JFrame {
     
@@ -21,33 +21,28 @@ public class AddLessonFrame extends JFrame {
      * 
      */
     private static final long serialVersionUID = -4379958406580048097L;
-    private final JFrame mainFrame;
-    private JLabel label;
-    private JComboBox<String> field;
     private final List<JComboBox<String>> boxList = new ArrayList<>();
-    private JButton button;
     private final JPanel panelNord = new JPanel();
     private final JPanel panelSud = new JPanel();
     
     
     public AddLessonFrame(final JFrame frame) throws HeadlessException {
         super("Add Lesson"); //non si vede il titolo, pensare se si vuole risolvere o meno, non sembra importante
-        this.mainFrame = frame;
         this.setLayout(new BorderLayout());
         this.panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
         for (int i = 0; i < AddFields.values().length; i++) {
-            this.label = new JLabel(AddFields.getName(i));
+            final JLabel label = new JLabel(AddFields.getName(i));
             this.panelNord.add(label, cnst);
-            this.field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
-            this.field.setEditable(true);
+            final JComboBox<String> field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
+            field.setEditable(true);
             this.boxList.add(field);
             this.panelNord.add(field, cnst);
             cnst.gridy++;
         }
-        this.button = new JButton("Ok");
-        this.button.addActionListener(e -> {
+        JButton button = new JButton("Ok");
+        button.addActionListener(e -> {
             final List<String> retValue = new ArrayList<>();
             for (final JComboBox<String> a : this.boxList) {
                 retValue.add(a.getSelectedItem().toString());
@@ -56,15 +51,15 @@ public class AddLessonFrame extends JFrame {
             this.setVisible(false);
         });
         this.panelSud.add(button);
-        this.button = new JButton("Cancel");
-        this.button.addActionListener(e -> {
+        button = new JButton("Cancel");
+        button.addActionListener(e -> {
             this.setVisible(false);
         });
         this.panelSud.add(button);
         this.add(panelNord, BorderLayout.NORTH);
         this.add(panelSud, BorderLayout.SOUTH);
         this.pack();
-        this.setLocation(this.mainFrame.getX() + this.mainFrame.getWidth() / 2, this.mainFrame.getY() + this.mainFrame.getHeight() / 2);
+        this.setLocation(frame.getX() + frame.getWidth() / 2, frame.getY() + frame.getHeight() / 2);
         this.setVisible(true);
     }
 }

@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.JFrame;
 
-public class AddCourseFrame extends AbstractAddFrame {
+public class AddCourseFrame extends AbstractAddFrame { // probabilmente da eliminare o cambiare
     
     private final JFrame mainFrame = new JFrame();
 

@@ -1,10 +1,9 @@
 package view;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-import model.Day;
 import model.Hour;
 
 public class MyTableModel extends AbstractTableModel {

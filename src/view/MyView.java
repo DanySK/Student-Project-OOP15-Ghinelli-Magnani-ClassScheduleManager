@@ -1,13 +1,10 @@
 package view;
 
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.util.List;
 
@@ -27,18 +24,18 @@ public class MyView extends JFrame implements IView {
      * 
      */
     private static final long serialVersionUID = -7339167500714323687L;
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu menu = new MenuBrutto(this);
-    private JMenu menu2 = new MenuAddBrutto(this);
-    private JMenu menu3 = new SemesterMenu();
-    private MyTableModel model = new MyTableModel();
-    private JTable table = new JTable(model);
-    private JScrollPane fullTable = new JScrollPane(this.table);
-    private JPanel combo = new JPanel(new BorderLayout());
-    private JPanel legenda = new JPanel(new GridBagLayout());
-    private JPanel editing = new JPanel();
-    private JButton keep = new JButton("Keep");
-    private JButton delete = new JButton("Delete");
+    private final JMenuBar menuBar = new JMenuBar();
+    private final JMenu menu = new MenuBrutto(this); // da cambiare nomi
+    private final JMenu menu2 = new MenuAddBrutto(this);
+    private final JMenu menu3 = new SemesterMenu(); //
+    private final MyTableModel model = new MyTableModel();
+    private final JTable table = new JTable(model);
+    private final JScrollPane fullTable = new JScrollPane(this.table);
+    private final JPanel combo = new JPanel(new BorderLayout());
+    private final JPanel legenda = new JPanel(new GridBagLayout());
+    private final JPanel editing = new JPanel();
+    private final JButton keep = new JButton("Keep");
+    private final JButton delete = new JButton("Delete");
 
     public MyView() {
         super();

@@ -4,7 +4,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class MyMenu extends JMenu implements IMenu {
+public class MyMenu extends JMenu implements IMenu { //da eliminare o cambiare
 
     /**
      * 
