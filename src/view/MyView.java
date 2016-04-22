@@ -25,7 +25,7 @@ public class MyView extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private final JMenuBar menuBar = new JMenuBar();
-    private final JMenu menu = new MenuBrutto(this); // da cambiare nomi
+    private JMenu menu = new MenuBrutto(this); // da cambiare nomi
     private final JMenu menu2 = new MenuAddBrutto(this);
     private final JMenu menu3 = new SemesterMenu(); //
     private final MyTableModel model = new MyTableModel();
@@ -101,7 +101,7 @@ public class MyView extends JFrame implements IView {
 
     @Override
     public void refreshSearchList() {
-        //this.menu.refreshSearchList();
+        this.menu = new MenuBrutto(this); // va rivalidata la view o no? da testare
     }
 
 }
