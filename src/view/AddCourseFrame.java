@@ -16,7 +16,7 @@ public class AddCourseFrame extends AbstractAddFrame { // praticamente uguale ad
      * 
      */
     private static final long serialVersionUID = -6489822172457272017L;
-    private List<JComboBox<String>> boxList = new ArrayList<>();
+    
     
     public AddCourseFrame(final JFrame frame) {
         super(frame);
@@ -25,20 +25,33 @@ public class AddCourseFrame extends AbstractAddFrame { // praticamente uguale ad
     @Override
     public JPanel setFields() {
         final JPanel panelNord = new JPanel();
-        final List<JComboBox<String>> boxVal = new ArrayList<>();
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        for (int i = 0; i < 3; i++) {
-            final JLabel label = new JLabel("Campi corso");
-            panelNord.add(label, cnst);
-            final JComboBox<String> field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
-            field.setEditable(true);
-            boxVal.add(field);
-            panelNord.add(field, cnst);
-            cnst.gridy++;
-        }
-        this.boxList = boxVal;
+        
+        JLabel label = new JLabel("Name");
+        panelNord.add(label, cnst);
+        JComboBox<String> field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
+        field.setEditable(true);
+        boxList.add(field);
+        panelNord.add(field, cnst);
+        cnst.gridy++;
+        
+        label = new JLabel("Year");
+        panelNord.add(label, cnst);
+        field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
+        field.setEditable(true);
+        boxList.add(field);
+        panelNord.add(field, cnst);
+        cnst.gridy++;
+        
+        label = new JLabel("Semester");
+        panelNord.add(label, cnst);
+        field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
+        field.setEditable(false);
+        boxList.add(field);
+        panelNord.add(field, cnst);
+        
         return panelNord;
     }
 

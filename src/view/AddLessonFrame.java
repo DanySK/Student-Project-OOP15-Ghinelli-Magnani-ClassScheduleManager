@@ -20,7 +20,6 @@ public class AddLessonFrame extends AbstractAddFrame {
      * 
      */
     private static final long serialVersionUID = -4379958406580048097L;
-    private List<JComboBox<String>> boxList = new ArrayList<>();
     
     
     public AddLessonFrame(final JFrame frame) throws HeadlessException {
@@ -31,7 +30,6 @@ public class AddLessonFrame extends AbstractAddFrame {
     @Override
     public JPanel setFields() {
         final JPanel panelNord = new JPanel();
-        final List<JComboBox<String>> boxVal = new ArrayList<>();
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
@@ -39,12 +37,11 @@ public class AddLessonFrame extends AbstractAddFrame {
             final JLabel label = new JLabel(AddFields.getName(i));
             panelNord.add(label, cnst);
             final JComboBox<String> field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
-            field.setEditable(true);
-            boxVal.add(field);
+            field.setEditable(AddFields.getBool(i));
+            boxList.add(field);
             panelNord.add(field, cnst);
             cnst.gridy++;
         }
-        this.boxList = boxVal;
         return panelNord;
     }
 

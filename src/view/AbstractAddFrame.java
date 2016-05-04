@@ -2,8 +2,11 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,6 +17,7 @@ public abstract class AbstractAddFrame extends JFrame implements IAddFrame {
      */
     private static final long serialVersionUID = -3695151833842350492L;
     private final JPanel panelSud = new JPanel();
+    protected final List<JComboBox<String>> boxList = new ArrayList<>();
     
     public AbstractAddFrame(final JFrame frame) throws HeadlessException {
         super();
