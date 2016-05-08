@@ -18,7 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
-public class MyView extends JFrame implements IView {
+import view.utility.StructCreatorImpl;
+
+public class IViewImpl extends JFrame implements IView {
     
     /**
      * 
@@ -37,7 +39,7 @@ public class MyView extends JFrame implements IView {
     private final JButton keep = new JButton("Keep");
     private final JButton delete = new JButton("Delete");
 
-    public MyView() {
+    public IViewImpl() {
         super();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
@@ -88,8 +90,8 @@ public class MyView extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final List<List<Object>> list) {
-        this.model.setModel(list);
+    public void addData(final List<Object> list) {
+        this.model.setModel(StructCreatorImpl.getStruct(0, list));
     }
 
     @Override

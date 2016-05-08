@@ -1,5 +1,9 @@
 package application;
 
+import controller.IControllerImpl;
+import view.IView;
+import view.IViewImpl;
+
 public final class Main {
     
     private Main() {
@@ -7,7 +11,7 @@ public final class Main {
     }
     
     public static void main(final String... args) {
-        // TODO Auto-generated method stub
-
+        final IView view = new IViewImpl();
+        new IControllerImpl(view);
     }
 }
