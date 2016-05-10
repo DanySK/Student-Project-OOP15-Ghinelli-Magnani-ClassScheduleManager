@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.GridBagConstraints;
+import java.awt.GridBagConstraints; 
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class AddLessonFrame extends AbstractAddFrame {
             panelNord.add(label, cnst);
             final JComboBox<String> field = new JComboBox<>(/*elenco del campo che contiene già valori(tramite array di stringhe)*/);
             field.setEditable(AddFields.getBool(i));
-            boxList.add(field);
+            super.getBoxList().add(field);
             panelNord.add(field, cnst);
             cnst.gridy++;
         }
@@ -51,7 +51,7 @@ public class AddLessonFrame extends AbstractAddFrame {
         final JButton button = new JButton("Ok");
         button.addActionListener(e -> {
             final List<String> retValue = new ArrayList<>();
-            for (final JComboBox<String> a : this.boxList) {
+            for (final JComboBox<String> a : super.getBoxList()) {
                 retValue.add(a.getSelectedItem().toString());
             }
             //chiamata al controller che passa la lista di stringhe ottenuta, l'ordine dei tipi delle stringhe è uguale all'ordine dei tipi di liste passate prima

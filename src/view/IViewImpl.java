@@ -1,7 +1,7 @@
 package view;
 
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;  
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -38,6 +38,7 @@ public class IViewImpl extends JFrame implements IView {
     private final JPanel editing = new JPanel();
     private final JButton keep = new JButton("Keep");
     private final JButton delete = new JButton("Delete");
+    
 
     public IViewImpl() {
         super();

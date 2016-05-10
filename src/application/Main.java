@@ -1,6 +1,5 @@
 package application;
 
-import controller.IControllerImpl;
 import view.IView;
 import view.IViewImpl;
 
@@ -12,6 +11,6 @@ public final class Main {
     
     public static void main(final String... args) {
         final IView view = new IViewImpl();
-        new IControllerImpl(view);
+        view.addData(null);
     }
 }
