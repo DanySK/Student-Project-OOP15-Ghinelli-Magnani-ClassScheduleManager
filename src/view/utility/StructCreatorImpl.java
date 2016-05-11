@@ -23,9 +23,9 @@ public final class StructCreatorImpl {
             for (int i = 0; i < Day.values().length * 3/*(lunghezza lista aule)*/ + Day.values().length; i++) {
                  base.add(new ArrayList<>());
                  if (i == (Day.values().length * 3/*(lunghezza lista aule)*/ + Day.values().length) / Day.values().length * check) {
-                     base.get(i).add(Day.getName(check));
+                     base.get(i).add(Day.values()[check].getDay());
                      for (int y = 1; y <= Hour.values().length; y++) {
-                         base.get(i).add(Hour.getHour(y - 1));
+                         base.get(i).add(Hour.values()[y - 1].getHour());
                      }
                      check++;
                  } else {
@@ -74,10 +74,10 @@ public final class StructCreatorImpl {
                 if (i == 0) {
                     base.get(i).add("");
                     for (int y = 1; y <= Hour.values().length; y++) {
-                        base.get(i).add(Hour.getHour(y - 1));
+                        base.get(i).add(Hour.values()[y - 1].getHour());
                     }
                 } else {
-                    base.get(i).add(Day.getName(i - 1));
+                    base.get(i).add(Day.values()[i - 1].getDay());
                     for (int y = 1; y < 9; y++) {
                         base.get(i).add("");
                     }

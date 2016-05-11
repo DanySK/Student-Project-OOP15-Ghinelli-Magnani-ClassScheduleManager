@@ -30,17 +30,17 @@ public enum Day {
      */
     FRIDAY("Friday");
 
-    private final String name;
+    private final String day;
     
     private Day(final String s) {
-            name = s;
+            day = s;
     }
     /**
-     * @param 
+     *
      * @return 
      *          string containing the name of the day.
      */
-    public static String getName(final int i) {
-            return Day.values()[i].name;
+    public String getDay() {
+            return this.day;
     }
 }

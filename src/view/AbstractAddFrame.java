@@ -32,7 +32,7 @@ public abstract class AbstractAddFrame extends JFrame implements IAddFrame {
         this.panelSud.add(button);
         this.add(panelNord, BorderLayout.NORTH);
         this.add(panelSud, BorderLayout.SOUTH);
-        this.pack();
+        this.pack(); //da sistemare la zona in cui appare per bene
         this.setLocation(frame.getX() + frame.getWidth() / 2, frame.getY() + frame.getHeight() / 2);
         this.setVisible(true);
     }

@@ -91,7 +91,7 @@ public class IViewImpl extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final List<Object> list) {
+    public void addData(final List<Object> list) { //da sistemare il modo in cui richiamare il tipo di lista finale
         this.model.setModel(StructCreatorImpl.getStruct(0, list));
     }
 

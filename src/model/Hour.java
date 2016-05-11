@@ -9,7 +9,7 @@ package model;
  * @author Martina Magnani
  * */
 public enum Hour {
-    NOVE_DIECI("9/10"),
+    NOVE_DIECI("09/10"),
     DIECI_UNDICI("10/11"),
     UNDICI_DODICI("11/12"),
     DODICI_TREDICI("12/13"),
@@ -30,11 +30,11 @@ public enum Hour {
     }
     /**
      * Method that return the required hour
-     * @param i
+     * 
      * @return
      *         required hour 
      */
-    public static String getHour(final int i) {
-        return Hour.values()[i].hour;
+    public String getHour() {
+        return this.hour;
     }
 }

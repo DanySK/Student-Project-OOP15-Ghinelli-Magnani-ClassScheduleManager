@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddCourseFrame extends AbstractAddFrame { // praticamente uguale ad addLessonFrame, pensare a come riassumere
+public class AddCourseFrame extends AbstractAddFrame { //da riassumere con un semplice ciclo una volta ottenuta la mappa dal controller
     /**
      * 
      */
@@ -32,6 +32,7 @@ public class AddCourseFrame extends AbstractAddFrame { // praticamente uguale ad
         cnst.gridy = 0;
         
         JLabel label = new JLabel("Name");
+        cnst.anchor = GridBagConstraints.WEST;
         panelNord.add(label, cnst);
         JComboBox<String> field = new JComboBox<>();
         for (final String a : Controller.getController().getCourseName()) {
@@ -39,10 +40,12 @@ public class AddCourseFrame extends AbstractAddFrame { // praticamente uguale ad
         }
         field.setEditable(true);
         super.getBoxList().add(field);
+        cnst.anchor = GridBagConstraints.EAST;
         panelNord.add(field, cnst);
         cnst.gridy++;
         
         label = new JLabel("Year");
+        cnst.anchor = GridBagConstraints.WEST;
         panelNord.add(label, cnst);
         field = new JComboBox<>();
         for (final String a : Controller.getController().getYears()) {
@@ -50,16 +53,20 @@ public class AddCourseFrame extends AbstractAddFrame { // praticamente uguale ad
         }
         field.setEditable(true);
         super.getBoxList().add(field);
+        cnst.anchor = GridBagConstraints.EAST;
         panelNord.add(field, cnst);
         cnst.gridy++;
         
         label = new JLabel("Semester");
+        cnst.anchor = GridBagConstraints.WEST;
         panelNord.add(label, cnst);
         field = new JComboBox<>();
+        field.setPrototypeDisplayValue("aaaaaaaaaa");
         field.addItem("1");
         field.addItem("2");
         field.setEditable(false);
         super.getBoxList().add(field);
+        cnst.anchor = GridBagConstraints.EAST;
         panelNord.add(field, cnst);
         
         return panelNord;
