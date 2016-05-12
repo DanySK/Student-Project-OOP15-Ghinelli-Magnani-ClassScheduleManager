@@ -1,8 +1,7 @@
 package view;
-
+  
 import java.awt.GridBagConstraints;  
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,18 +13,15 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddLessonFrame extends AbstractAddFrame {
-    
+public class AddCourseDialog extends AbstractAddDialog { //da riassumere con un semplice ciclo una volta ottenuta la mappa dal controller
     /**
      * 
      */
-    private static final long serialVersionUID = -4379958406580048097L;
+    private static final long serialVersionUID = -6489822172457272017L;
     
-    
-    public AddLessonFrame(final JFrame frame) throws HeadlessException {
+    public AddCourseDialog(final JFrame frame) {
         super(frame);
     }
-
 
     @Override
     public JPanel setFields() {
@@ -33,7 +29,7 @@ public class AddLessonFrame extends AbstractAddFrame {
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        Controller.getController().getLessonsValues().forEach((x, y) -> {
+        Controller.getController().getCoursesValues().forEach((x, y) -> {
             final JLabel label = new JLabel(x.getX());
             cnst.anchor = GridBagConstraints.WEST;
             panelNord.add(label, cnst);
@@ -50,7 +46,6 @@ public class AddLessonFrame extends AbstractAddFrame {
         });
         return panelNord;
     }
-
 
     @Override
     public JButton setOkButton() {

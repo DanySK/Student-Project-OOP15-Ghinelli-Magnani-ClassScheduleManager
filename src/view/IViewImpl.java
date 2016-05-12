@@ -3,6 +3,7 @@ package view;
 
 import java.awt.BorderLayout;  
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -87,6 +88,8 @@ public class IViewImpl extends JFrame implements IView {
         this.getContentPane().add(fullTable, BorderLayout.CENTER);
         this.getContentPane().add(combo, BorderLayout.EAST);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
+        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation((dim.width - this.getSize().width) / 2, (dim.height - this.getSize().height) / 2);
         this.setVisible(true);
     }
 

@@ -47,12 +47,20 @@ public final class Controller {
             hours.add(Hour.values()[i].getHour());
         }
         //da ordinare le liste ottenute
-        returnValue.put(new Pair<>("Name", false), Arrays.asList("OOP", "BASI DI DATI", "ARCHITETTURA DEGLI ELABORATORI"));
+        returnValue.put(new Pair<>("Name", false), this.getCourseName());
         returnValue.put(new Pair<>("Prof.", true), Arrays.asList("Viroli", "Ghini"));
         returnValue.put(new Pair<>("Day", false), days);
         returnValue.put(new Pair<>("Class", false), Arrays.asList("Classe 1", "Classe 2"));
         returnValue.put(new Pair<>("Hour", false), hours);
         returnValue.put(new Pair<>("Duration", false), Arrays.asList("1", "2", "3", "4", "5"));
+        return returnValue;
+    }
+    
+    public Map<Pair<String, Boolean>, List<String>> getCoursesValues() {
+        final Map<Pair<String, Boolean>, List<String>> returnValue = new HashMap<>();
+        returnValue.put(new Pair<>("Course", true), this.getCourseName());
+        returnValue.put(new Pair<>("Year", false), this.getYears());
+        returnValue.put(new Pair<>("Semester", false), Arrays.asList("1", "2"));
         return returnValue;
     }
 
