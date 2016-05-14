@@ -21,7 +21,7 @@ public class Lesson implements ILesson, Serializable {
     private final Professor prof;
     private final Teaching teaching;
     private final Semester semester;
-    private final ClassRoom classroom;
+    private final String classroom;
     private final Hour hour;
     private final Day day;
     private final int duration;
@@ -41,7 +41,7 @@ public class Lesson implements ILesson, Serializable {
      * @param duration
      *          lesson duration
      */
-    public Lesson(final Professor prof, final Teaching teaching, final Semester semester, final ClassRoom classroom, final Hour hour, final Day day, final int duration, final int id) {
+    public Lesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration, final int id) {
         if(prof == null || teaching == null || semester == null || classroom == null || hour == null || day == null || duration == 0){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -83,7 +83,7 @@ public class Lesson implements ILesson, Serializable {
      * @return
      *          ClassRoom
      */
-    public ClassRoom getClassRoom() {
+    public String getClassRoom() {
         return this.classroom;
     }
     /**
@@ -132,22 +132,20 @@ public class Lesson implements ILesson, Serializable {
                 + "Hour: " + this.hour + " | "
                 + "Duration: " + this.duration + " | ";
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((classroom == null) ? 0 : classroom.hashCode());
         result = prime * result + ((day == null) ? 0 : day.hashCode());
+        result = prime * result + duration;
         result = prime * result + ((hour == null) ? 0 : hour.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((prof == null) ? 0 : prof.hashCode());
         result = prime * result + ((semester == null) ? 0 : semester.hashCode());
+        result = prime * result + ((teaching == null) ? 0 : teaching.hashCode());
         return result;
     }
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -164,9 +162,23 @@ public class Lesson implements ILesson, Serializable {
             return false;
         if (day != other.day)
             return false;
+        if (duration != other.duration)
+            return false;
         if (hour != other.hour)
             return false;
+        if (id != other.id)
+            return false;
+        if (prof == null) {
+            if (other.prof != null)
+                return false;
+        } else if (!prof.equals(other.prof))
+            return false;
         if (semester != other.semester)
+            return false;
+        if (teaching == null) {
+            if (other.teaching != null)
+                return false;
+        } else if (!teaching.equals(other.teaching))
             return false;
         return true;
     }

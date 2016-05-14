@@ -19,9 +19,11 @@ import model_interface.ISchedulesModel;
  *
  */
 public class SchedulesModel implements ISchedulesModel {
+    private static final long serialVersionUID = 1L;
     private final List<Professor> professorsList;
     private final List<Teaching> teachingsList;
-    private final List<ClassRoom> classroomsList;
+    private final transient List<String> classroomsList;
+    private final transient List<String> academicYears;
     private final List<Lesson> lessonsList;
     private int counter;
     /**
@@ -32,6 +34,7 @@ public class SchedulesModel implements ISchedulesModel {
         this.teachingsList = new ArrayList<>();
         this.lessonsList = new ArrayList<>();
         this.classroomsList = new ArrayList<>();
+        this.academicYears = new ArrayList<>();
         this.counter = 0;
     }
     /**
@@ -57,8 +60,11 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *         the complete list of professors
      */
-    public List<Professor> getProfessorsList(){
-        final List<Professor> difensiveListProfessor = this.professorsList;
+    public List<String> getProfessorsList(){
+        final List<String> difensiveListProfessor = new ArrayList();
+        for (final Professor s : this.professorsList) {
+            difensiveListProfessor.add(s.getName());
+        }
         return difensiveListProfessor;
     }
     /**
@@ -66,7 +72,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @param subject
      *          the new subject
      */
-    public void addTeaching(final String name, final Year year, final Court court){
+    public void addTeaching(final String name, final String year, final Court court){
         if (name==null || year==null || court==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -95,12 +101,12 @@ public class SchedulesModel implements ISchedulesModel {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        for (final ClassRoom cl : this.classroomsList) {
-            if (cl.getName().equals(name)) {
+        for (final String s : this.classroomsList) {
+            if (s.equals(name)) {
                 throw new IllegalArgumentException();
             }
         }
-        this.classroomsList.add(new ClassRoom(name));
+        this.classroomsList.add(name);
     }
     /**
      * Method that returns the list of classrooms
@@ -108,18 +114,39 @@ public class SchedulesModel implements ISchedulesModel {
      *         the complete list of class
      */
     public List<String> getClassroomsList() {
-        final List<String> difensiveListClassRoom = new ArrayList<>();
-        for (final ClassRoom c : this.classroomsList) {
-            difensiveListClassRoom.add(c.getName());
-        }
-        return difensiveListClassRoom;    
+        return this.classroomsList;
     }
+    /**
+     * Method that adds a classroom in the list academic years
+     * @param prof
+     *          the new years
+     */
+    public void addYears(final String name){
+        if (name==null) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
+        for (final String s : this.academicYears) {
+            if (s.equals(name)) {
+                throw new IllegalArgumentException();
+            }
+        }
+        this.academicYears.add(name);
+    }
+    /**
+     * Method that returns the list of academic year
+     * @return
+     *         the complete list of class
+     */
+    public List<String> getAcademicYearsList() {
+        return this.academicYears;   
+    }
+
     /**
      * Method that add a lesson in the list of lessons
      * @param lesson
      *          the new lesson
      */
-    public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+    public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -139,7 +166,7 @@ public class SchedulesModel implements ISchedulesModel {
             throw new NoSuchElementException();       
         }
     }
-    public void addLesson(final String prof, final Teaching teaching, final Semester semester, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+    public void addLesson(final String prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -192,7 +219,7 @@ public class SchedulesModel implements ISchedulesModel {
      *          parameter that if non-NULL indicates that I want the lessons conducted in this particular day
      * @return
      */
-    public List<Lesson> getLessons(final String prof, final String teaching, final Year year, final Court court, final Semester semester, final String classroom, final Hour hour, final Day day) {
+    public List<Lesson> getLessons(final String prof, final String teaching, final String year, final Court court, final Semester semester, final String classroom, final Hour hour, final Day day) {
         List<Lesson> finalList = new ArrayList<Lesson>();
         for (final Lesson l : this.lessonsList) {
             if (prof!=null && !l.getProfessor().getName().equals(prof)){
@@ -210,7 +237,7 @@ public class SchedulesModel implements ISchedulesModel {
             if (semester!=null && l.getSemester().equals(semester)) {
                 continue;
             }
-            if (classroom!=null && !l.getClassRoom().getName().equals(classroom)) {
+            if (classroom!=null && !l.getClassRoom().equals(classroom)) {
                 continue;
             }
             if (hour!=null && !l.getHour().equals(hour)) {
@@ -257,8 +284,8 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *          list of enum classroom
      */
-    public List<ClassRoom> getClassRoomActive(){
-        final List<ClassRoom> clActive = new ArrayList<>();
+    public List<String> getClassRoomActive(){
+        final List<String> clActive = new ArrayList<>();
         for (final Lesson l : this.lessonsList) {
             if (clActive == null || !clActive.contains(l.getClassRoom())) {
                 clActive.add(l.getClassRoom());

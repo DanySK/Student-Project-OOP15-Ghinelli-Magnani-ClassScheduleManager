@@ -1,6 +1,10 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +24,7 @@ import model.SchedulesModel;
 public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
-    private final SchedulesModel model;
+    private SchedulesModel model;
     private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");
 
     private Controller(){
@@ -32,7 +36,13 @@ public final class Controller {
             e.printStackTrace();
         }
     }
-    
+    /**
+     * This method reads a configuration file 
+     * @param path
+     *          path name
+     * @throws IOException
+     * @author Martina Magnani
+     */
     private void readConfig(final Path path) throws IOException{
         final List<String> contentFile = Files.readAllLines(path);
         for (final String s : contentFile) {
@@ -42,10 +52,39 @@ public final class Controller {
                 if (temp.equals("aula")) {
                     this.model.addClassroom(st.nextToken());
                 }
+                if (temp.equals("anno")) {
+                    this.model.addYears(st.nextToken());
+                }
             }
         }
     }
-    
+    /**
+     * Method to save an object on a file.
+     * 
+     * @param fileName The system-dependent filename.
+     * @param obj Object to be saved on file.
+     * @throws IOException {@link ObjectOutputStream#writeObject(Object)}.
+     * @author Martina Magnani
+     */
+    public void saveFile(final String fileName) throws IOException {
+            final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName));
+            oos.writeObject(this.model);
+            oos.close();
+    }
+    /**
+     * Method to load an object on a file.
+     * 
+     * @param fileName The system-dependent filename.
+     * @return Object loaded from a file.
+     * @throws IOException construct method of {@link ObjectIntputStream}.
+     * @throws ClassNotFoundException {@link ObjectInputStream#readObject()}.
+     * @author Martina Magnani
+     */
+    public void openFile(final String fileName) throws IOException, ClassNotFoundException {
+            final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
+            this.model = (SchedulesModel) ois.readObject();
+            ois.close();
+    }
     public static Controller getController() throws IOException {
         synchronized (Controller.class) {
             if (!singleton.isPresent()) {
@@ -56,12 +95,11 @@ public final class Controller {
     }
 
     public List<String> getYears() {
-        //model.getyearslist
-        return new ArrayList<>(Arrays.asList("primo", "secondo", "terzo"));
+        return this.model.getAcademicYearsList();
     }
 
     public List<String> getCourseName() {
-      //model.getcoursenamelist
+      //model.getcoursenamelist ->>>>>>>>>>> this.model.getTeachingsList();
         return new ArrayList<>(Arrays.asList("OOP", "BASI", "ARCH"));
     }
     
@@ -77,7 +115,7 @@ public final class Controller {
         }
         //da ordinare le liste ottenute
         returnValue.put(new Pair<>("Name", false), this.getCourseName());
-        returnValue.put(new Pair<>("Prof.", true), Arrays.asList("Viroli", "Ghini"));
+        returnValue.put(new Pair<>("Prof.", true), Arrays.asList("Viroli", "Ghini"));  // this.model.getProfessorsList()
         returnValue.put(new Pair<>("Day", false), days);
         returnValue.put(new Pair<>("Class", false), this.model.getClassroomsList());
         returnValue.put(new Pair<>("Hour", false), hours);
