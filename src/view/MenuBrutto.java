@@ -29,12 +29,7 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
         menuItem.addActionListener(e -> {
             final int retVal = this.fileChooser.showSaveDialog(this);
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                try {
-                    Controller.getController().saveFile(this.fileChooser.getSelectedFile().getPath());
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                
             }
         });
         this.add(menuItem);

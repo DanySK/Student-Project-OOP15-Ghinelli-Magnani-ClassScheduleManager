@@ -1,9 +1,8 @@
 package view;
 
-import java.awt.GridBagConstraints;  
+import java.awt.GridBagConstraints;   
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class AddLessonDialog extends AbstractAddDialog {
      */
     private static final long serialVersionUID = -4379958406580048097L;
     
-    public AddLessonDialog(final JFrame frame) throws HeadlessException, IOException {
+    public AddLessonDialog(final JFrame frame) throws HeadlessException {
         super(frame);
     }
 
@@ -33,26 +32,21 @@ public class AddLessonDialog extends AbstractAddDialog {
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        try {
-            Controller.getController().getLessonsValues().forEach((x, y) -> {
-                final JLabel label = new JLabel(x.getX());
-                cnst.anchor = GridBagConstraints.WEST;
-                panelNord.add(label, cnst);
-                final JComboBox<String> field = new JComboBox<>();
-                y.forEach(z -> {
-                    field.addItem(z);
-                });
-                field.setPrototypeDisplayValue("aaaaaaaaaa"); //non visualizza totalemente l'oggetto nell'elenco
-                field.setEditable(x.getY());
-                super.getBoxList().add(field);
-                cnst.anchor = GridBagConstraints.EAST;
-                panelNord.add(field, cnst);
-                cnst.gridy++;
+        Controller.getController().getLessonsValues().forEach((x, y) -> {
+            final JLabel label = new JLabel(x.getX());
+            cnst.anchor = GridBagConstraints.WEST;
+            panelNord.add(label, cnst);
+            final JComboBox<String> field = new JComboBox<>();
+            y.forEach(z -> {
+                field.addItem(z);
             });
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            field.setPrototypeDisplayValue("aaaaaaaaaa"); //non visualizza totalemente l'oggetto nell'elenco
+            field.setEditable(x.getY());
+            super.getBoxList().add(field);
+            cnst.anchor = GridBagConstraints.EAST;
+            panelNord.add(field, cnst);
+            cnst.gridy++;
+        });
         return panelNord;
     }
 
