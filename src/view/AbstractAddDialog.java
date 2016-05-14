@@ -12,7 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public abstract class AbstractAddDialog extends JDialog implements IAddFrame {
+public abstract class AbstractAddDialog extends JDialog implements IAddDialog {
 
     /**
      * 

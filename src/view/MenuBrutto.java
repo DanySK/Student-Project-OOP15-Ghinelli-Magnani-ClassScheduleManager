@@ -1,10 +1,9 @@
 package view;
 
-import javax.swing.JFileChooser;
+import javax.swing.JFileChooser; 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import controller.Controller;
 import view.utility.SearchModes;
 
 public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
@@ -34,12 +33,7 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
         menuItem.addActionListener(e -> {
             final int retVal = this.fileChooser.showSaveDialog(this);
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                try {
-                    Controller.getController().saveFile(this.fileChooser.getSelectedFile().getPath());
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                
             }
         });
         this.add(menuItem);
