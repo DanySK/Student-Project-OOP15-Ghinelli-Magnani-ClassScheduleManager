@@ -19,7 +19,11 @@ public class MyTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return nCOL;
+        if (base.isEmpty()) {
+            return nCOL;
+        } else {
+            return base.get(0).size();
+        }
     }
 
     @Override

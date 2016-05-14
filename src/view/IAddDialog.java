@@ -3,7 +3,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public interface IAddFrame {
+public interface IAddDialog {
 
     JPanel setFields();
     
