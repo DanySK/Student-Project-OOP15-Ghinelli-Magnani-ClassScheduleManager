@@ -1,16 +1,12 @@
 package controller;
 
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.IOException; 
 import java.util.ArrayList;  
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.StringTokenizer;
 
 import controller.utility.Pair;
 import model.Day;
@@ -20,39 +16,24 @@ import model.SchedulesModel;
 public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
-    private final SchedulesModel model;
-    private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");
+    private final SchedulesModel model = new SchedulesModel();
 
-    private Controller(){
-        this.model = new SchedulesModel();
-        try {
-            this.readConfig(configPath);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    private Controller() {
+        
     }
-    
-    private void readConfig(final Path path) throws IOException{
-        final List<String> contentFile = Files.readAllLines(path);
-        for (final String s : contentFile) {
-            final StringTokenizer st = new StringTokenizer(s, ":");
-            if (st.countTokens() == 2) {
-                final String temp = st.nextToken();
-                if (temp.equals("aula")) {
-                    this.model.addClassroom(st.nextToken());
-                }
-            }
-        }
-    }
-    
-    public static Controller getController() throws IOException {
+
+    public static Controller getController() {
         synchronized (Controller.class) {
             if (!singleton.isPresent()) {
                 singleton = Optional.of(new Controller());
             }
         }
         return singleton.get();
+    }
+    
+    public void readConfiguration() throws IOException {
+        final IDataManager data = new IDataManegerImpl();
+        data.readConfig(this.model);
     }
 
     public List<String> getYears() {
