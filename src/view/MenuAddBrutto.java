@@ -21,7 +21,12 @@ public class MenuAddBrutto extends JMenu {
         this.add(menuItem);
         menuItem = new JMenuItem("Add lesson");
         menuItem.addActionListener(e -> {
-            new AddLessonDialog(frame);
+            try {
+                new AddLessonDialog(frame);
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         });
         this.add(menuItem);
     }

@@ -1,23 +1,52 @@
 package controller;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;  
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import controller.utility.Pair;
 import model.Day;
 import model.Hour;
+import model.SchedulesModel;
 
 public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
+    private final SchedulesModel model;
+    private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");
+
+    private Controller(){
+        this.model = new SchedulesModel();
+        try {
+            this.readConfig(configPath);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
     
-    private Controller() { }
+    private void readConfig(final Path path) throws IOException{
+        final List<String> contentFile = Files.readAllLines(path);
+        for (final String s : contentFile) {
+            final StringTokenizer st = new StringTokenizer(s, ":");
+            if (st.countTokens() == 2) {
+                final String temp = st.nextToken();
+                if (temp.equals("aula")) {
+                    this.model.addClassroom(st.nextToken());
+                }
+            }
+        }
+    }
     
-    public static Controller getController() {
+    public static Controller getController() throws IOException {
         synchronized (Controller.class) {
             if (!singleton.isPresent()) {
                 singleton = Optional.of(new Controller());
@@ -50,7 +79,7 @@ public final class Controller {
         returnValue.put(new Pair<>("Name", false), this.getCourseName());
         returnValue.put(new Pair<>("Prof.", true), Arrays.asList("Viroli", "Ghini"));
         returnValue.put(new Pair<>("Day", false), days);
-        returnValue.put(new Pair<>("Class", false), Arrays.asList("Classe 1", "Classe 2"));
+        returnValue.put(new Pair<>("Class", false), this.model.getClassroomsList());
         returnValue.put(new Pair<>("Hour", false), hours);
         returnValue.put(new Pair<>("Duration", false), Arrays.asList("1", "2", "3", "4", "5"));
         return returnValue;

@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class JUnitTest {
     
-    final Dominio dominio = new Dominio();
+    final SchedulesModel dominio = new SchedulesModel();
     /*
     @Test
     public void test() {

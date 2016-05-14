@@ -2,6 +2,7 @@ package view;
   
 import java.awt.GridBagConstraints;  
 import java.awt.GridBagLayout;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,21 +30,26 @@ public class AddCourseDialog extends AbstractAddDialog { //da riassumere con un 
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        Controller.getController().getCoursesValues().forEach((x, y) -> {
-            final JLabel label = new JLabel(x.getX());
-            cnst.anchor = GridBagConstraints.WEST;
-            panelNord.add(label, cnst);
-            final JComboBox<String> field = new JComboBox<>();
-            y.forEach(z -> {
-                field.addItem(z);
+        try {
+            Controller.getController().getCoursesValues().forEach((x, y) -> {
+                final JLabel label = new JLabel(x.getX());
+                cnst.anchor = GridBagConstraints.WEST;
+                panelNord.add(label, cnst);
+                final JComboBox<String> field = new JComboBox<>();
+                y.forEach(z -> {
+                    field.addItem(z);
+                });
+                field.setPrototypeDisplayValue("aaaaaaaaaa"); //non visualizza totalemente l'oggetto nell'elenco
+                field.setEditable(x.getY());
+                super.getBoxList().add(field);
+                cnst.anchor = GridBagConstraints.EAST;
+                panelNord.add(field, cnst);
+                cnst.gridy++;
             });
-            field.setPrototypeDisplayValue("aaaaaaaaaa"); //non visualizza totalemente l'oggetto nell'elenco
-            field.setEditable(x.getY());
-            super.getBoxList().add(field);
-            cnst.anchor = GridBagConstraints.EAST;
-            panelNord.add(field, cnst);
-            cnst.gridy++;
-        });
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return panelNord;
     }
 
@@ -55,7 +61,7 @@ public class AddCourseDialog extends AbstractAddDialog { //da riassumere con un 
             for (final JComboBox<String> a : super.getBoxList()) {
                 retValue.add(a.getSelectedItem().toString());
             }
-            //chiamata al controller che passa la lista di stringhe ottenuta, l'ordine dei tipi delle stringhe è uguale all'ordine dei tipi di liste passate prima
+            //chiamata al controller che passa la lista di stringhe ottenuta, l'ordine dei tipi delle stringhe ï¿½ uguale all'ordine dei tipi di liste passate prima
             this.setVisible(false);
         });
         return button;

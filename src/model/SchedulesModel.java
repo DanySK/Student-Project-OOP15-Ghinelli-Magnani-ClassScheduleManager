@@ -5,8 +5,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import model_interface.IDominio;
+import model_interface.ISchedulesModel;
 
 /**
  * This class handles all the lists useful to the application that are: a list of professors, a list of subjects and a list of lessons.
@@ -17,7 +18,7 @@ import model_interface.IDominio;
  * @author Martina Magnani
  *
  */
-public class Dominio implements IDominio {
+public class SchedulesModel implements ISchedulesModel {
     private final List<Professor> professorsList;
     private final List<Teaching> teachingsList;
     private final List<ClassRoom> classroomsList;
@@ -26,7 +27,7 @@ public class Dominio implements IDominio {
     /**
      * Constructor of class Dominio
      */
-    public Dominio() {
+    public SchedulesModel() {
         this.professorsList = new ArrayList<>();
         this.teachingsList = new ArrayList<>();
         this.lessonsList = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Dominio implements IDominio {
      * @param prof
      *          the new professor
      */
-    public void addProfessor(final String name) {
+    public Professor addProfessor(final String name) {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -47,7 +48,9 @@ public class Dominio implements IDominio {
                 throw new IllegalArgumentException();
             }
         }
-        this.professorsList.add(new Professor(name));
+        final Professor prof = new Professor(name);
+        this.professorsList.add(prof);
+        return prof;
     }
     /**
      * Method that returns the list professors
@@ -55,7 +58,8 @@ public class Dominio implements IDominio {
      *         the complete list of professors
      */
     public List<Professor> getProfessorsList(){
-        return this.professorsList;
+        final List<Professor> difensiveListProfessor = this.professorsList;
+        return difensiveListProfessor;
     }
     /**
      * Method that adds a subject in the list of teachings
@@ -79,7 +83,8 @@ public class Dominio implements IDominio {
      *         the complete list of subjects
      */
     public List<Teaching> getTeachingsList(){
-        return this.teachingsList;
+        final List<Teaching> difensiveListTeaching = this.teachingsList;
+        return difensiveListTeaching;
     }
     /**
      * Method that adds a classroom in the list classrooms
@@ -97,8 +102,17 @@ public class Dominio implements IDominio {
         }
         this.classroomsList.add(new ClassRoom(name));
     }
-    public List<ClassRoom> getClassroomsList() {
-        return this.classroomsList;
+    /**
+     * Method that returns the list of classrooms
+     * @return
+     *         the complete list of class
+     */
+    public List<String> getClassroomsList() {
+        final List<String> difensiveListClassRoom = new ArrayList<>();
+        for (final ClassRoom c : this.classroomsList) {
+            difensiveListClassRoom.add(c.getName());
+        }
+        return difensiveListClassRoom;    
     }
     /**
      * Method that add a lesson in the list of lessons
@@ -111,7 +125,10 @@ public class Dominio implements IDominio {
         }
         if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching) && this.classroomsList.contains(classroom)) {
             for (final Lesson l : this.lessonsList) {
-                if(l.getDay()==day && l.getClassRoom().equals(classroom) && l.getHour()==hour && l.getSemester()==semester){
+                if (l.getDay()==day && l.getClassRoom().equals(classroom) && l.getHour()==hour && l.getSemester()==semester) {
+                    throw new IllegalArgumentException();
+                }
+                if (l.getProfessor().equals(prof) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
                     throw new IllegalArgumentException();
                 }
             }
@@ -119,9 +136,29 @@ public class Dominio implements IDominio {
             this.counter++;
         }
         else {
-            throw new IllegalArgumentException();       
+            throw new NoSuchElementException();       
         }
     }
+    public void addLesson(final String prof, final Teaching teaching, final Semester semester, final ClassRoom classroom, final Hour hour, final Day day, final int duration) {
+        if (prof==null) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }
+        Professor professor = this.getProfessor(prof);
+        if (professor==null) {
+            professor = this.addProfessor(prof);
+        }
+        this.addLesson(professor, teaching, semester, classroom, hour, day, duration);
+    }
+
+    public Professor getProfessor(final String prof) {
+        for (final Professor p : this.professorsList) {
+            if (p.getName().equals(prof)) {
+                return p;
+            }
+        }
+        return null;
+    }
+        
     /**
      * Method that delete a lesson in the list of lesson
      * @param lesson

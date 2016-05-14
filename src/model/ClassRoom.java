@@ -3,11 +3,13 @@
  */
 package model;
 
+import model_interface.IClassRoom;
+
 /**
  * @author Martina Magnani
  *
  */
-public class ClassRoom {
+public class ClassRoom implements IClassRoom{
     private final String name;
 
     public ClassRoom(final String name) {
