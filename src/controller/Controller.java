@@ -55,6 +55,9 @@ public final class Controller {
                 if (temp.equals("anno")) {
                     this.model.addYears(st.nextToken());
                 }
+                if (temp.equals("prof")) {
+                    this.model.addProfessor(st.nextToken());
+                }
             }
         }
     }
@@ -115,7 +118,7 @@ public final class Controller {
         }
         //da ordinare le liste ottenute
         returnValue.put(new Pair<>("Name", false), this.getCourseName());
-        returnValue.put(new Pair<>("Prof.", true), Arrays.asList("Viroli", "Ghini"));  // this.model.getProfessorsList()
+        returnValue.put(new Pair<>("Prof.", true), this.model.getProfessorsList()); //Arrays.asList("Viroli", "Ghini")
         returnValue.put(new Pair<>("Day", false), days);
         returnValue.put(new Pair<>("Class", false), this.model.getClassroomsList());
         returnValue.put(new Pair<>("Hour", false), hours);
