@@ -1,10 +1,9 @@
 package view;
 
-import javax.swing.JFileChooser;
+import javax.swing.JFileChooser; 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import controller.Controller;
 import view.utility.SearchModes;
 
 public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
