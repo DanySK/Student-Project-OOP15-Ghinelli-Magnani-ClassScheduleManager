@@ -57,10 +57,11 @@ public class IDataManegerImpl implements IDataManager {
      * @throws ClassNotFoundException {@link ObjectInputStream#readObject()}.
      * @author Martina Magnani
      */
-    public void openFile(final String fileName, SchedulesModel model) throws IOException, ClassNotFoundException {
+    public SchedulesModel openFile(final String fileName) throws IOException, ClassNotFoundException {
             final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
-            model = (SchedulesModel) ois.readObject();
+            SchedulesModel model = (SchedulesModel) ois.readObject();
             ois.close();
+            return model;
     }
 
 }

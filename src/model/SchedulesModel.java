@@ -22,8 +22,8 @@ public class SchedulesModel implements ISchedulesModel {
     private static final long serialVersionUID = 1L;
     private final List<Professor> professorsList;
     private final List<Teaching> teachingsList;
-    private final transient List<String> classroomsList;
-    private final transient List<String> academicYears;
+    private final List<String> classroomsList;
+    private final List<String> academicYears;
     private final List<Lesson> lessonsList;
     private int counter;
     /**
@@ -36,6 +36,8 @@ public class SchedulesModel implements ISchedulesModel {
         this.classroomsList = new ArrayList<>();
         this.academicYears = new ArrayList<>();
         this.counter = 0;
+        System.out.println("schedulesmodel");
+
     }
     /**
      * Method that adds a professor in the list professors
@@ -65,6 +67,7 @@ public class SchedulesModel implements ISchedulesModel {
         for (final Professor s : this.professorsList) {
             difensiveListProfessor.add(s.getName());
         }
+        System.out.println("getprofessorslist " + difensiveListProfessor);
         return difensiveListProfessor;
     }
     /**
@@ -114,6 +117,7 @@ public class SchedulesModel implements ISchedulesModel {
      *         the complete list of class
      */
     public List<String> getClassroomsList() {
+        System.out.println(this.classroomsList);
         return this.classroomsList;
     }
     /**
@@ -138,6 +142,7 @@ public class SchedulesModel implements ISchedulesModel {
      *         the complete list of class
      */
     public List<String> getAcademicYearsList() {
+        System.out.println(this.academicYears);
         return this.academicYears;   
     }
 
