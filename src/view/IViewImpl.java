@@ -28,7 +28,7 @@ public class IViewImpl extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private final JMenuBar menuBar = new JMenuBar();
-    private JMenu menu = new MenuBrutto(this); // da cambiare nomi
+    private JMenu menu = new MenuBrutto(this); // da cambiare nomi, i menù potrebbero essere riassunti nel costruttore sfruttando un solo campo invece che 3
     private final JMenu menu2 = new MenuAddBrutto(this);
     private final JMenu menu3 = new SemesterMenu(); //
     private final MyTableModel model = new MyTableModel();

@@ -36,7 +36,7 @@ public class MyTableModel extends AbstractTableModel {
         return base.get(rowIndex).get(columnIndex);
     }
     
-    public void setModel(final List<List<Object>> list) { // da modificare anche il numero di colonne e di righe se serve
+    public void setModel(final List<List<Object>> list) {
         if (list == null) {
                 throw new IllegalArgumentException("The TableModel can't be null!");
         }
