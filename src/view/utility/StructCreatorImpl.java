@@ -3,6 +3,7 @@ package view.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Controller;
 import model.Day;
 import model.Hour;
 
@@ -10,6 +11,7 @@ public final class StructCreatorImpl {
     
     private static final int TYPE1 = 0;
     private static final int TYPE2 = 1;
+    private static final int EMPTY = 9;
     
     private StructCreatorImpl() {
         
@@ -20,18 +22,24 @@ public final class StructCreatorImpl {
         final List<List<Object>> base = new ArrayList<>();
         if (searchType == TYPE1) { // vista totale usabile in più ricerche
             int check = 0;
-            for (int i = 0; i < Day.values().length * 3/*(lunghezza lista aule)*/ + Day.values().length; i++) {
+            int check2 = 0;
+            for (int i = 0; i < Day.values().length * Controller.getController().getClassrooms().size() + Day.values().length; i++) {
                  base.add(new ArrayList<>());
-                 if (i == (Day.values().length * 3/*(lunghezza lista aule)*/ + Day.values().length) / Day.values().length * check) {
+                 if (i == (Day.values().length * Controller.getController().getClassrooms().size() + Day.values().length) / Day.values().length * check) {
                      base.get(i).add(Day.values()[check].getDay());
                      for (int y = 1; y <= Hour.values().length; y++) {
                          base.get(i).add(Hour.values()[y - 1].getHour());
                      }
                      check++;
                  } else {
-                     base.get(i).add("Aula prova"); // dalla lista delle classi prendere con indice i - 1
-                     for (int y = 1; y < 9; y++) {
+                     base.get(i).add(Controller.getController().getClassrooms().get(check2));
+                     for (int y = 1; y < EMPTY; y++) {
                          base.get(i).add("");
+                     }
+                     if (check2 == Controller.getController().getClassrooms().size() - 1) {
+                         check2 = 0;
+                     } else {
+                         check2++;
                      }
                  }
             }
@@ -78,7 +86,7 @@ public final class StructCreatorImpl {
                     }
                 } else {
                     base.get(i).add(Day.values()[i - 1].getDay());
-                    for (int y = 1; y < 9; y++) {
+                    for (int y = 1; y < EMPTY; y++) {
                         base.get(i).add("");
                     }
                 }

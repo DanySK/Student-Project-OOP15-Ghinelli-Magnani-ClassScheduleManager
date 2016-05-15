@@ -1,10 +1,14 @@
 package view;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JFileChooser; 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import view.utility.SearchModes;
+import controller.Controller;
 
 public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
 
@@ -21,10 +25,9 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
             final int retVal = this.fileChooser.showOpenDialog(this);
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 try {
-                    Controller.getController().openFile(this.fileChooser.getSelectedFile().getPath());
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                    Controller.getController().loadData(this.fileChooser.getSelectedFile());
+                } catch (IOException e1) {
+                    Logger.getGlobal().log(Level.SEVERE, "Error:", e);
                 }
             }
         });
@@ -33,7 +36,11 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
         menuItem.addActionListener(e -> {
             final int retVal = this.fileChooser.showSaveDialog(this);
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                
+                try {
+                    Controller.getController().saveData(this.fileChooser.getSelectedFile());
+                } catch (IOException e1) {
+                    Logger.getGlobal().log(Level.SEVERE, "Error:", e);
+                }
             }
         });
         this.add(menuItem);
@@ -44,19 +51,18 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
         this.add(menuItem);
         
         final JMenu subMenu = new JMenu("Search");
-        for (int i = 0; i < SearchModes.values().length; i++) {
-            final JMenu subSubMenu = new JMenu("By " + SearchModes.getName(i));
-            for (int y = 0; y < 3/*lunghezza della collezione di quella particolare ricerca*/; y++) {
-                menuItem = new JMenuItem("Prova"/*elemento della particolare collezione*/); //confrontarsi con il controller per gestire bene la faccenda di elementi mancanti
-                        menuItem.addActionListener(e -> {
-                            //chiamata alla funzione che dice il tipo di ricerca, elemento della particolare collezione;
-                        });
-                subSubMenu.add(menuItem);
-            }
-            subMenu.add(subSubMenu); 
-        }
+        Controller.getController().getSearchValues().forEach((x, y) -> {
+            final JMenu subSubMenu = new JMenu(x);
+            y.forEach(z -> {
+                final JMenuItem menuItem2 = new JMenuItem(z);
+                menuItem2.addActionListener(e -> {
+                    Controller.getController().searchBy(x, z);
+                });
+                subSubMenu.add(menuItem2);
+            });
+            subMenu.add(subSubMenu);
+        });
         this.add(subMenu);
-        
     }
 
     

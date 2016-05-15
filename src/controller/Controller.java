@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException; 
 import java.util.ArrayList;  
 import java.util.Arrays;
@@ -7,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import controller.utility.Pair;
 import model.Day;
@@ -35,15 +39,35 @@ public final class Controller {
         final IDataManager data = new IDataManegerImpl();
         data.readConfig(this.model);
     }
+    
+    public void saveData(final File file) throws IOException {
+        final IDataManager data = new IDataManegerImpl();
+        data.saveFile(file.getPath(), model);
+    }
+    
+    public void loadData(final File file) throws IOException {
+        final IDataManager data = new IDataManegerImpl();
+        try {
+            data.openFile(file.getPath());
+        } catch (ClassNotFoundException e) {
+            Logger.getGlobal().log(Level.SEVERE, "Error:", e);
+        }
+    }
 
     public List<String> getYears() {
-        //model.getyearslist
-        return new ArrayList<>(Arrays.asList("primo", "secondo", "terzo"));
+        return model.getAcademicYearsList();
     }
 
     public List<String> getCourseName() {
-      //model.getcoursenamelist
-        return new ArrayList<>(Arrays.asList("OOP", "BASI", "ARCH"));
+        return model.getTeachingsList().stream().map(x -> x.getName()).sorted().collect(Collectors.toList());
+    }
+    
+    public List<String> getProfessors() {
+        return model.getProfessorsList().stream().sorted().collect(Collectors.toList());
+    }
+    
+    public List<String> getClassrooms() {
+        return model.getClassroomsList();
     }
     
     public Map<Pair<String, Boolean>, List<String>> getLessonsValues() {
@@ -56,9 +80,8 @@ public final class Controller {
         for (int  i = 0; i < Hour.values().length; i++) {
             hours.add(Hour.values()[i].getHour());
         }
-        //da ordinare le liste ottenute
         returnValue.put(new Pair<>("Name", false), this.getCourseName());
-        returnValue.put(new Pair<>("Prof.", true), Arrays.asList("Viroli", "Ghini"));
+        returnValue.put(new Pair<>("Prof.", true), this.getProfessors());
         returnValue.put(new Pair<>("Day", false), days);
         returnValue.put(new Pair<>("Class", false), this.model.getClassroomsList());
         returnValue.put(new Pair<>("Hour", false), hours);
@@ -73,5 +96,30 @@ public final class Controller {
         returnValue.put(new Pair<>("Semester", false), Arrays.asList("1", "2"));
         return returnValue;
     }
+    
+    public Map<String, List<String>> getSearchValues() {
+        final Map<String, List<String>> returnValue = new HashMap<>();
+        returnValue.put("By Year", this.getYears());
+        returnValue.put("By Prof.", this.getProfessors());
+        returnValue.put("By Course", this.getCourseName());
+        returnValue.put("By Classroom", this.getClassrooms());
+        return returnValue;
+    }
 
+    public void addCourse(final List<String> values) {
+        
+    }
+    
+    public void addLesson(final List<String> values) {
+        
+    }
+    
+    public void searchBy(final String type, final String value) {
+        
+    }
+    
+    public void setSemester(final int semester) {
+        
+    }
+    
 }

@@ -4,6 +4,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import controller.Controller;
+
 public class SemesterMenu extends JMenu {
 
     /**
@@ -16,13 +18,13 @@ public class SemesterMenu extends JMenu {
         super("Semester");
         JRadioButtonMenuItem sem = new JRadioButtonMenuItem("1st", true);
         sem.addActionListener(e -> {
-            // controller.show1stSem;
+            Controller.getController().setSemester(1);
         });
         group.add(sem);
         this.add(sem);
         sem = new JRadioButtonMenuItem("2st");
         sem.addActionListener(e -> {
-            // controller.show1stSem;
+            Controller.getController().setSemester(2);
         });
         group.add(sem);
         this.add(sem);

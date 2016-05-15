@@ -23,13 +23,13 @@ public class IDataManegerImpl implements IDataManager {
             final StringTokenizer st = new StringTokenizer(s, ":");
             if (st.countTokens() == 2) {
                 final String temp = st.nextToken();
-                if (temp.equals("aula")) {
+                if ("aula".equals(temp)) {
                     model.addClassroom(st.nextToken());
                 }
-                if (temp.equals("anno")) {
+                if ("anno".equals(temp)) {
                     model.addYears(st.nextToken());
                 }
-                if (temp.equals("prof")) {
+                if ("prof".equals(temp)) {
                     model.addProfessor(st.nextToken());
                 }
             }
@@ -59,7 +59,7 @@ public class IDataManegerImpl implements IDataManager {
      */
     public SchedulesModel openFile(final String fileName) throws IOException, ClassNotFoundException {
             final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
-            SchedulesModel model = (SchedulesModel) ois.readObject();
+            final SchedulesModel model = (SchedulesModel) ois.readObject();
             ois.close();
             return model;
     }
