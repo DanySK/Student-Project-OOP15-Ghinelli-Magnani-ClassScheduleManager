@@ -13,13 +13,13 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddCourseDialog extends AbstractAddDialog { //da riassumere con un semplice ciclo una volta ottenuta la mappa dal controller
+public class AddTeachingDialog extends AbstractAddDialog { //da riassumere con un semplice ciclo una volta ottenuta la mappa dal controller
     /**
      * 
      */
     private static final long serialVersionUID = -6489822172457272017L;
     
-    public AddCourseDialog(final JFrame frame) {
+    public AddTeachingDialog(final JFrame frame) {
         super(frame);
     }
 

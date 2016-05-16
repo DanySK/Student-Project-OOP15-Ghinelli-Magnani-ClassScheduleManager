@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import controller.utility.Pair;
+import model.Court;
 import model.Day;
 import model.Hour;
 import model.SchedulesModel;
@@ -86,22 +87,32 @@ public final class Controller {
         returnValue.put(new Pair<>("Class", false), this.model.getClassroomsList());
         returnValue.put(new Pair<>("Hour", false), hours);
         returnValue.put(new Pair<>("Duration", false), Arrays.asList("1", "2", "3", "4", "5"));
+        returnValue.put(new Pair<>("Semester", false), Arrays.asList("1", "2"));
         return returnValue;
     }
     
     public Map<Pair<String, Boolean>, List<String>> getCoursesValues() {
         final Map<Pair<String, Boolean>, List<String>> returnValue = new HashMap<>();
-        returnValue.put(new Pair<>("Course", true), this.getCourseName());
+        final List<String> courts = new ArrayList<>();
+        for (int i = 0; i < Court.values().length; i++) {
+            courts.add(Court.values()[i].getDef());
+        }
+        returnValue.put(new Pair<>("Teaching", true), this.getCourseName());
         returnValue.put(new Pair<>("Year", false), this.getYears());
-        returnValue.put(new Pair<>("Semester", false), Arrays.asList("1", "2"));
+        returnValue.put(new Pair<>("Court", false), courts);
         return returnValue;
     }
     
     public Map<String, List<String>> getSearchValues() {
         final Map<String, List<String>> returnValue = new HashMap<>();
+        final List<String> courts = new ArrayList<>();
+        for (int i = 0; i < Court.values().length; i++) {
+            courts.add(Court.values()[i].getDef());
+        }
         returnValue.put("By Year", this.getYears());
+        returnValue.put("By Court", courts);
         returnValue.put("By Prof.", this.getProfessors());
-        returnValue.put("By Course", this.getCourseName());
+        returnValue.put("By Teaching", this.getCourseName());
         returnValue.put("By Classroom", this.getClassrooms());
         return returnValue;
     }
