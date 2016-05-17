@@ -22,5 +22,6 @@ public final class Main {
         }
         final IView view = new IViewImpl();
         view.addData(null);
+        Controller.getController().setView(view);
     }
 }

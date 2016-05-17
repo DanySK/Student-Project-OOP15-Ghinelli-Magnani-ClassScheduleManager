@@ -6,6 +6,7 @@ import java.util.List;
 import controller.Controller;
 import model.Day;
 import model.Hour;
+import model.Lesson;
 
 public final class StructCreatorImpl {
     
@@ -18,7 +19,7 @@ public final class StructCreatorImpl {
     }
 
     //@Override
-    public static List<List<Object>> getStruct(final int searchType, final List<Object> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito, oppure lasciare tutto insieme
+    public static List<List<Object>> getStruct(final int searchType, final List<Lesson> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito, oppure lasciare tutto insieme
         final List<List<Object>> base = new ArrayList<>();
         if (searchType == TYPE1) { // vista totale usabile in più ricerche
             int check = 0;

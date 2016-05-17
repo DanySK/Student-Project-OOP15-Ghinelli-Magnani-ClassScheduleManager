@@ -16,12 +16,17 @@ import controller.utility.Pair;
 import model.Court;
 import model.Day;
 import model.Hour;
+import model.Lesson;
 import model.SchedulesModel;
+import model.Semester;
+import model.Teaching;
+import view.IView;
 
 public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
     private final SchedulesModel model = new SchedulesModel();
+    private Optional<IView> view = Optional.empty();
 
     private Controller() {
         
@@ -34,6 +39,10 @@ public final class Controller {
             }
         }
         return singleton.get();
+    }
+    
+    public void setView(final IView viewValue) {
+        this.view = Optional.of(viewValue);
     }
     
     public void readConfiguration() throws IOException {
@@ -83,10 +92,10 @@ public final class Controller {
         }
         returnValue.put(new Pair<>("Name", false), this.getCourseName());
         returnValue.put(new Pair<>("Prof.", true), this.getProfessors());
+        returnValue.put(new Pair<>("Duration", false), Arrays.asList("1", "2", "3", "4", "5"));
+        returnValue.put(new Pair<>("Hour", false), hours);
         returnValue.put(new Pair<>("Day", false), days);
         returnValue.put(new Pair<>("Class", false), this.model.getClassroomsList());
-        returnValue.put(new Pair<>("Hour", false), hours);
-        returnValue.put(new Pair<>("Duration", false), Arrays.asList("1", "2", "3", "4", "5"));
         returnValue.put(new Pair<>("Semester", false), Arrays.asList("1", "2"));
         return returnValue;
     }
@@ -118,19 +127,53 @@ public final class Controller {
     }
 
     public void addCourse(final List<String> values) {
-        
+        for (int i = 0; i < Court.values().length; i++) {
+            if (Court.values()[i].getDef().equals(values.get(2))) {
+                this.model.addTeaching(values.get(0), values.get(1), Court.values()[i]);
+            }
+        }
     }
     
-    public void addLesson(final List<String> values) {
-        
+    public void addLesson(final List<String> values) { // schifo ma non si può fare altrimenti
+        final Teaching teaching = this.model.getTeachingsList().stream().filter(x -> x.getName().equals(values.get(0))).findFirst().get();
+        final Semester semester;
+        Day day = null;
+        Hour hour = null;
+        final int duration = Integer.valueOf(values.get(2));
+        if (values.get(6).equals("1")) {
+            semester = Semester.values()[0];
+        } else {
+            semester = Semester.values()[1];
+        }
+        for (int i = 0; i < Day.values().length; i++) {
+            if (values.get(4).equals(Day.values()[i].getDay())) {
+                day = Day.values()[i];
+            }
+        }
+        for (int i = 0; i < Hour.values().length; i++) {
+            if (values.get(3).equals(Hour.values()[i].getHour())) {
+                hour = Hour.values()[i];
+            }
+        }
+        this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, duration);
     }
     
-    public void searchBy(final String type, final String value) {
-        
+    public void searchBy(final String type, final String value) { //schifo ma non si può fare altrimenti
+        if ("By Year".equals(type)) {
+            this.view.get().addData(this.model.getLessons(null, null, value, null, null, null, null, null));
+        }
+        if ("By Court".equals(type)) {
+            Court court = null;
+            for (int i = 0; i < Court.values().length; i++) {
+                if (Court.values()[i].getDef().equals(value)) {
+                    court = Court.values()[i];
+                }
+            }
+            this.view.get().addData(this.model.getLessons(null, null, null, court, null, null, null, null));
+        }
     }
     
     public void setSemester(final int semester) {
         
     }
-    
 }

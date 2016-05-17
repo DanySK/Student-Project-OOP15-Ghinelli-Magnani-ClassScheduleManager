@@ -1,7 +1,7 @@
 package view;
 
 
-import java.awt.BorderLayout;  
+import java.awt.BorderLayout;   
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
+import model.Lesson;
 import view.utility.StructCreatorImpl;
 
 public class IViewImpl extends JFrame implements IView {
@@ -94,7 +95,7 @@ public class IViewImpl extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final List<Object> list) { //da sistemare il modo in cui richiamare il tipo di lista finale
+    public void addData(final List<Lesson> list) { //da sistemare il modo in cui richiamare il tipo di lista finale
         this.model.setModel(StructCreatorImpl.getStruct(0, list));
     }
 

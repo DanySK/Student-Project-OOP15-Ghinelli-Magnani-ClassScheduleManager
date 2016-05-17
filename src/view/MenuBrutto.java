@@ -51,6 +51,11 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
         this.add(menuItem);
         
         final JMenu subMenu = new JMenu("Search");
+        menuItem = new JMenuItem("Total");
+        menuItem.addActionListener(e -> {
+            Controller.getController().searchBy("Total", "Total");
+        });
+        subMenu.add(menuItem);
         Controller.getController().getSearchValues().forEach((x, y) -> {
             final JMenu subSubMenu = new JMenu(x);
             y.forEach(z -> {
