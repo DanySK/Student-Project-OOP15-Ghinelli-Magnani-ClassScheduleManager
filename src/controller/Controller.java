@@ -134,7 +134,7 @@ public final class Controller {
         }
     }
     
-    public void addLesson(final List<String> values) { // schifo ma non si può fare altrimenti
+    public void addLesson(final List<String> values) { // schifo
         final Teaching teaching = this.model.getTeachingsList().stream().filter(x -> x.getName().equals(values.get(0))).findFirst().get();
         final Semester semester;
         Day day = null;
@@ -158,7 +158,7 @@ public final class Controller {
         this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, duration);
     }
     
-    public void searchBy(final String type, final String value) { //schifo ma non si può fare altrimenti
+    public void searchBy(final String type, final String value) { //schifo
         if ("By Year".equals(type)) {
             this.view.get().addData(this.model.getLessons(null, null, value, null, null, null, null, null));
         }
