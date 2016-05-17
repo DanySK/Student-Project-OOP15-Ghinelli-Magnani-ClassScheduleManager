@@ -27,7 +27,7 @@ public class SchedulesModel implements ISchedulesModel {
     private final List<Lesson> lessonsList;
     private int counter;
     /**
-     * Constructor of class Dominio
+     * Constructor of class SchedulesModel
      */
     public SchedulesModel() {
         this.professorsList = new ArrayList<>();
@@ -62,12 +62,8 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *         the complete list of professors
      */
-    public List<String> getProfessorsList(){
-        final List<String> difensiveListProfessor = new ArrayList();
-        for (final Professor s : this.professorsList) {
-            difensiveListProfessor.add(s.getName());
-        }
-        System.out.println("getprofessorslist " + difensiveListProfessor);
+    public List<Professor> getProfessorsList(){
+        final List<Professor> difensiveListProfessor = this.professorsList;
         return difensiveListProfessor;
     }
     /**
@@ -117,7 +113,6 @@ public class SchedulesModel implements ISchedulesModel {
      *         the complete list of class
      */
     public List<String> getClassroomsList() {
-        System.out.println(this.classroomsList);
         return this.classroomsList;
     }
     /**
@@ -141,15 +136,27 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *         the complete list of class
      */
-    public List<String> getAcademicYearsList() {
+    public List<String> getYearsList() {
         System.out.println(this.academicYears);
         return this.academicYears;   
     }
 
     /**
      * Method that add a lesson in the list of lessons
-     * @param lesson
-     *          the new lesson
+     * @param prof
+     *          prof of the lesson
+     * @param teaching
+     *          teching of the lesson
+     * @param semester
+     *          semester of the lesson
+     * @param classroom
+     *          classroom of the lesson 
+     * @param hour
+     *          hour of the lesson  
+     * @param day
+     *          day of the lesson
+     * @param durata
+     *          durata of the lesson  
      */
     public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
@@ -171,6 +178,23 @@ public class SchedulesModel implements ISchedulesModel {
             throw new NoSuchElementException();       
         }
     }
+    /**
+     * Method that add a lesson in the list of lessons
+     * @param prof
+     *          prof of the lesson
+     * @param teaching
+     *          teaching of the lesson
+     * @param semester
+     *          semester of the lesson
+     * @param classroom
+     *          classroom of the lesson 
+     * @param hour
+     *          hour of the lesson  
+     * @param day
+     *          day of the lesson
+     * @param durata
+     *          durata of the lesson  
+     */
     public void addLesson(final String prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
@@ -181,7 +205,13 @@ public class SchedulesModel implements ISchedulesModel {
         }
         this.addLesson(professor, teaching, semester, classroom, hour, day, duration);
     }
-
+    /**
+     * Method that returns (if exists) the object Professor whose name matches the string prof
+     * @param prof
+     *          string with the name of prof
+     * @return 
+     *        Professor
+     */
     public Professor getProfessor(final String prof) {
         for (final Professor p : this.professorsList) {
             if (p.getName().equals(prof)) {
@@ -287,7 +317,7 @@ public class SchedulesModel implements ISchedulesModel {
     /**
      * Method that allows to obtain the list of only classrooms occupied by some lessons
      * @return
-     *          list of enum classroom
+     *          list of classroom
      */
     public List<String> getClassRoomActive(){
         final List<String> clActive = new ArrayList<>();
