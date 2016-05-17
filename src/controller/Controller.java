@@ -65,7 +65,7 @@ public final class Controller {
     }
 
     public List<String> getYears() {
-        return model.getAcademicYearsList();
+        return model.getYearsList();
     }
 
     public List<String> getCourseName() {
@@ -73,7 +73,7 @@ public final class Controller {
     }
     
     public List<String> getProfessors() {
-        return model.getProfessorsList().stream().sorted().collect(Collectors.toList());
+        return model.getProfessorsList().stream().map(x -> x.getName()).sorted().collect(Collectors.toList());
     }
     
     public List<String> getClassrooms() {
