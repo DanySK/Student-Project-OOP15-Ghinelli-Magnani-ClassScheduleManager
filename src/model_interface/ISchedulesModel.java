@@ -18,11 +18,13 @@ import model.Teaching;
  */
 public interface ISchedulesModel extends java.io.Serializable{
     public Professor addProfessor(final String name);
-    public List<String> getProfessorsList();
+    public List<Professor> getProfessorsList();
     public void addTeaching(final String name, final String year, final Court court);
     public List<Teaching> getTeachingsList();
     public void addClassroom(final String name);
     public List<String> getClassroomsList();
+    public void addYears(final String name);
+    public List<String> getYearsList();
     public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration);
     public void addLesson(final String prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration);
     public Professor getProfessor(final String prof);
