@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.File;
+import java.io.File; 
 import java.io.IOException; 
 import java.util.ArrayList;  
 import java.util.Arrays;
@@ -16,7 +16,6 @@ import controller.utility.Pair;
 import model.Court;
 import model.Day;
 import model.Hour;
-import model.Lesson;
 import model.SchedulesModel;
 import model.Semester;
 import model.Teaching;
@@ -27,6 +26,9 @@ public final class Controller {
     private static Optional<Controller> singleton = Optional.empty();
     private final SchedulesModel model = new SchedulesModel();
     private Optional<IView> view = Optional.empty();
+    private Semester sem = Semester.FIRST_SEMESTER;
+    private String searchType = "Total";
+    private String searchValue = "Total";
 
     private Controller() {
         
@@ -156,24 +158,45 @@ public final class Controller {
             }
         }
         this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, duration);
+        this.searchBy(this.searchType, this.searchValue);
     }
     
-    public void searchBy(final String type, final String value) { //schifo
-        if ("By Year".equals(type)) {
-            this.view.get().addData(this.model.getLessons(null, null, value, null, null, null, null, null));
+    public void searchBy(final String typeValue, final String valueM) { //schifo
+        this.searchType = typeValue;
+        this.searchValue = valueM;
+        if ("By Year".equals(typeValue)) {
+            this.view.get().addData(0, this.model.getLessons(null, null, valueM, null, this.sem, null, null, null));
         }
-        if ("By Court".equals(type)) {
+        if ("By Court".equals(typeValue)) {
             Court court = null;
             for (int i = 0; i < Court.values().length; i++) {
-                if (Court.values()[i].getDef().equals(value)) {
+                if (Court.values()[i].getDef().equals(valueM)) {
                     court = Court.values()[i];
                 }
             }
-            this.view.get().addData(this.model.getLessons(null, null, null, court, null, null, null, null));
+            this.view.get().addData(0, this.model.getLessons(null, null, null, court, this.sem, null, null, null));
+        }
+        if ("By Prof.".equals(typeValue)) {
+            this.view.get().addData(0, this.model.getLessons(valueM, null, null, null, this.sem, null, null, null));
+        }
+        if ("By Teaching".equals(typeValue)) {
+            this.view.get().addData(0, this.model.getLessons(null, valueM, null, null, this.sem, null, null, null));
+        }
+        if ("By Classroom".equals(typeValue)) {
+            this.view.get().addData(1, this.model.getLessons(null, null, null, null, this.sem, valueM, null, null));
+        }
+        if ("Total".equals(typeValue)) { // da chidere alla marti cosa dovrei passare per la vista totale
+            this.view.get().addData(0, this.model.getLessons(null, null, null, null, this.sem, null, null, null));
         }
     }
     
     public void setSemester(final int semester) {
-        
+        if (semester == 1) {
+            this.sem = Semester.FIRST_SEMESTER;
+            this.searchBy(this.searchType, this.searchValue);
+        } else {
+            this.sem = Semester.SECOND_SEMESTER;
+            this.searchBy(this.searchType, this.searchValue);
+        }
     }
 }

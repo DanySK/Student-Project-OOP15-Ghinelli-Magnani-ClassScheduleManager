@@ -22,8 +22,8 @@ public class MyRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(final JTable table,
             final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         if (value instanceof Lesson) {
-            //cell.setText(value.getName());
-            //cell.setBackground(value.getColor());
+            cell.setText(((Lesson) value).getSubject().getName());
+            //cell.setBackground(((Lesson) value));
         } else {
             cell.setText(value.toString());
         }

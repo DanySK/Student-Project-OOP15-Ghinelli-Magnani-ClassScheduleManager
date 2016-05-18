@@ -6,7 +6,7 @@ import model.Lesson;
 
 public interface IView {
     
-    void addData(List<Lesson> list);
+    void addData(final int type, List<Lesson> list);
     
     void editMode();
     

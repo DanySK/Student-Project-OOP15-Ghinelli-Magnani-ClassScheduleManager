@@ -21,7 +21,7 @@ public final class Main {
             Logger.getGlobal().log(Level.SEVERE, "Error:", e);
         }
         final IView view = new IViewImpl();
-        view.addData(null);
+        view.addData(0, null);
         Controller.getController().setView(view);
     }
 }

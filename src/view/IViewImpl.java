@@ -20,7 +20,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
 import model.Lesson;
-import view.utility.StructCreatorImpl;
+import view.utility.StructCreatorUtility;
 
 public class IViewImpl extends JFrame implements IView {
     
@@ -95,8 +95,8 @@ public class IViewImpl extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final List<Lesson> list) { //da sistemare il modo in cui richiamare il tipo di lista finale
-        this.model.setModel(StructCreatorImpl.getStruct(0, list));
+    public void addData(final int type, final List<Lesson> list) { //da sistemare il modo in cui richiamare il tipo di lista finale
+        this.model.setModel(StructCreatorUtility.getStruct(type, list));
     }
 
     @Override

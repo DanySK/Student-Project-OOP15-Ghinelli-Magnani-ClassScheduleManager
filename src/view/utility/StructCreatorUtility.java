@@ -8,20 +8,19 @@ import model.Day;
 import model.Hour;
 import model.Lesson;
 
-public final class StructCreatorImpl {
+public final class StructCreatorUtility {
     
     private static final int TYPE1 = 0;
     private static final int TYPE2 = 1;
     private static final int EMPTY = 9;
     
-    private StructCreatorImpl() {
+    private StructCreatorUtility() {
         
     }
 
-    //@Override
-    public static List<List<Object>> getStruct(final int searchType, final List<Lesson> list) { // creare nuovo metodo apposta per creare le tabelle vuote da riempire in seguito, oppure lasciare tutto insieme
+    public static List<List<Object>> getStruct(final int searchType, final List<Lesson> list) {
         final List<List<Object>> base = new ArrayList<>();
-        if (searchType == TYPE1) { // vista totale usabile in più ricerche
+        if (searchType == TYPE1) {
             int check = 0;
             int check2 = 0;
             for (int i = 0; i < Day.values().length * Controller.getController().getClassrooms().size() + Day.values().length; i++) {
@@ -45,32 +44,34 @@ public final class StructCreatorImpl {
                  }
             }
             
-            
-            
-            /*for (Object a (lista di lezioni, non di object): list) {
-                // String day = a.getDay();
-                // String hour = a.getHour();
-                // String class = a.getClass();
-                int dayVal;
-                int hourVal;
-                int classVal;
+            if (list == null) {
+                return base;
+            }
+            list.forEach(x -> System.out.println(x.getSubject().getName())); //la lista che arriva è vuota
+            for (final Lesson lesson : list) {
+                final String day = lesson.getDay().getDay();
+                final String hour = lesson.getHour().getHour();
+                final String classRoom = lesson.getClassRoom();
+                int dayVal = 0;
+                int hourVal = 0;
+                int classVal = 0;
                 for (int i = 0; i < Day.values().length; i++) {
-                    if (day.equals(Day.values()[i].getName())) {
+                    if (day.equals(Day.values()[i].getDay())) {
                         dayVal = i + 1;
                     }
                 }
                 for (int i = 0; i < Hour.values().length; i++) {
-                    if (hour.equals(Hour.values()[i].getName())) {
+                    if (hour.equals(Hour.values()[i].getHour())) {
                         hourVal = i + 1;
                     }
                 }
-                for (class a : classList) {
-                    if (a.equals(class)) {
-                        classVal = classList.indexOf(a) + 1;
+                for (final String classValue : Controller.getController().getClassrooms()) {
+                    if (classValue.equals(classRoom)) {
+                        classVal = Controller.getController().getClassrooms().indexOf(classValue) + 1;
                     }
                 }
-                this.base.get(classVal * dayVal + 1).set(hourVal, a);
-            }*/
+                base.get(classVal * dayVal + 1).set(hourVal, lesson);
+            }
             
             
             
@@ -93,27 +94,27 @@ public final class StructCreatorImpl {
                 }
             }
             
+            if (list == null) {
+                return base;
+            }
             
-            
-            /*for (Object a (lista di lezioni, non di object): list) {
-                // String day = a.getDay();
-                // String hour = a.getHour();
-                // String class = a.getClass();
-                int dayVal;
-                int hourVal;
-                int classVal;
+            for (final Lesson lesson : list) {
+                final String day = lesson.getDay().getDay();
+                final String hour = lesson.getHour().getHour();
+                int dayVal = 0;
+                int hourVal = 0;
                 for (int i = 0; i < Day.values().length; i++) {
-                    if (day.equals(Day.values()[i].getName())) {
+                    if (day.equals(Day.values()[i].getDay())) {
                         dayVal = i + 1;
                     }
                 }
                 for (int i = 0; i < Hour.values().length; i++) {
-                    if (hour.equals(Hour.values()[i].getName())) {
+                    if (hour.equals(Hour.values()[i].getHour())) {
                         hourVal = i + 1;
                     }
                 }
-                this.base.get(dayVal + 1).set(hourVal, a);
-            }*/
+                base.get(dayVal + 1).set(hourVal, lesson);
+            }
             
             
             
