@@ -1,8 +1,7 @@
 package view;
 
 
-import java.awt.BorderLayout;   
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
 import model.Lesson;
+import view.utility.ColorUtility;
 import view.utility.StructCreatorUtility;
 
 public class IViewImpl extends JFrame implements IView {
@@ -62,12 +62,12 @@ public class IViewImpl extends JFrame implements IView {
         this.legenda.setBorder(new TitledBorder("Legenda"));
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        for (int i = 0; i < 3/*numero colori da usare*/; i++) {
+        for (int i = 0; i < ColorUtility.getColorsByYear().size(); i++) {
             final JLabel color = new JLabel("  ");
             color.setOpaque(true);
-            color.setBackground(Color.CYAN/*colore da usare*/);
+            color.setBackground(ColorUtility.getColorsByYear().get(i).getY());
             this.legenda.add(color, cnst);
-            this.legenda.add(new JLabel("Prova"/*valore assegnato al colore*/), cnst);
+            this.legenda.add(new JLabel(ColorUtility.getColorsByYear().get(i).getX()), cnst);
             cnst.gridy++;
         }
         this.combo.add(legenda, BorderLayout.NORTH);

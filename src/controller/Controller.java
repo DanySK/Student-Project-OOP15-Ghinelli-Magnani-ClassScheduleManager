@@ -154,10 +154,13 @@ public final class Controller {
         }
         for (int i = 0; i < Hour.values().length; i++) {
             if (values.get(3).equals(Hour.values()[i].getHour())) {
-                hour = Hour.values()[i];
+                int check;
+                for (check = 0; check < duration && check < Hour.values().length - i; check++) { // da testare
+                    hour = Hour.values()[i + check];
+                    this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, 1);
+                }
             }
         }
-        this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, duration);
         this.searchBy(this.searchType, this.searchValue);
     }
     
