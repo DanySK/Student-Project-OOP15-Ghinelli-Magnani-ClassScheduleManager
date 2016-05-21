@@ -9,15 +9,15 @@ package model;
  * @author Martina Magnani
  * */
 public enum Hour {
-    NOVE_DIECI("09/10"),
-    DIECI_UNDICI("10/11"),
-    UNDICI_DODICI("11/12"),
-    DODICI_TREDICI("12/13"),
-    //TREDICI_QUATTORDICI("13/14"), questo orario non c'è mai, pausa pranzo
-    QUATTORDICI_QUINDICI("14/15"),
-    QUINDICI_SEDICI("15/16"),
-    SEDICI_DICIASSETTE("16/17"),
-    DICIASSETE_DICIOTTO("17/18");
+    NOVE("09/10"),
+    DIECI("10/11"),
+    UNDICI("11/12"),
+    DODICI("12/13"),
+    //TREDICI_QUATTORDICI("13/14"), questo orario non c'ï¿½ mai, pausa pranzo
+    QUATTORDICI("14/15"),
+    QUINDICI("15/16"),
+    SEDICI("16/17"),
+    DICIASSETE("17/18");
     
     private final String hour;
     /**
