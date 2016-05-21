@@ -26,12 +26,12 @@ public class IDataManegerImpl implements IDataManager {
                 if ("aula".equals(temp)) {
                     model.addClassroom(st.nextToken());
                 }
-                if ("anno".equals(temp)) {
+                /*if ("anno".equals(temp)) {
                     model.addYears(st.nextToken());
                 }
                 if ("prof".equals(temp)) {
                     model.addProfessor(st.nextToken());
-                }
+                }*/
             }
         }
     }
