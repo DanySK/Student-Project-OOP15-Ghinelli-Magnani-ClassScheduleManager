@@ -177,6 +177,7 @@ public class SchedulesModel implements ISchedulesModel {
         else {
             throw new NoSuchElementException();       
         }
+        System.out.println("Ho aggiunto una lezione con semestre uguale a: " + semester);
     }
     /**
      * Method that add a lesson in the list of lessons
@@ -269,7 +270,7 @@ public class SchedulesModel implements ISchedulesModel {
             if (court!=null && !l.getSubject().getCourt().equals(Court.COMUNE) && !l.getSubject().getCourt().equals(court)) {
                 continue;
             }
-            if (semester!=null && l.getSemester().equals(semester)) {
+            if (semester!=null && !l.getSemester().equals(semester)) {
                 continue;
             }
             if (classroom!=null && !l.getClassRoom().equals(classroom)) {
@@ -283,6 +284,7 @@ public class SchedulesModel implements ISchedulesModel {
             }
             finalList.add(l);
         }
+        System.out.println("Sto tornando la lezione con semestre uguale a: " + semester);
         return finalList;
     }
     /**

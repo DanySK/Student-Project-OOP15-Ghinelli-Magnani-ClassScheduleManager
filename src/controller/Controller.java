@@ -24,7 +24,7 @@ import view.IView;
 public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
-    private final SchedulesModel model = new SchedulesModel();
+    private SchedulesModel model = new SchedulesModel();
     private Optional<IView> view = Optional.empty();
     private Semester sem = Semester.FIRST_SEMESTER;
     private String searchType = "Total";
@@ -60,7 +60,7 @@ public final class Controller {
     public void loadData(final File file) throws IOException {
         final IDataManager data = new IDataManegerImpl();
         try {
-            data.openFile(file.getPath());
+            this.model = data.openFile(file.getPath());
         } catch (ClassNotFoundException e) {
             Logger.getGlobal().log(Level.SEVERE, "Error:", e);
         }
