@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class MenuAddBrutto extends JMenu {
+public class AddMenu extends JMenu {
 
     /**
      * 
@@ -12,7 +12,7 @@ public class MenuAddBrutto extends JMenu {
     private static final long serialVersionUID = 4790546772035194942L;
     
     
-    public MenuAddBrutto(final JFrame frame) {
+    public AddMenu(final JFrame frame) {
         super("Add");
         JMenuItem menuItem = new JMenuItem("Add teaching");
         menuItem.addActionListener(e -> {

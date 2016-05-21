@@ -10,15 +10,16 @@ import javax.swing.JMenuItem;
 
 import controller.Controller;
 
-public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
+public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
 
     /**
      * 
      */
     private static final long serialVersionUID = 6771132861200476380L;
     private final JFileChooser fileChooser = new JFileChooser();
+    private JMenu refreshSearch;
 
-    public MenuBrutto(final IView frame) {
+    public BaseMenu(final IView frame) {
         super("Menu");
         JMenuItem menuItem = new JMenuItem("Open");
         menuItem.addActionListener(e -> {
@@ -51,6 +52,7 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
         this.add(menuItem);
         
         final JMenu subMenu = new JMenu("Search");
+        this.refreshSearch = subMenu;
         menuItem = new JMenuItem("Total");
         menuItem.addActionListener(e -> {
             Controller.getController().searchBy("Total", "Total");
@@ -68,6 +70,28 @@ public class MenuBrutto extends JMenu {  // considerare l'idea di rendere dinami
             subMenu.add(subSubMenu);
         });
         this.add(subMenu);
+    }
+    
+    public void refreshSearchList() {
+        this.remove(refreshSearch);
+        this.refreshSearch = new JMenu("Search");
+        final JMenuItem menuItem = new JMenuItem("Total");
+        menuItem.addActionListener(e -> {
+            Controller.getController().searchBy("Total", "Total");
+        });
+        refreshSearch.add(menuItem);
+        Controller.getController().getSearchValues().forEach((x, y) -> {
+            final JMenu subSubMenu = new JMenu(x);
+            y.forEach(z -> {
+                final JMenuItem menuItem2 = new JMenuItem(z);
+                menuItem2.addActionListener(e -> {
+                    Controller.getController().searchBy(x, z);
+                });
+                subSubMenu.add(menuItem2);
+            });
+            refreshSearch.add(subSubMenu);
+        });
+        this.add(refreshSearch);
     }
 
     

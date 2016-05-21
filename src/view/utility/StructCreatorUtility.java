@@ -47,7 +47,6 @@ public final class StructCreatorUtility {
             if (list == null) {
                 return base;
             }
-            list.forEach(x -> System.out.println(x.getSubject().getName())); //la lista che arriva è vuota
             for (final Lesson lesson : list) {
                 final String day = lesson.getDay().getDay();
                 final String hour = lesson.getHour().getHour();
@@ -55,10 +54,12 @@ public final class StructCreatorUtility {
                 int dayVal = 0;
                 int hourVal = 0;
                 int classVal = 0;
+                int check3 = 0;
                 for (int i = 0; i < Day.values().length; i++) {
                     if (day.equals(Day.values()[i].getDay())) {
-                        dayVal = i + 1;
+                        dayVal = i * Day.values().length + check3 * 2 + 1;
                     }
+                    check3++;
                 }
                 for (int i = 0; i < Hour.values().length; i++) {
                     if (hour.equals(Hour.values()[i].getHour())) {
@@ -67,10 +68,10 @@ public final class StructCreatorUtility {
                 }
                 for (final String classValue : Controller.getController().getClassrooms()) {
                     if (classValue.equals(classRoom)) {
-                        classVal = Controller.getController().getClassrooms().indexOf(classValue) + 1;
+                        classVal = Controller.getController().getClassrooms().indexOf(classValue);
                     }
                 }
-                base.get(classVal * dayVal + 1).set(hourVal, lesson);
+                base.get(classVal + dayVal).set(hourVal, lesson);
             }
             
             
@@ -113,7 +114,7 @@ public final class StructCreatorUtility {
                         hourVal = i + 1;
                     }
                 }
-                base.get(dayVal + 1).set(hourVal, lesson);
+                base.get(dayVal).set(hourVal, lesson);
             }
             
             

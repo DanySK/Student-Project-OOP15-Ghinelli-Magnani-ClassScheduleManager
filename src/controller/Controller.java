@@ -64,6 +64,7 @@ public final class Controller {
         } catch (ClassNotFoundException e) {
             Logger.getGlobal().log(Level.SEVERE, "Error:", e);
         }
+        this.searchBy(this.searchType, this.searchValue);
     }
 
     public List<String> getYears() {
@@ -122,8 +123,8 @@ public final class Controller {
         }
         returnValue.put("By Year", this.getYears());
         returnValue.put("By Court", courts);
-        returnValue.put("By Prof.", this.getProfessors());
-        returnValue.put("By Teaching", this.getCourseName());
+        returnValue.put("By Prof.", model.getProfessorsActive().stream().map(x -> x.getName()).collect(Collectors.toList()));
+        returnValue.put("By Teaching", model.getTeachingActive().stream().map(x -> x.getName()).collect(Collectors.toList()));
         returnValue.put("By Classroom", this.getClassrooms());
         return returnValue;
     }
@@ -136,12 +137,12 @@ public final class Controller {
         }
     }
     
-    public void addLesson(final List<String> values) { // schifo
+    public void addLesson(final List<String> values) {
         final Teaching teaching = this.model.getTeachingsList().stream().filter(x -> x.getName().equals(values.get(0))).findFirst().get();
         final Semester semester;
         Day day = null;
         Hour hour = null;
-        final int duration = Integer.valueOf(values.get(2));
+        final Integer duration = Integer.valueOf(values.get(2));
         if (values.get(6).equals("1")) {
             semester = Semester.values()[0];
         } else {
@@ -164,7 +165,7 @@ public final class Controller {
         this.searchBy(this.searchType, this.searchValue);
     }
     
-    public void searchBy(final String typeValue, final String valueM) { //schifo
+    public void searchBy(final String typeValue, final String valueM) {
         this.searchType = typeValue;
         this.searchValue = valueM;
         if ("By Year".equals(typeValue)) {
@@ -188,9 +189,10 @@ public final class Controller {
         if ("By Classroom".equals(typeValue)) {
             this.view.get().addData(1, this.model.getLessons(null, null, null, null, this.sem, valueM, null, null));
         }
-        if ("Total".equals(typeValue)) { // da chidere alla marti cosa dovrei passare per la vista totale
+        if ("Total".equals(typeValue)) {
             this.view.get().addData(0, this.model.getLessons(null, null, null, null, this.sem, null, null, null));
         }
+        this.view.get().refreshSearchList();
     }
     
     public void setSemester(final int semester) {

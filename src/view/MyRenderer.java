@@ -7,6 +7,7 @@ import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import model.Lesson;
+import view.utility.ColorUtility;
 
 public class MyRenderer extends DefaultTableCellRenderer {
 
@@ -19,11 +20,15 @@ public class MyRenderer extends DefaultTableCellRenderer {
     //considerare cell all'interno di un JScrollPane
     
     @Override
-    public Component getTableCellRendererComponent(final JTable table,
-            final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
+        cell.setOpaque(true);
         if (value instanceof Lesson) {
-            cell.setText(((Lesson) value).getSubject().getName());
-            //cell.setBackground(((Lesson) value));
+            cell.setText(((Lesson) value).getSubject().getName() + System.getProperties().getProperty("line.separator") + ((Lesson) value).getProfessor().getName());
+            ColorUtility.getColorsByYear().forEach(x -> {
+                if (x.getX().equals(((Lesson) value).getSubject().getYear())) {
+                    cell.setBackground(x.getY());
+                }
+            });
         } else {
             cell.setText(value.toString());
         }

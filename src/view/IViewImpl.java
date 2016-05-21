@@ -29,8 +29,8 @@ public class IViewImpl extends JFrame implements IView {
      */
     private static final long serialVersionUID = -7339167500714323687L;
     private final JMenuBar menuBar = new JMenuBar();
-    private JMenu menu = new MenuBrutto(this); // da cambiare nomi, i menù potrebbero essere riassunti nel costruttore sfruttando un solo campo invece che 3
-    private final JMenu menu2 = new MenuAddBrutto(this);
+    private BaseMenu menu = new BaseMenu(this);
+    private final JMenu menu2 = new AddMenu(this);
     private final JMenu menu3 = new SemesterMenu(); //
     private final MyTableModel model = new MyTableModel();
     private final JTable table = new JTable(model);
@@ -95,7 +95,7 @@ public class IViewImpl extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final int type, final List<Lesson> list) { //da sistemare il modo in cui richiamare il tipo di lista finale
+    public void addData(final int type, final List<Lesson> list) {
         this.model.setModel(StructCreatorUtility.getStruct(type, list));
     }
 
@@ -108,7 +108,7 @@ public class IViewImpl extends JFrame implements IView {
 
     @Override
     public void refreshSearchList() {
-        this.menu = new MenuBrutto(this); // va rivalidata la view o no? da testare
+        this.menu.refreshSearchList();
     }
 
 }
