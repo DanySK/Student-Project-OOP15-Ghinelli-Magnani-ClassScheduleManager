@@ -19,6 +19,7 @@ import model.Hour;
 import model.SchedulesModel;
 import model.Semester;
 import model.Teaching;
+import model.Year;
 import view.IView;
 
 public final class Controller {
@@ -67,10 +68,6 @@ public final class Controller {
         this.searchBy(this.searchType, this.searchValue);
     }
 
-    public List<String> getYears() {
-        return model.getYearsList();
-    }
-
     public List<String> getCourseName() {
         return model.getTeachingsList().stream().map(x -> x.getName()).sorted().collect(Collectors.toList());
     }
@@ -106,11 +103,15 @@ public final class Controller {
     public Map<Pair<String, Boolean>, List<String>> getCoursesValues() {
         final Map<Pair<String, Boolean>, List<String>> returnValue = new HashMap<>();
         final List<String> courts = new ArrayList<>();
+        final List<String> years = new ArrayList<>();
         for (int i = 0; i < Court.values().length; i++) {
             courts.add(Court.values()[i].getDef());
         }
+        for (int i = 0; i < Year.values().length; i++) {
+            years.add(Year.values()[i].getYear());
+        }
         returnValue.put(new Pair<>("Teaching", true), this.getCourseName());
-        returnValue.put(new Pair<>("Year", false), this.getYears());
+        returnValue.put(new Pair<>("Year", false), years);
         returnValue.put(new Pair<>("Court", false), courts);
         return returnValue;
     }
@@ -118,10 +119,14 @@ public final class Controller {
     public Map<String, List<String>> getSearchValues() {
         final Map<String, List<String>> returnValue = new HashMap<>();
         final List<String> courts = new ArrayList<>();
+        final List<String> years = new ArrayList<>();
         for (int i = 0; i < Court.values().length; i++) {
             courts.add(Court.values()[i].getDef());
         }
-        returnValue.put("By Year", this.getYears());
+        for (int i = 0; i < Year.values().length; i++) {
+            years.add(Year.values()[i].getYear());
+        }
+        returnValue.put("By Year", years);
         returnValue.put("By Court", courts);
         returnValue.put("By Prof.", model.getProfessorsActive().stream().map(x -> x.getName()).collect(Collectors.toList()));
         returnValue.put("By Teaching", model.getTeachingActive().stream().map(x -> x.getName()).collect(Collectors.toList()));
@@ -155,8 +160,11 @@ public final class Controller {
         }
         for (int i = 0; i < Hour.values().length; i++) {
             if (values.get(3).equals(Hour.values()[i].getHour())) {
+                if (duration > Hour.values().length - i) {
+                    return; // mettere il messaggio di errore
+                }
                 int check;
-                for (check = 0; check < duration && check < Hour.values().length - i; check++) { // da testare
+                for (check = 0; check < duration; check++) {
                     hour = Hour.values()[i + check];
                     this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, 1);
                 }

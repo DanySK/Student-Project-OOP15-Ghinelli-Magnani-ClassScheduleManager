@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
@@ -21,7 +22,6 @@ public class MyRenderer extends DefaultTableCellRenderer {
     
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        cell.setOpaque(true);
         if (value instanceof Lesson) {
             cell.setText(((Lesson) value).getSubject().getName() + System.getProperties().getProperty("line.separator") + ((Lesson) value).getProfessor().getName());
             ColorUtility.getColorsByYear().forEach(x -> {
@@ -31,6 +31,7 @@ public class MyRenderer extends DefaultTableCellRenderer {
             });
         } else {
             cell.setText(value.toString());
+            cell.setBackground(Color.WHITE);
         }
         
         final int h = cell.getPreferredSize().height;

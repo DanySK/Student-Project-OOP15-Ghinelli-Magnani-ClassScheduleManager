@@ -18,6 +18,7 @@ public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico
     private static final long serialVersionUID = 6771132861200476380L;
     private final JFileChooser fileChooser = new JFileChooser();
     private JMenu refreshSearch;
+    private static final String TOTAL = "Total";
 
     public BaseMenu(final IView frame) {
         super("Menu");
@@ -53,9 +54,9 @@ public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico
         
         final JMenu subMenu = new JMenu("Search");
         this.refreshSearch = subMenu;
-        menuItem = new JMenuItem("Total");
+        menuItem = new JMenuItem(TOTAL);
         menuItem.addActionListener(e -> {
-            Controller.getController().searchBy("Total", "Total");
+            Controller.getController().searchBy(TOTAL, TOTAL);
         });
         subMenu.add(menuItem);
         Controller.getController().getSearchValues().forEach((x, y) -> {
@@ -75,9 +76,9 @@ public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico
     public void refreshSearchList() {
         this.remove(refreshSearch);
         this.refreshSearch = new JMenu("Search");
-        final JMenuItem menuItem = new JMenuItem("Total");
+        final JMenuItem menuItem = new JMenuItem(TOTAL);
         menuItem.addActionListener(e -> {
-            Controller.getController().searchBy("Total", "Total");
+            Controller.getController().searchBy(TOTAL, TOTAL);
         });
         refreshSearch.add(menuItem);
         Controller.getController().getSearchValues().forEach((x, y) -> {
