@@ -23,7 +23,7 @@ public class SchedulesModel implements ISchedulesModel {
     private final List<Professor> professorsList;
     private final List<Teaching> teachingsList;
     private final List<String> classroomsList;
-    private final List<String> academicYears;
+    //private final List<String> academicYears;
     private final List<Lesson> lessonsList;
     private int counter;
     /**
@@ -34,7 +34,7 @@ public class SchedulesModel implements ISchedulesModel {
         this.teachingsList = new ArrayList<>();
         this.lessonsList = new ArrayList<>();
         this.classroomsList = new ArrayList<>();
-        this.academicYears = new ArrayList<>();
+        //this.academicYears = new ArrayList<>();
         this.counter = 0;
         System.out.println("schedulesmodel");
 
@@ -115,11 +115,13 @@ public class SchedulesModel implements ISchedulesModel {
     public List<String> getClassroomsList() {
         return this.classroomsList;
     }
+    
     /**
      * Method that adds a classroom in the list academic years
      * @param prof
      *          the new years
      */
+    /*
     public void addYears(final String name){
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
@@ -131,15 +133,18 @@ public class SchedulesModel implements ISchedulesModel {
         }
         this.academicYears.add(name);
     }
+    */
     /**
      * Method that returns the list of academic year
      * @return
      *         the complete list of class
      */
+    /*
     public List<String> getYearsList() {
         System.out.println(this.academicYears);
         return this.academicYears;   
     }
+    */
 
     /**
      * Method that add a lesson in the list of lessons
