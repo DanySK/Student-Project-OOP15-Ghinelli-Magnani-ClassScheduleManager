@@ -71,7 +71,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @param subject
      *          the new subject
      */
-    public void addTeaching(final String name, final String year, final Court court){
+    public void addTeaching(final String name, final Year year, final Court court){
         if (name==null || year==null || court==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }

@@ -11,6 +11,7 @@ import model.Lesson;
 import model.Professor;
 import model.Semester;
 import model.Teaching;
+import model.Year;
 
 /**
  * @author Martina Magnani
@@ -19,7 +20,7 @@ import model.Teaching;
 public interface ISchedulesModel extends java.io.Serializable{
     public Professor addProfessor(final String name);
     public List<Professor> getProfessorsList();
-    public void addTeaching(final String name, final String year, final Court court);
+    public void addTeaching(final String name, final Year year, final Court court);
     public List<Teaching> getTeachingsList();
     public void addClassroom(final String name);
     public List<String> getClassroomsList();

@@ -4,6 +4,7 @@
 package model_interface;
 
 import model.Court;
+import model.Year;
 
 /**
  * @author Martina Magnani
@@ -11,6 +12,6 @@ import model.Court;
  */
 public interface ITeaching extends java.io.Serializable{
     public String getName();
-    public String getYear();
+    public Year getYear();
     public Court getCourt();
 }
