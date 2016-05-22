@@ -161,7 +161,7 @@ public final class Controller {
         for (int i = 0; i < Hour.values().length; i++) {
             if (values.get(3).equals(Hour.values()[i].getHour())) {
                 if (duration > Hour.values().length - i) {
-                    return; // mettere il messaggio di errore
+                    this.errorMessage("Limit of hours surpassed!");
                 }
                 int check;
                 for (check = 0; check < duration; check++) {
@@ -211,5 +211,9 @@ public final class Controller {
             this.sem = Semester.SECOND_SEMESTER;
             this.searchBy(this.searchType, this.searchValue);
         }
+    }
+    
+    public void errorMessage(final String error) {
+        this.view.get().errorDialog(error);
     }
 }

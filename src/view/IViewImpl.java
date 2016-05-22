@@ -1,7 +1,7 @@
 package view;
 
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -109,6 +110,11 @@ public class IViewImpl extends JFrame implements IView {
     @Override
     public void refreshSearchList() {
         this.menu.refreshSearchList();
+    }
+
+    @Override
+    public void errorDialog(final String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 
 }

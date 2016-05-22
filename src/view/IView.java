@@ -11,5 +11,7 @@ public interface IView {
     void editMode();
     
     void refreshSearchList();
+    
+    void errorDialog(final String message);
 
 }
