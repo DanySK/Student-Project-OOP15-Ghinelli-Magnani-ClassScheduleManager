@@ -27,7 +27,7 @@ public class SchedulesModel implements ISchedulesModel {
     private final List<Lesson> lessonsList;
     private int counter;
     /**
-     * Constructor of class SchedulesModel
+     * Constructor of class SchedulesModel.
      */
     public SchedulesModel() {
         this.professorsList = new ArrayList<>();
@@ -41,8 +41,9 @@ public class SchedulesModel implements ISchedulesModel {
     }
     /**
      * Method that adds a professor in the list professors
-     * @param prof
+     * @param name
      *          the new professor
+     * @return Professor
      */
     public Professor addProfessor(final String name) {
         if (name==null) {
@@ -62,16 +63,20 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *         the complete list of professors
      */
-    public List<Professor> getProfessorsList(){
+    public List<Professor> getProfessorsList() {
         final List<Professor> difensiveListProfessor = this.professorsList;
         return difensiveListProfessor;
     }
     /**
      * Method that adds a subject in the list of teachings
-     * @param subject
-     *          the new subject
+     * @param name
+     *          the name of the new subject
+     * @param year
+     *          the year of the subject
+     * @param cour
+     *          the court of the subject
      */
-    public void addTeaching(final String name, final Year year, final Court court){
+    public void addTeaching(final String name, final String year, final Court court) {
         if (name==null || year==null || court==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -87,7 +92,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *         the complete list of subjects
      */
-    public List<Teaching> getTeachingsList(){
+    public List<Teaching> getTeachingsList() {
         final List<Teaching> difensiveListTeaching = this.teachingsList;
         return difensiveListTeaching;
     }
@@ -96,7 +101,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @param prof
      *          the new classroom
      */
-    public void addClassroom(final String name){
+    public void addClassroom(final String name) {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -118,11 +123,11 @@ public class SchedulesModel implements ISchedulesModel {
     
     /**
      * Method that adds a classroom in the list academic years
-     * @param prof
-     *          the new years
+     * @param name
+     *          name of the new years
      */
     /*
-    public void addYears(final String name){
+    public void addYears(final String name) {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -160,8 +165,8 @@ public class SchedulesModel implements ISchedulesModel {
      *          hour of the lesson  
      * @param day
      *          day of the lesson
-     * @param durata
-     *          durata of the lesson  
+     * @param duration
+     *          duration of the lesson  
      */
     public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
@@ -263,7 +268,7 @@ public class SchedulesModel implements ISchedulesModel {
     public List<Lesson> getLessons(final String prof, final String teaching, final String year, final Court court, final Semester semester, final String classroom, final Hour hour, final Day day) {
         List<Lesson> finalList = new ArrayList<Lesson>();
         for (final Lesson l : this.lessonsList) {
-            if (prof!=null && !l.getProfessor().getName().equals(prof)){
+            if (prof!=null && !l.getProfessor().getName().equals(prof)) {
                 continue;
             }
             if (teaching!=null && !l.getSubject().getName().equals(teaching)) {
@@ -298,7 +303,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *          list of professor
      */
-    public List<Professor> getProfessorsActive(){
+    public List<Professor> getProfessorsActive() {
         final List<Professor> pActive = new ArrayList<>();
         for (final Lesson l : this.lessonsList) {
             if (pActive == null || !pActive.contains(l.getProfessor())) {
@@ -312,7 +317,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *          list of teaching
      */
-    public List<Teaching> getTeachingActive(){
+    public List<Teaching> getTeachingActive() {
         final List<Teaching> tActive = new ArrayList<>();
         for (final Lesson l : this.lessonsList) {
             if (tActive == null || !tActive.contains(l.getSubject())) {
@@ -326,7 +331,7 @@ public class SchedulesModel implements ISchedulesModel {
      * @return
      *          list of classroom
      */
-    public List<String> getClassRoomActive(){
+    public List<String> getClassRoomActive() {
         final List<String> clActive = new ArrayList<>();
         for (final Lesson l : this.lessonsList) {
             if (clActive == null || !clActive.contains(l.getClassRoom())) {

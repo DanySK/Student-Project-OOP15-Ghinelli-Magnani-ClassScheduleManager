@@ -10,8 +10,8 @@ import model.Year;
  * @author Martina Magnani
  *  
  */
-public interface ITeaching extends java.io.Serializable{
-    public String getName();
-    public Year getYear();
-    public Court getCourt();
+public interface ITeaching extends java.io.Serializable {
+    String getName();
+    String getYear();
+    Court getCourt();
 }

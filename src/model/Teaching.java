@@ -12,10 +12,10 @@ import model_interface.ITeaching;
  */
 public class Teaching implements ITeaching{
     private final String name;
-    private final Year year;
+    private final String year;
     private final Court court;
     
-    public Teaching(final String name, final Year year, final Court court){
+    public Teaching(final String name, final String year, final Court court) {
         if(name == null || year == null){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -36,7 +36,7 @@ public class Teaching implements ITeaching{
      * @return
      *          year
      */
-    public Year getYear() {
+    public String getYear() {
         return this.year;
     }
     /**
