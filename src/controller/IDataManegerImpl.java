@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import model.SchedulesModel;
+import model_interface.ISchedulesModel;
 
 public class IDataManegerImpl implements IDataManager {
     
     private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");
 
-    public void readConfig(final SchedulesModel model) throws IOException {
+    public void readConfig(final ISchedulesModel model) throws IOException {
         final List<String> contentFile = Files.readAllLines(this.configPath);
         for (final String s : contentFile) {
             final StringTokenizer st = new StringTokenizer(s, ":");
@@ -43,7 +44,7 @@ public class IDataManegerImpl implements IDataManager {
      * @throws IOException {@link ObjectOutputStream#writeObject(Object)}.
      * @author Martina Magnani
      */
-    public void saveFile(final String fileName, final SchedulesModel model) throws IOException {
+    public void saveFile(final String fileName, final ISchedulesModel model) throws IOException {
             final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName));
             oos.writeObject(model);
             oos.close();

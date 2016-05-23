@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,12 +21,13 @@ import model.SchedulesModel;
 import model.Semester;
 import model.Teaching;
 import model.Year;
+import model_interface.ISchedulesModel;
 import view.IView;
 
 public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
-    private SchedulesModel model = new SchedulesModel();
+    private ISchedulesModel model = new SchedulesModel();
     private Optional<IView> view = Optional.empty();
     private Semester sem = Semester.FIRST_SEMESTER;
     private String searchType = "Total";
@@ -137,7 +139,11 @@ public final class Controller {
     public void addCourse(final List<String> values) {
         for (int i = 0; i < Court.values().length; i++) {
             if (Court.values()[i].getDef().equals(values.get(2))) {
-                this.model.addTeaching(values.get(0), values.get(1), Court.values()[i]);
+                try {
+                    this.model.addTeaching(values.get(0), values.get(1), Court.values()[i]);
+                } catch (IllegalArgumentException e) {
+                    this.errorMessage(e.getMessage());
+                }
             }
         }
     }
@@ -166,7 +172,11 @@ public final class Controller {
                 int check;
                 for (check = 0; check < duration; check++) {
                     hour = Hour.values()[i + check];
-                    this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, 1);
+                    try {
+                        this.model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, 1);
+                    } catch (Exception e) {
+                        this.errorMessage(e.getMessage());
+                    }
                 }
             }
         }

@@ -29,6 +29,7 @@ public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico
                 try {
                     Controller.getController().loadData(this.fileChooser.getSelectedFile());
                 } catch (IOException e1) {
+                    frame.errorDialog(e1.getMessage());
                     Logger.getGlobal().log(Level.SEVERE, "Error:", e);
                 }
             }
@@ -41,6 +42,7 @@ public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico
                 try {
                     Controller.getController().saveData(this.fileChooser.getSelectedFile());
                 } catch (IOException e1) {
+                    frame.errorDialog(e1.getMessage());
                     Logger.getGlobal().log(Level.SEVERE, "Error:", e);
                 }
             }
