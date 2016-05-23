@@ -17,6 +17,7 @@ import controller.utility.Pair;
 import model.Court;
 import model.Day;
 import model.Hour;
+import model.Lesson;
 import model.SchedulesModel;
 import model.Semester;
 import model.Teaching;
@@ -225,5 +226,13 @@ public final class Controller {
     
     public void errorMessage(final String error) {
         this.view.get().errorDialog(error);
+    }
+    
+    public void deleteLesson(final Lesson lesson) {
+        try {
+            this.model.deleteLesson(lesson);
+        } catch (IllegalArgumentException e) {
+            this.errorMessage(e.getMessage());
+        }
     }
 }

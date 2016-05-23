@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -17,8 +19,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import controller.Controller;
 import model.Lesson;
 import view.utility.ColorUtility;
 import view.utility.StructCreatorUtility;
@@ -73,14 +77,23 @@ public class IViewImpl extends JFrame implements IView {
         }
         this.combo.add(legenda, BorderLayout.NORTH);
         this.keep.addActionListener(e -> {
-            /*int colVal = this.table.getSelectedColumn();
-            int rowVal = this.table.getSelectedRow();
-            this.table.getValueAt(rowVal, colVal); macello incredibile, pensare bene a come agire ricordarsi instanceof(importante potrebbe risolvere molti problemi)*/
+            /*final int colVal = this.table.getSelectedColumn();
+            final int rowVal = this.table.getSelectedRow();
+            this.table.getValueAt(rowVal, colVal);*/
         });
         this.keep.setEnabled(false);
         this.editing.add(keep);
         this.delete.addActionListener(e -> {
-            // da implementare
+            /*final int colVal = this.table.getSelectedColumn();
+            final int rowVal = this.table.getSelectedRow();
+            if (colVal == -1 || rowVal == -1) {
+                this.errorDialog("No element selected");
+            } else {
+                final Object lesson = this.table.getValueAt(rowVal, colVal);
+                if (lesson instanceof Lesson) {
+                    Controller.getController().deleteLesson((Lesson) lesson);
+                }
+            }*/   // da sistemare
         });
         this.delete.setEnabled(false);
         this.editing.add(delete);
@@ -104,7 +117,8 @@ public class IViewImpl extends JFrame implements IView {
     public void editMode() {
         this.keep.setEnabled(true);
         this.delete.setEnabled(true);
-        this.table.setFocusable(true);
+        this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.table.setCellSelectionEnabled(true);
     }
 
     @Override
