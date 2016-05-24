@@ -50,7 +50,7 @@ public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico
         this.add(menuItem);
         menuItem = new JMenuItem("Edit");
         menuItem.addActionListener(e -> {
-            frame.editMode();
+            frame.editMode(true);
         });
         this.add(menuItem);
         

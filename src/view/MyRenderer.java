@@ -18,7 +18,6 @@ public class MyRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 6439423550121913327L;
     
     private final JTextPane cell = new JTextPane();
-    //considerare cell all'interno di un JScrollPane
     
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
@@ -44,7 +43,9 @@ public class MyRenderer extends DefaultTableCellRenderer {
         if (table.getRowHeight(row) < h) { 
             table.setRowHeight(row, h);
         }
-        
+        if (isSelected) {
+            cell.setBackground(Color.WHITE);
+        }
         return this.cell;
     }
 

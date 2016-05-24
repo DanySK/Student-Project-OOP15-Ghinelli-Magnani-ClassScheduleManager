@@ -234,5 +234,6 @@ public final class Controller {
         } catch (IllegalArgumentException e) {
             this.errorMessage(e.getMessage());
         }
+        this.searchBy(this.searchType, this.searchValue);
     }
 }

@@ -37,7 +37,6 @@ public class AddTeachingDialog extends AbstractAddDialog { //da riassumere con u
             y.forEach(z -> {
                 field.addItem(z);
             });
-            //field.setPrototypeDisplayValue("aaaaaaaaaa"); //non visualizza totalemente l'oggetto nell'elenco
             field.setEditable(x.getY());
             super.getBoxList().add(field);
             cnst.anchor = GridBagConstraints.EAST;

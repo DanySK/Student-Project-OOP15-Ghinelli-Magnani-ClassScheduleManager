@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import controller.Controller;
+import controller.utility.Pair;
 import model.Lesson;
 import view.utility.ColorUtility;
 import view.utility.StructCreatorUtility;
@@ -45,6 +47,8 @@ public class IViewImpl extends JFrame implements IView {
     private final JPanel editing = new JPanel();
     private final JButton keep = new JButton("Keep");
     private final JButton delete = new JButton("Delete");
+    private final JButton done = new JButton("Done");
+    private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
     
 
     public IViewImpl() {
@@ -84,19 +88,28 @@ public class IViewImpl extends JFrame implements IView {
         this.keep.setEnabled(false);
         this.editing.add(keep);
         this.delete.addActionListener(e -> {
-            /*final int colVal = this.table.getSelectedColumn();
-            final int rowVal = this.table.getSelectedRow();
+            final int colVal = this.cellCoordinates.getY();
+            final int rowVal = this.cellCoordinates.getX();
             if (colVal == -1 || rowVal == -1) {
                 this.errorDialog("No element selected");
             } else {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
                 if (lesson instanceof Lesson) {
-                    Controller.getController().deleteLesson((Lesson) lesson);
+                    if (JOptionPane.showConfirmDialog(this, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
+                        Controller.getController().deleteLesson((Lesson) lesson);
+                    }
+                } else {
+                    Controller.getController().errorMessage("You can't delete this element, it's not a lesson!");
                 }
-            }*/   // da sistemare
+            }
         });
         this.delete.setEnabled(false);
         this.editing.add(delete);
+        this.done.addActionListener(e -> {
+            this.editMode(false);
+        });
+        this.done.setEnabled(false);
+        this.editing.add(done);
         this.combo.add(editing, BorderLayout.CENTER);
         
         this.getContentPane().add(menuBar, BorderLayout.NORTH);
@@ -114,11 +127,22 @@ public class IViewImpl extends JFrame implements IView {
     }
 
     @Override
-    public void editMode() {
-        this.keep.setEnabled(true);
-        this.delete.setEnabled(true);
-        this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.table.setCellSelectionEnabled(true);
+    public void editMode(final boolean set) {
+        this.keep.setEnabled(set);
+        this.delete.setEnabled(set);
+        this.done.setEnabled(set);
+        this.table.setCellSelectionEnabled(set);
+        if (set) {
+            this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            final MouseListener clickCell = new MouseAdapter() {
+                @Override
+                public void mouseClicked(final MouseEvent e) {
+                    cellCoordinates = new Pair<>(table.rowAtPoint(e.getPoint()), table.columnAtPoint(e.getPoint()));
+                    
+                }
+            };
+            this.table.addMouseListener(clickCell);
+        }
     }
 
     @Override
