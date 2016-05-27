@@ -37,16 +37,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="5" language="java" name="model.Year" project="Project Orario Lezioni" 
-    file="/Project Orario Lezioni/src/model/Year.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1071" y="170"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="6" language="java" name="model.Professor" project="Project Orario Lezioni" 
+  <class id="5" language="java" name="model.Professor" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model/Professor.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="833" y="811"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,7 +46,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="model.Teaching" project="Project Orario Lezioni" 
+  <class id="6" language="java" name="model.Teaching" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model/Teaching.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="838" y="399"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="model.Lesson" project="Project Orario Lezioni" 
+  <class id="7" language="java" name="model.Lesson" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model/Lesson.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="440" y="573"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,16 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="model.SchedulesModel" project="Project Orario Lezioni" 
-    file="/Project Orario Lezioni/src/model/SchedulesModel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1399" y="592"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="10" language="java" name="model_interface.ILesson" project="Project Orario Lezioni" 
+  <interface id="8" language="java" name="model_interface.ILesson" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model_interface/ILesson.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="440" y="131"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="11" language="java" name="model_interface.IProfessor" project="Project Orario Lezioni" 
+  <interface id="9" language="java" name="model_interface.IProfessor" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model_interface/IProfessor.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="831" y="636"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="12" language="java" name="model_interface.ITeaching" project="Project Orario Lezioni" 
+  <interface id="10" language="java" name="model_interface.ITeaching" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model_interface/ITeaching.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="837" y="137"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="13" language="java" name="model_interface.ISchedulesModel" project="Project Orario Lezioni" 
+  <interface id="11" language="java" name="model_interface.ISchedulesModel" project="Project Orario Lezioni" 
     file="/Project Orario Lezioni/src/model_interface/ISchedulesModel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1401" y="175"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,92 +100,142 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
+  <enumeration id="12" language="java" name="model.Year" project="Project Orario Lezioni" 
+    file="/Project Orario Lezioni/src/model/Year.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1057" y="188"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="13" language="java" name="model.SchedulesModel" project="Project Orario Lezioni" 
+    file="/Project Orario Lezioni/src/model/SchedulesModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1247" y="756"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <association id="14">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="15" name="hour"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="17">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="18" name="professorsList"/>      
-      <multiplicity id="19" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="20">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="21" name="teachingsList"/>      
-      <multiplicity id="22" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="23">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <association id="24">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="25" name="day"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="27">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="13"/>  
-  </realization>  
-  <realization id="28">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="11"/>  
-  </realization>  
-  <association id="29">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="30" name="court"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="15" name="court">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="17">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="18" name="day">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="20">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="11"/>  
+  </realization>  
+  <association id="21">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="22" name="teachingsList"/>      
+      <multiplicity id="23" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="24">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <association id="25">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="26" name="hour">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="27" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="29" name="lessonsList"/>      
+      <multiplicity id="30" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="31">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
   <association id="32">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="33" name="semester"/>      
-      <multiplicity id="34" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="33" name="semester">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="35">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="36" name="prof"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="36" name="prof">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="39" name="teaching">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="38">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="39" name="teaching"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <realization id="41">    
-    <end type="SOURCE" refId="8"/>    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="10"/>  
   </realization>  
   <association id="42">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="43" name="lessonsList"/>      
-      <multiplicity id="44" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="43" name="year"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="45">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="46" name="professorsList"/>      
+      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

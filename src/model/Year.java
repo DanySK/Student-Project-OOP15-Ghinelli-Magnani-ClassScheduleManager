@@ -32,15 +32,7 @@ public enum Year {
     /**
      * Third Year Optional LT (degree)
      */
-    TERZO_OPZ_TRIENNALE("3° year LT - OPTIONAL"),
-    /**
-     * First Year LM (master's degree)
-     */
-    PRIMO_MAGISTRALE("1° year LM"),
-    /**
-     * Secondo Year Optional LM (master's degree)
-     */
-    SECONDO_OPZ_MAGISTRALE("2° year LM - OPTIONAL");
+    TERZO_OPZ_TRIENNALE("3° year LT - OPTIONAL");
     
     private final String year;
     /**
