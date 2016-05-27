@@ -10,7 +10,7 @@ import javax.swing.JMenuItem;
 
 import controller.Controller;
 
-public class BaseMenu extends JMenu {  // considerare l'idea di rendere dinamico il menu di ricerca semplicemente ricreandolo da capo e rimetterlo nella view
+public class BaseMenu extends JMenu {
 
     /**
      * 

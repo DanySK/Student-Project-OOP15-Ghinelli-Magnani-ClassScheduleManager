@@ -7,9 +7,6 @@ import javax.swing.table.AbstractTableModel;
 import model.Hour;
 
 public class MyTableModel extends AbstractTableModel {
-    /*la lista presente qui contiene tutti gli elementi della tabella,
-     *  compresi gli spazi bianchi(null tipo), il renderer si occuper� di farli apparire come dovrebbero
-     */
     /**
      * 
      */

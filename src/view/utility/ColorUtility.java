@@ -1,6 +1,6 @@
 package view.utility;
 
-import java.awt.Color; 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 

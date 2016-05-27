@@ -1,6 +1,6 @@
 package view;
   
-import java.awt.GridBagConstraints;   
+import java.awt.GridBagConstraints;    
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddTeachingDialog extends AbstractAddDialog { //da riassumere con un semplice ciclo una volta ottenuta la mappa dal controller
+public class AddTeachingDialog extends AbstractAddDialog {
     /**
      * 
      */

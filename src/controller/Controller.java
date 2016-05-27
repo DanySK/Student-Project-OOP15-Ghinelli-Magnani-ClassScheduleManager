@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.File;  
+import java.io.File;   
 import java.io.IOException; 
 import java.util.ArrayList;  
 import java.util.Arrays;
@@ -16,7 +16,6 @@ import controller.utility.Pair;
 import model.Court;
 import model.Day;
 import model.Hour;
-import model.Lesson;
 import model.SchedulesModel;
 import model.Semester;
 import model.Year;
