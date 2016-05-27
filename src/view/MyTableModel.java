@@ -8,7 +8,7 @@ import model.Hour;
 
 public class MyTableModel extends AbstractTableModel {
     /*la lista presente qui contiene tutti gli elementi della tabella,
-     *  compresi gli spazi bianchi(null tipo), il renderer si occuperà di farli apparire come dovrebbero
+     *  compresi gli spazi bianchi(null tipo), il renderer si occuperï¿½ di farli apparire come dovrebbero
      */
     /**
      * 
@@ -34,6 +34,12 @@ public class MyTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(final int rowIndex, final int columnIndex) {
         return base.get(rowIndex).get(columnIndex);
+    }
+    
+    @Override
+    public void setValueAt(final Object value, final int row, final int column) {
+        this.base.get(row).set(column, value);
+        fireTableDataChanged();
     }
     
     public void setModel(final List<List<Object>> list) {

@@ -27,7 +27,7 @@ import controller.Controller;
 import controller.utility.Pair;
 import model.Lesson;
 import view.utility.ColorUtility;
-import view.utility.StructCreatorUtility;
+import view.utility.ObjectManager;
 
 public class IViewImpl extends JFrame implements IView {
     
@@ -38,16 +38,19 @@ public class IViewImpl extends JFrame implements IView {
     private final JMenuBar menuBar = new JMenuBar();
     private final BaseMenu menu = new BaseMenu(this);
     private final JMenu menu2 = new AddMenu(this);
-    private final JMenu menu3 = new SemesterMenu(); //
-    private final MyTableModel model = new MyTableModel();
-    private final JTable table = new JTable(model);
+    private final JMenu menu3 = new SemesterMenu();
+    private final MyTableModel tableModel = new MyTableModel();
+    private final JTable table = new JTable(tableModel);
     private final JScrollPane fullTable = new JScrollPane(this.table);
     private final JPanel combo = new JPanel(new BorderLayout());
     private final JPanel legenda = new JPanel(new GridBagLayout());
     private final JPanel editing = new JPanel();
+    private final JPanel slots = new JPanel(new BorderLayout());
     private final JButton keep = new JButton("Keep");
     private final JButton delete = new JButton("Delete");
     private final JButton done = new JButton("Done");
+    private final JButton slot1 = new JButton();
+    private final JButton slot2 = new JButton();
     private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
     
 
@@ -60,7 +63,7 @@ public class IViewImpl extends JFrame implements IView {
         this.table.setDefaultRenderer(Object.class, new MyRenderer());
         this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.table.setTableHeader(null);
-        this.table.setFillsViewportHeight(true); //da usare forse, capire bene di cosa si tratta
+        this.table.setFillsViewportHeight(true); // da ricordare a che serve
         this.table.setFocusable(false);
         this.table.setRowSelectionAllowed(false);
         
@@ -81,16 +84,61 @@ public class IViewImpl extends JFrame implements IView {
         }
         this.combo.add(legenda, BorderLayout.NORTH);
         this.keep.addActionListener(e -> {
-            /*final int colVal = this.table.getSelectedColumn();
-            final int rowVal = this.table.getSelectedRow();
-            this.table.getValueAt(rowVal, colVal);*/
+            final int rowVal = this.cellCoordinates.getX();
+            final int colVal = this.cellCoordinates.getY();
+            if (colVal == 0 && rowVal == 0) {
+                this.errorDialog("No element selected");
+            } else {
+                final Object lesson = this.table.getValueAt(rowVal, colVal);
+                if (lesson instanceof Lesson) {
+                    if (!this.slot1.isVisible()) {
+                        final Lesson lessonTmp = (Lesson) lesson;
+                        this.table.setValueAt("", rowVal, colVal);
+                        this.slot1.setText(lessonTmp.getSubject().getName() + "/" + lessonTmp.getProfessor().getName());
+                        this.slot1.setVisible(true);
+                        this.slot1.addActionListener(e1 -> {
+                            if (lesson instanceof Lesson) { // mi entra sempre qui, capire perchè
+                                Controller.getController().errorMessage("You can't place this lesson over another one!");
+                            } else {
+                                if (!lesson.toString().equals("")) {
+                                    Controller.getController().errorMessage("You can't place this lesson here!");
+                                } else {
+                                    this.table.setValueAt(lessonTmp, rowVal, colVal);
+                                }
+                            }
+                        });
+                    } else {
+                        if (!this.slot2.isVisible()) {
+                            final Lesson lessonTmp = (Lesson) lesson;
+                            this.table.setValueAt("", rowVal, colVal);
+                            this.slot2.setText(lessonTmp.getSubject().getName() + "/" + lessonTmp.getProfessor().getName());
+                            this.slot2.setVisible(true);
+                            this.slot2.addActionListener(e2 -> {
+                                if (lesson instanceof Lesson) {
+                                    Controller.getController().errorMessage("You can't place this lesson over another one!");
+                                } else {
+                                    if (!lesson.toString().equals("")) {
+                                        Controller.getController().errorMessage("You can't place this lesson here!");
+                                    } else {
+                                        this.table.setValueAt(lessonTmp, rowVal, colVal);
+                                    }
+                                }
+                            });
+                        } else {
+                            Controller.getController().errorMessage("You can't take another lesson, place one of which you got at least!");
+                        }
+                    }
+                } else {
+                    Controller.getController().errorMessage("You can't take this element, it's not a lesson!");
+                }
+            }
         });
         this.keep.setEnabled(false);
         this.editing.add(keep);
         this.delete.addActionListener(e -> {
-            final int colVal = this.cellCoordinates.getY();
             final int rowVal = this.cellCoordinates.getX();
-            if (colVal == -1 || rowVal == -1) {
+            final int colVal = this.cellCoordinates.getY();
+            if (colVal == 0 && rowVal == 0) {
                 this.errorDialog("No element selected");
             } else {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
@@ -111,6 +159,11 @@ public class IViewImpl extends JFrame implements IView {
         this.done.setEnabled(false);
         this.editing.add(done);
         this.combo.add(editing, BorderLayout.CENTER);
+        this.slot1.setVisible(false);
+        this.slot2.setVisible(false);
+        this.slots.add(slot1, BorderLayout.NORTH);
+        this.slots.add(slot2, BorderLayout.CENTER);
+        this.combo.add(slots, BorderLayout.SOUTH);
         
         this.getContentPane().add(menuBar, BorderLayout.NORTH);
         this.getContentPane().add(fullTable, BorderLayout.CENTER);
@@ -123,7 +176,7 @@ public class IViewImpl extends JFrame implements IView {
 
     @Override
     public void addData(final int type, final List<Lesson> list) {
-        this.model.setModel(StructCreatorUtility.getStruct(type, list));
+        this.tableModel.setModel(ObjectManager.getStruct(type, list));
     }
 
     @Override

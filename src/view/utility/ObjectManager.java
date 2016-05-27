@@ -8,13 +8,13 @@ import model.Day;
 import model.Hour;
 import model.Lesson;
 
-public final class StructCreatorUtility {
+public final class ObjectManager {
     
     private static final int TYPE1 = 0;
     private static final int TYPE2 = 1;
     private static final int EMPTY = 9;
     
-    private StructCreatorUtility() {
+    private ObjectManager() {
         
     }
 

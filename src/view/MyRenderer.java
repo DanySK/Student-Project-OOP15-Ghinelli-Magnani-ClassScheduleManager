@@ -44,7 +44,11 @@ public class MyRenderer extends DefaultTableCellRenderer {
             table.setRowHeight(row, h);
         }
         if (isSelected) {
-            cell.setBackground(Color.WHITE);
+            if (cell.getBackground().equals(Color.WHITE)) {
+                cell.setBackground(Color.BLACK);
+            } else {
+                cell.setBackground(Color.WHITE);
+            }
         }
         return this.cell;
     }
