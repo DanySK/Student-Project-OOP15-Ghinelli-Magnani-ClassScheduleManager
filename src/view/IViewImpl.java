@@ -1,7 +1,7 @@
 package view;
 
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;  
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,7 +25,7 @@ import javax.swing.border.TitledBorder;
 
 import controller.Controller;
 import controller.utility.Pair;
-import model.Lesson;
+import model_interface.ILesson;
 import view.utility.ColorUtility;
 import view.utility.ObjectManager;
 
@@ -90,14 +90,14 @@ public class IViewImpl extends JFrame implements IView {
                 this.errorDialog("No element selected");
             } else {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
-                if (lesson instanceof Lesson) {
+                if (lesson instanceof ILesson) {
                     if (!this.slot1.isVisible()) {
-                        final Lesson lessonTmp = (Lesson) lesson;
+                        final ILesson lessonTmp = (ILesson) lesson;
                         this.table.setValueAt("", rowVal, colVal);
                         this.slot1.setText(lessonTmp.getSubject().getName() + "/" + lessonTmp.getProfessor().getName());
                         this.slot1.setVisible(true);
                         this.slot1.addActionListener(e1 -> {
-                            if (lesson instanceof Lesson) { // mi entra sempre qui, capire perchè
+                            if (lesson instanceof ILesson) { // mi entra sempre qui, capire perchè
                                 Controller.getController().errorMessage("You can't place this lesson over another one!");
                             } else {
                                 if (!lesson.toString().equals("")) {
@@ -109,12 +109,12 @@ public class IViewImpl extends JFrame implements IView {
                         });
                     } else {
                         if (!this.slot2.isVisible()) {
-                            final Lesson lessonTmp = (Lesson) lesson;
+                            final ILesson lessonTmp = (ILesson) lesson;
                             this.table.setValueAt("", rowVal, colVal);
                             this.slot2.setText(lessonTmp.getSubject().getName() + "/" + lessonTmp.getProfessor().getName());
                             this.slot2.setVisible(true);
                             this.slot2.addActionListener(e2 -> {
-                                if (lesson instanceof Lesson) {
+                                if (lesson instanceof ILesson) {
                                     Controller.getController().errorMessage("You can't place this lesson over another one!");
                                 } else {
                                     if (!lesson.toString().equals("")) {
@@ -142,9 +142,9 @@ public class IViewImpl extends JFrame implements IView {
                 this.errorDialog("No element selected");
             } else {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
-                if (lesson instanceof Lesson) {
+                if (lesson instanceof ILesson) {
                     if (JOptionPane.showConfirmDialog(this, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
-                        Controller.getController().deleteLesson((Lesson) lesson);
+                        Controller.getController().deleteLesson((ILesson) lesson);
                     }
                 } else {
                     Controller.getController().errorMessage("You can't delete this element, it's not a lesson!");
@@ -175,7 +175,7 @@ public class IViewImpl extends JFrame implements IView {
     }
 
     @Override
-    public void addData(final int type, final List<Lesson> list) {
+    public void addData(final int type, final List<ILesson> list) {
         this.tableModel.setModel(ObjectManager.getStruct(type, list));
     }
 

@@ -122,7 +122,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          false
      *                  if lesson does not exist
      */
-    boolean deleteLesson(final Lesson lesson);
+    boolean deleteLesson(final ILesson lesson);
     
     /**
      * Method that returns the list of filtered lessons according to the parameters that are passed

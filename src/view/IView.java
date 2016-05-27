@@ -1,12 +1,12 @@
 package view;
 
-import java.util.List;
+import java.util.List; 
 
-import model.Lesson;
+import model_interface.ILesson;
 
 public interface IView {
     
-    void addData(final int type, List<Lesson> list);
+    void addData(final int type, List<ILesson> list);
     
     void editMode(final boolean set);
     

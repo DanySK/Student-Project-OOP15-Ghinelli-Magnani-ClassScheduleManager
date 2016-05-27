@@ -1,13 +1,12 @@
 package controller;
 
-import java.io.File; 
+import java.io.File;  
 import java.io.IOException; 
 import java.util.ArrayList;  
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +19,10 @@ import model.Hour;
 import model.Lesson;
 import model.SchedulesModel;
 import model.Semester;
-import model.Teaching;
 import model.Year;
+import model_interface.ILesson;
 import model_interface.ISchedulesModel;
+import model_interface.ITeaching;
 import view.IView;
 
 public final class Controller {
@@ -138,19 +138,27 @@ public final class Controller {
     }
 
     public void addCourse(final List<String> values) {
+        Court court = null;
+        Year year = null;
         for (int i = 0; i < Court.values().length; i++) {
             if (Court.values()[i].getDef().equals(values.get(2))) {
-                try {
-                    this.model.addTeaching(values.get(0), values.get(1), Court.values()[i]);
-                } catch (IllegalArgumentException e) {
-                    this.errorMessage(e.getMessage());
-                }
+                court = Court.values()[i];
             }
+        }
+        for (int i = 0; i < Year.values().length; i++) {
+            if (Year.values()[i].getYear().equals(values.get(1))) {
+                year = Year.values()[i];
+            }
+        }
+        try {
+            this.model.addTeaching(values.get(0), year, court);
+        } catch (IllegalArgumentException e) {
+            this.errorMessage(e.getMessage());
         }
     }
     
     public void addLesson(final List<String> values) {
-        final Teaching teaching = this.model.getTeachingsList().stream().filter(x -> x.getName().equals(values.get(0))).findFirst().get();
+        final ITeaching teaching = this.model.getTeachingsList().stream().filter(x -> x.getName().equals(values.get(0))).findFirst().get();
         final Semester semester;
         Day day = null;
         Hour hour = null;
@@ -188,7 +196,13 @@ public final class Controller {
         this.searchType = typeValue;
         this.searchValue = valueM;
         if ("By Year".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(null, null, valueM, null, this.sem, null, null, null));
+            Year year = null;
+            for (int i = 0; i < Year.values().length; i++) {
+                if (Court.values()[i].getDef().equals(valueM)) {
+                    year = Year.values()[i];
+                }
+            }
+            this.view.get().addData(0, this.model.getLessons(null, null, year, null, this.sem, null, null, null));
         }
         if ("By Court".equals(typeValue)) {
             Court court = null;
@@ -228,7 +242,7 @@ public final class Controller {
         this.view.get().errorDialog(error);
     }
     
-    public void deleteLesson(final Lesson lesson) {
+    public void deleteLesson(final ILesson lesson) {
         try {
             this.model.deleteLesson(lesson);
         } catch (IllegalArgumentException e) {

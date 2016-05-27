@@ -1,12 +1,12 @@
 package view.utility;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 
 import controller.Controller;
 import model.Day;
 import model.Hour;
-import model.Lesson;
+import model_interface.ILesson;
 
 public final class ObjectManager {
     
@@ -18,7 +18,7 @@ public final class ObjectManager {
         
     }
 
-    public static List<List<Object>> getStruct(final int searchType, final List<Lesson> list) {
+    public static List<List<Object>> getStruct(final int searchType, final List<ILesson> list) {
         final List<List<Object>> base = new ArrayList<>();
         if (searchType == TYPE1) {
             int check = 0;
@@ -47,7 +47,7 @@ public final class ObjectManager {
             if (list == null) {
                 return base;
             }
-            for (final Lesson lesson : list) {
+            for (final ILesson lesson : list) {
                 final String day = lesson.getDay().getDay();
                 final String hour = lesson.getHour().getHour();
                 final String classRoom = lesson.getClassRoom();
@@ -99,7 +99,7 @@ public final class ObjectManager {
                 return base;
             }
             
-            for (final Lesson lesson : list) {
+            for (final ILesson lesson : list) {
                 final String day = lesson.getDay().getDay();
                 final String hour = lesson.getHour().getHour();
                 int dayVal = 0;

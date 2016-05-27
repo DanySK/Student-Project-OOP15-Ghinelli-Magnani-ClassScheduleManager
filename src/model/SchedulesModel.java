@@ -159,7 +159,7 @@ public class SchedulesModel implements ISchedulesModel {
     }
         
     @Override 
-    public boolean deleteLesson(final Lesson lesson) {
+    public boolean deleteLesson(final ILesson lesson) {
         if (this.lessonsList.contains(lesson)) {
             return this.lessonsList.remove(lesson);
         }

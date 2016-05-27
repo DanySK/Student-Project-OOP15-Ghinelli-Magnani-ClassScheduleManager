@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import model.Lesson;
+import model_interface.ILesson;
 import view.utility.ColorUtility;
 
 public class MyRenderer extends DefaultTableCellRenderer {
@@ -21,10 +21,10 @@ public class MyRenderer extends DefaultTableCellRenderer {
     
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        if (value instanceof Lesson) {
-            cell.setText(((Lesson) value).getSubject().getName() + System.getProperties().getProperty("line.separator") + ((Lesson) value).getProfessor().getName());
+        if (value instanceof ILesson) {
+            cell.setText(((ILesson) value).getSubject().getName() + System.getProperties().getProperty("line.separator") + ((ILesson) value).getProfessor().getName());
             ColorUtility.getColorsByYear().forEach(x -> {
-                if (x.getX().equals(((Lesson) value).getSubject().getYear())) {
+                if (x.getX().equals(((ILesson) value).getSubject().getYear().getYear())) {
                     cell.setBackground(x.getY());
                 }
             });
