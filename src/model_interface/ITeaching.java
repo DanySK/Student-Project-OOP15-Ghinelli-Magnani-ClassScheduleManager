@@ -11,7 +11,23 @@ import model.Year;
  *  
  */
 public interface ITeaching extends java.io.Serializable {
+    /**
+     * Method that returns the name of the subject
+     * 
+     * @return name
+     */
     String getName();
-    String getYear();
+    /**
+     * Method that returns the Year of the subject
+     * 
+     * @return year
+     */
+    Year getYear();
+
+    /**
+     * Method that returns the Court of the subject
+     * 
+     * @return court
+     */
     Court getCourt();
 }
