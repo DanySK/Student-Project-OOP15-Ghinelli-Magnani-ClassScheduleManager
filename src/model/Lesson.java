@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.Optional;
 
 import model_interface.ILesson;
+import model_interface.IProfessor;
+import model_interface.ITeaching;
 
 /** The Lesson class shapes the object that will identify an unique lesson
  * 
@@ -14,12 +16,9 @@ import model_interface.ILesson;
  *
  */
 public class Lesson implements ILesson, Serializable {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
-    private final Professor prof;
-    private final Teaching teaching;
+    private final IProfessor prof;
+    private final ITeaching teaching;
     private final Semester semester;
     private final String classroom;
     private final Hour hour;
@@ -41,7 +40,7 @@ public class Lesson implements ILesson, Serializable {
      * @param duration
      *          lesson duration
      */
-    public Lesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration, final int id) {
+    public Lesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration, final int id) {
         if(prof == null || teaching == null || semester == null || classroom == null || hour == null || day == null || duration == 0){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -59,7 +58,7 @@ public class Lesson implements ILesson, Serializable {
      * @return 
      *          Professor of the lesson
      */
-    public Professor getProfessor() {
+    public IProfessor getProfessor() {
         return this.prof;
     }
     /**
@@ -67,7 +66,7 @@ public class Lesson implements ILesson, Serializable {
      * @return
      *          Teaching of the lesson
      */
-    public Teaching getSubject() {
+    public ITeaching getSubject() {
         return this.teaching;
     }
     /**

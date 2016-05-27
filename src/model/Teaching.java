@@ -6,47 +6,40 @@ package model;
 import model_interface.ITeaching;
 
 /**
- * The Teaching class shapes the object that will identify a university course 
+ * The Teaching class shapes the object that will identify a university course
  * 
  * @author Martina Magnani
  */
-public class Teaching implements ITeaching{
+public class Teaching implements ITeaching {
+    private static final long serialVersionUID = -6207742327835161721L;
     private final String name;
-    private final String year;
+    private final Year year;
     private final Court court;
-    
-    public Teaching(final String name, final String year, final Court court) {
-        if(name == null || year == null){
-            throw new IllegalArgumentException("The values can't be null!"); 
+
+    public Teaching(final String name, final Year year, final Court court) {
+        if (name == null || year == null) {
+            throw new IllegalArgumentException("The values can't be null!");
         }
         this.name = name;
         this.year = year;
         this.court = court;
     }
-    /**
-     * Method that returns the name of the subject
-     * @return
-     *          name
-     */
+
+    @Override
     public String getName() {
         return this.name;
     }
-    /**
-     * Method that returns the Year of the subject
-     * @return
-     *          year
-     */
-    public String getYear() {
+
+    @Override
+    public Year getYear() {
         return this.year;
     }
-    /**
-     * Method that returns the Court of the subject
-     * @return
-     *          court
-     */
+    
+    @Override
     public Court getCourt() {
         return this.court;
     }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -56,6 +49,7 @@ public class Teaching implements ITeaching{
         result = prime * result + ((year == null) ? 0 : year.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -72,11 +66,9 @@ public class Teaching implements ITeaching{
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (year == null) {
-            if (other.year != null)
-                return false;
-        } else if (!year.equals(other.year))
+        if (year != other.year)
             return false;
         return true;
     }
+
 }

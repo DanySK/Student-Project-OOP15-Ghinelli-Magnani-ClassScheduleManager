@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import model_interface.ILesson;
+import model_interface.IProfessor;
 import model_interface.ISchedulesModel;
+import model_interface.ITeaching;
 
 /**
  * This class handles all the lists useful to the application that are: a list of professors, a list of subjects and a list of lessons.
@@ -20,87 +23,63 @@ import model_interface.ISchedulesModel;
  */
 public class SchedulesModel implements ISchedulesModel {
     private static final long serialVersionUID = 1L;
-    private final List<Professor> professorsList;
-    private final List<Teaching> teachingsList;
+    private final List<IProfessor> professorsList;
+    private final List<ITeaching> teachingsList;
     private final List<String> classroomsList;
-    //private final List<String> academicYears;
-    private final List<Lesson> lessonsList;
+    private final List<ILesson> lessonsList;
     private int counter;
-    /**
-     * Constructor of class SchedulesModel.
-     */
+    
     public SchedulesModel() {
         this.professorsList = new ArrayList<>();
         this.teachingsList = new ArrayList<>();
         this.lessonsList = new ArrayList<>();
         this.classroomsList = new ArrayList<>();
-        //this.academicYears = new ArrayList<>();
         this.counter = 0;
         System.out.println("schedulesmodel");
 
     }
-    /**
-     * Method that adds a professor in the list professors
-     * @param name
-     *          the new professor
-     * @return Professor
-     */
-    public Professor addProfessor(final String name) {
+    
+    @Override
+    public IProfessor addProfessor(final String name) {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        for (final Professor p : this.professorsList) {
+        for (final IProfessor p : this.professorsList) {
             if (p.getName().equals(name)) {
                 throw new IllegalArgumentException();
             }
         }
-        final Professor prof = new Professor(name);
+        final IProfessor prof = new Professor(name);
         this.professorsList.add(prof);
         return prof;
     }
-    /**
-     * Method that returns the list professors
-     * @return
-     *         the complete list of professors
-     */
-    public List<Professor> getProfessorsList() {
-        final List<Professor> difensiveListProfessor = this.professorsList;
+    
+    @Override
+    public List<IProfessor> getProfessorsList() {
+        final List<IProfessor> difensiveListProfessor = this.professorsList;
         return difensiveListProfessor;
     }
-    /**
-     * Method that adds a subject in the list of teachings
-     * @param name
-     *          the name of the new subject
-     * @param year
-     *          the year of the subject
-     * @param cour
-     *          the court of the subject
-     */
-    public void addTeaching(final String name, final String year, final Court court) {
+    
+    @Override
+    public void addTeaching(final String name, final Year year, final Court court) {
         if (name==null || year==null || court==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        for (final Teaching t : this.teachingsList) {
+        for (final ITeaching t : this.teachingsList) {
             if (t.getName().equals(name)) {
                 throw new IllegalArgumentException();
             }
         }
         this.teachingsList.add(new Teaching(name, year, court));
     }
-    /**
-     * Method that returns the list of teachings
-     * @return
-     *         the complete list of subjects
-     */
-    public List<Teaching> getTeachingsList() {
-        final List<Teaching> difensiveListTeaching = this.teachingsList;
+    
+    @Override
+    public List<ITeaching> getTeachingsList() {
+        final List<ITeaching> difensiveListTeaching = this.teachingsList;
         return difensiveListTeaching;
     }
-    /**
-     * Method that adds a classroom in the list classrooms
-     * @param prof
-     *          the new classroom
-     */
+    
+    @Override
     public void addClassroom(final String name) {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
@@ -112,44 +91,11 @@ public class SchedulesModel implements ISchedulesModel {
         }
         this.classroomsList.add(name);
     }
-    /**
-     * Method that returns the list of classrooms
-     * @return
-     *         the complete list of class
-     */
+    
+    @Override
     public List<String> getClassroomsList() {
         return this.classroomsList;
     }
-    
-    /**
-     * Method that adds a classroom in the list academic years
-     * @param name
-     *          name of the new years
-     */
-    /*
-    public void addYears(final String name) {
-        if (name==null) {
-            throw new IllegalArgumentException("The values can't be null!"); 
-        }
-        for (final String s : this.academicYears) {
-            if (s.equals(name)) {
-                throw new IllegalArgumentException();
-            }
-        }
-        this.academicYears.add(name);
-    }
-    */
-    /**
-     * Method that returns the list of academic year
-     * @return
-     *         the complete list of class
-     */
-    /*
-    public List<String> getYearsList() {
-        System.out.println(this.academicYears);
-        return this.academicYears;   
-    }
-    */
 
     /**
      * Method that add a lesson in the list of lessons
@@ -168,12 +114,12 @@ public class SchedulesModel implements ISchedulesModel {
      * @param duration
      *          duration of the lesson  
      */
-    public void addLesson(final Professor prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
+    public void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
         if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching) && this.classroomsList.contains(classroom)) {
-            for (final Lesson l : this.lessonsList) {
+            for (final ILesson l : this.lessonsList) {
                 if (l.getDay()==day && l.getClassRoom().equals(classroom) && l.getHour()==hour && l.getSemester()==semester) {
                     throw new IllegalArgumentException();
                 }
@@ -189,42 +135,22 @@ public class SchedulesModel implements ISchedulesModel {
         }
         System.out.println("Ho aggiunto una lezione con semestre uguale a: " + semester);
     }
-    /**
-     * Method that add a lesson in the list of lessons
-     * @param prof
-     *          prof of the lesson
-     * @param teaching
-     *          teaching of the lesson
-     * @param semester
-     *          semester of the lesson
-     * @param classroom
-     *          classroom of the lesson 
-     * @param hour
-     *          hour of the lesson  
-     * @param day
-     *          day of the lesson
-     * @param durata
-     *          durata of the lesson  
-     */
-    public void addLesson(final String prof, final Teaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
+    
+    @Override
+    public void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-        Professor professor = this.getProfessor(prof);
+        IProfessor professor = this.getProfessor(prof);
         if (professor==null) {
             professor = this.addProfessor(prof);
         }
         this.addLesson(professor, teaching, semester, classroom, hour, day, duration);
     }
-    /**
-     * Method that returns (if exists) the object Professor whose name matches the string prof
-     * @param prof
-     *          string with the name of prof
-     * @return 
-     *        Professor
-     */
-    public Professor getProfessor(final String prof) {
-        for (final Professor p : this.professorsList) {
+    
+    @Override
+    public IProfessor getProfessor(final String prof) {
+        for (final IProfessor p : this.professorsList) {
             if (p.getName().equals(prof)) {
                 return p;
             }
@@ -232,16 +158,7 @@ public class SchedulesModel implements ISchedulesModel {
         return null;
     }
         
-    /**
-     * Method that delete a lesson in the list of lesson
-     * @param lesson
-     *          the lesson to delete
-     * @return
-     *          true 
-     *                  if the lesson has been eliminated
-     *          false
-     *                  if lesson does not exist
-     */ 
+    @Override 
     public boolean deleteLesson(final Lesson lesson) {
         if (this.lessonsList.contains(lesson)) {
             return this.lessonsList.remove(lesson);
@@ -250,24 +167,11 @@ public class SchedulesModel implements ISchedulesModel {
             throw new IllegalArgumentException();
         }
     }
-    /**
-     * Method that returns the list of filtered lessons according to the parameters that are passed
-     * If these are NULL means that I do not want to filter according to those objects
-     * @param prof
-     *          parameter that if non-NULL indicates that I want the lessons of this particular prof
-     * @param teaching
-     *          parameter that if non-NULL indicates that I want the lessons of this particular teaching
-     * @param classroom
-     *          parameter that if non-NULL indicates that I want the lessons conducted in this particular classroom
-     * @param hour
-     *          parameter that if non-NULL indicates that I want the lessons conducted in this particular hour
-     * @param day
-     *          parameter that if non-NULL indicates that I want the lessons conducted in this particular day
-     * @return
-     */
-    public List<Lesson> getLessons(final String prof, final String teaching, final String year, final Court court, final Semester semester, final String classroom, final Hour hour, final Day day) {
-        List<Lesson> finalList = new ArrayList<Lesson>();
-        for (final Lesson l : this.lessonsList) {
+    
+    @Override
+    public List<ILesson> getLessons(final String prof, final String teaching, final Year year, final Court court, final Semester semester, final String classroom, final Hour hour, final Day day) {
+        List<ILesson> finalList = new ArrayList<>();
+        for (final ILesson l : this.lessonsList) {
             if (prof!=null && !l.getProfessor().getName().equals(prof)) {
                 continue;
             }
@@ -297,43 +201,33 @@ public class SchedulesModel implements ISchedulesModel {
         System.out.println("Sto tornando la lezione con semestre uguale a: " + semester);
         return finalList;
     }
-    /**
-     * 
-     * Method that allows to obtain the list of the only professors who have active lessons
-     * @return
-     *          list of professor
-     */
-    public List<Professor> getProfessorsActive() {
-        final List<Professor> pActive = new ArrayList<>();
-        for (final Lesson l : this.lessonsList) {
+    
+    @Override
+    public List<IProfessor> getProfessorsActive() {
+        final List<IProfessor> pActive = new ArrayList<>();
+        for (final ILesson l : this.lessonsList) {
             if (pActive == null || !pActive.contains(l.getProfessor())) {
                 pActive.add(l.getProfessor());
             }
         }
         return pActive;
     }
-    /**
-     * Method that allows to obtain the list of the only materials that are active in the lessons
-     * @return
-     *          list of teaching
-     */
-    public List<Teaching> getTeachingActive() {
-        final List<Teaching> tActive = new ArrayList<>();
-        for (final Lesson l : this.lessonsList) {
+    
+    @Override
+    public List<ITeaching> getTeachingActive() {
+        final List<ITeaching> tActive = new ArrayList<>();
+        for (final ILesson l : this.lessonsList) {
             if (tActive == null || !tActive.contains(l.getSubject())) {
                 tActive.add(l.getSubject());
             }
         }
         return tActive;
     }
-    /**
-     * Method that allows to obtain the list of only classrooms occupied by some lessons
-     * @return
-     *          list of classroom
-     */
+    
+    @Override
     public List<String> getClassRoomActive() {
         final List<String> clActive = new ArrayList<>();
-        for (final Lesson l : this.lessonsList) {
+        for (final ILesson l : this.lessonsList) {
             if (clActive == null || !clActive.contains(l.getClassRoom())) {
                 clActive.add(l.getClassRoom());
             }
