@@ -24,7 +24,7 @@ import model_interface.ISchedulesModel;
 import model_interface.ITeaching;
 import view.IView;
 
-public final class Controller {
+public final class Controller {  // i metodi vanno suddivisi in più classi, questa viene considerata una god class
     
     private static Optional<Controller> singleton = Optional.empty();
     private ISchedulesModel model = new SchedulesModel();

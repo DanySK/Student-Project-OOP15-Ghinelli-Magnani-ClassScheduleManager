@@ -84,36 +84,42 @@ public class IViewImpl extends JFrame implements IView {
         }
         this.combo.add(legenda, BorderLayout.NORTH);
         this.keep.addActionListener(e -> {
-            final int rowVal = this.cellCoordinates.getX();
-            final int colVal = this.cellCoordinates.getY();
-            if (colVal == 0 && rowVal == 0) {
+            final int rowValTmp = this.cellCoordinates.getX();
+            final int colValTmp = this.cellCoordinates.getY();
+            if (colValTmp == 0 && rowValTmp == 0) {
                 this.errorDialog("No element selected");
             } else {
-                final Object lesson = this.table.getValueAt(rowVal, colVal);
-                if (lesson instanceof ILesson) {
+                final Object lessonTmp = this.table.getValueAt(rowValTmp, colValTmp);
+                if (lessonTmp instanceof ILesson) {
                     if (!this.slot1.isVisible()) {
-                        final ILesson lessonTmp = (ILesson) lesson;
-                        this.table.setValueAt("", rowVal, colVal);
-                        this.slot1.setText(lessonTmp.getSubject().getName() + "/" + lessonTmp.getProfessor().getName());
+                        this.table.setValueAt("", rowValTmp, colValTmp);
+                        this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
                         this.slot1.addActionListener(e1 -> {
-                            if (lesson instanceof ILesson) { // mi entra sempre qui, capire perchè
+                            final int rowVal = this.cellCoordinates.getX();
+                            final int colVal = this.cellCoordinates.getY();
+                            final Object lesson = this.table.getValueAt(rowVal, colVal);
+                            if (lesson instanceof ILesson) {
                                 Controller.getController().errorMessage("You can't place this lesson over another one!");
                             } else {
                                 if (!lesson.toString().equals("")) {
                                     Controller.getController().errorMessage("You can't place this lesson here!");
                                 } else {
                                     this.table.setValueAt(lessonTmp, rowVal, colVal);
+                                    // manca la funzione per far cambiare il valore della lezione una volta sistemata
+                                    this.slot1.setVisible(false);
                                 }
                             }
                         });
                     } else {
                         if (!this.slot2.isVisible()) {
-                            final ILesson lessonTmp = (ILesson) lesson;
-                            this.table.setValueAt("", rowVal, colVal);
-                            this.slot2.setText(lessonTmp.getSubject().getName() + "/" + lessonTmp.getProfessor().getName());
+                            this.table.setValueAt("", rowValTmp, colValTmp);
+                            this.slot2.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                             this.slot2.setVisible(true);
                             this.slot2.addActionListener(e2 -> {
+                                final int rowVal = this.cellCoordinates.getX();
+                                final int colVal = this.cellCoordinates.getY();
+                                final Object lesson = this.table.getValueAt(rowVal, colVal);
                                 if (lesson instanceof ILesson) {
                                     Controller.getController().errorMessage("You can't place this lesson over another one!");
                                 } else {
@@ -121,6 +127,8 @@ public class IViewImpl extends JFrame implements IView {
                                         Controller.getController().errorMessage("You can't place this lesson here!");
                                     } else {
                                         this.table.setValueAt(lessonTmp, rowVal, colVal);
+                                        
+                                        this.slot2.setVisible(false);
                                     }
                                 }
                             });
@@ -155,6 +163,7 @@ public class IViewImpl extends JFrame implements IView {
         this.editing.add(delete);
         this.done.addActionListener(e -> {
             this.editMode(false);
+            // mettere la funzione che conferma i cambiamenti e che vanno passati al model
         });
         this.done.setEnabled(false);
         this.editing.add(done);
