@@ -52,6 +52,7 @@ public class IViewImpl extends JFrame implements IView {
     private final JButton slot1 = new JButton();
     private final JButton slot2 = new JButton();
     private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
+    private int searchType = 0;
     
 
     public IViewImpl() {
@@ -105,8 +106,8 @@ public class IViewImpl extends JFrame implements IView {
                                 if (!lesson.toString().equals("")) {
                                     Controller.getController().errorMessage("You can't place this lesson here!");
                                 } else {
-                                    this.table.setValueAt(lessonTmp, rowVal, colVal);
-                                    // manca la funzione per far cambiare il valore della lezione una volta sistemata
+                                    this.table.setValueAt(lessonTmp, rowVal, colVal); // da togliere una volta finita la funzione
+                                    // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
                                     this.slot1.setVisible(false);
                                 }
                             }
@@ -126,8 +127,8 @@ public class IViewImpl extends JFrame implements IView {
                                     if (!lesson.toString().equals("")) {
                                         Controller.getController().errorMessage("You can't place this lesson here!");
                                     } else {
-                                        this.table.setValueAt(lessonTmp, rowVal, colVal);
-                                        
+                                        this.table.setValueAt(lessonTmp, rowVal, colVal); // da togliere una volta finita la funzione
+                                        // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
                                         this.slot2.setVisible(false);
                                     }
                                 }
@@ -185,6 +186,7 @@ public class IViewImpl extends JFrame implements IView {
 
     @Override
     public void addData(final int type, final List<ILesson> list) {
+        this.searchType = type;
         this.tableModel.setModel(ObjectManager.getStruct(type, list));
     }
 

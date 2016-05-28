@@ -45,7 +45,11 @@ public class MyRenderer extends DefaultTableCellRenderer {
         }
         if (isSelected) {
             if (cell.getBackground().equals(Color.WHITE)) {
-                cell.setBackground(Color.BLACK);
+                if (cell.getText().equals("")) {
+                    cell.setBackground(Color.GREEN);
+                } else {
+                    cell.setBackground(Color.BLACK);
+                }
             } else {
                 cell.setBackground(Color.WHITE);
             }

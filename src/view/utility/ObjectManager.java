@@ -10,8 +10,8 @@ import model_interface.ILesson;
 
 public final class ObjectManager {
     
-    private static final int TYPE1 = 0;
-    private static final int TYPE2 = 1;
+    private static final int COMPLETE = 0;
+    private static final int PARTIAL = 1;
     private static final int EMPTY = 9;
     
     private ObjectManager() {
@@ -20,7 +20,7 @@ public final class ObjectManager {
 
     public static List<List<Object>> getStruct(final int searchType, final List<ILesson> list) {
         final List<List<Object>> base = new ArrayList<>();
-        if (searchType == TYPE1) {
+        if (searchType == COMPLETE) {
             int check = 0;
             int check2 = 0;
             for (int i = 0; i < Day.values().length * Controller.getController().getClassrooms().size() + Day.values().length; i++) {
@@ -79,7 +79,7 @@ public final class ObjectManager {
             return base;
         }
         
-        if (searchType == TYPE2) {
+        if (searchType == PARTIAL) {
             for (int i = 0; i < Day.values().length + 1; i++) {
                 base.add(new ArrayList<>());
                 if (i == 0) {
@@ -122,6 +122,24 @@ public final class ObjectManager {
             return base;
         }
         return null;
+    }
+    
+    public static ILesson setNewLessonValues(final int type, final int row, final int column, final ILesson lesson) {
+        if (type == COMPLETE) {
+            lesson.setHour(Hour.values()[column - 1]);
+            Controller.getController().getClassrooms().forEach(x -> {
+                if (x.equals(lesson.getClassRoom())) { // forse funziona
+                    lesson.setDay(Day.values()[(Controller.getController().getClassrooms().size() - Controller.getController().getClassrooms().indexOf(x) - 1) / Day.values().length]);
+                }
+            });
+            // da pensare bene come identificare sia il giorno che l'aula
+        }
+        
+        if (type == PARTIAL) {
+            lesson.setDay(Day.values()[row - 1]);
+            lesson.setHour(Hour.values()[column - 1]);
+        }
+        return lesson;
     }
 
 }
