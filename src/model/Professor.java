@@ -10,37 +10,27 @@ import model_interface.IProfessor;
  * 
  * @author Martina Magnani
  */
-public class Professor implements IProfessor{
+public class Professor implements IProfessor {
+    private static final long serialVersionUID = 1L;
     private final String name_surname;
-    /**
-     * Constructor of class Professor
-     * @param name
-     *            name of professor
-     * @param surname
-     *            surname of professor
-     */
+    
     public Professor(final String name) {
         if(name == null){
             throw new IllegalArgumentException("The values can't be null!"); 
         }
         this.name_surname = name;
     }
-    /**
-     * Method that returns the name of the professor
-     * @return
-     *          name of professor
-     */
+    
+    @Override
     public String getName() {
         return this.name_surname;
     }
-    /**
-     * 
-     * @return 
-     *          professor name and surname
-     */
+
+    @Override
     public String toString() {
         return this.name_surname;
     }
+    
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -51,6 +41,7 @@ public class Professor implements IProfessor{
         result = prime * result + ((name_surname == null) ? 0 : name_surname.hashCode());
         return result;
     }
+    
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */

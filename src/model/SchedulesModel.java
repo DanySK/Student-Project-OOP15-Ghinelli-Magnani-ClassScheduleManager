@@ -97,41 +97,25 @@ public class SchedulesModel implements ISchedulesModel {
         return this.classroomsList;
     }
 
-    /**
-     * Method that add a lesson in the list of lessons
-     * @param prof
-     *          prof of the lesson
-     * @param teaching
-     *          teching of the lesson
-     * @param semester
-     *          semester of the lesson
-     * @param classroom
-     *          classroom of the lesson 
-     * @param hour
-     *          hour of the lesson  
-     * @param day
-     *          day of the lesson
-     * @param duration
-     *          duration of the lesson  
-     */
+    @Override
     public void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
         if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching) && this.classroomsList.contains(classroom)) {
             for (final ILesson l : this.lessonsList) {
-                if (l.getDay()==day && l.getClassRoom().equals(classroom) && l.getHour()==hour && l.getSemester()==semester) {
-                    throw new IllegalArgumentException();
+                if (l.getClassRoom().equals(classroom) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
+                    throw new IllegalArgumentException("The classroom is already used!");
                 }
                 if (l.getProfessor().equals(prof) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("The professor is already engaged!");
                 }
             }
             this.lessonsList.add(new Lesson(prof,teaching,semester,classroom,hour,day,duration, counter));
             this.counter++;
         }
         else {
-            throw new NoSuchElementException();       
+            throw new NoSuchElementException("");       
         }
         System.out.println("Ho aggiunto una lezione con semestre uguale a: " + semester);
     }

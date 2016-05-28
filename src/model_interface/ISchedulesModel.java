@@ -7,10 +7,7 @@ import java.util.List;
 import model.Court;
 import model.Day;
 import model.Hour;
-import model.Lesson;
-import model.Professor;
 import model.Semester;
-import model.Teaching;
 import model.Year;
 
 /**
