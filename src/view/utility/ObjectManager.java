@@ -20,7 +20,7 @@ public final class ObjectManager {
 
     public static List<List<Object>> getStruct(final int searchType, final List<ILesson> list) {
         final List<List<Object>> base = new ArrayList<>();
-        if (searchType == COMPLETE) {
+        if (searchType == ObjectManager.COMPLETE) {
             int check = 0;
             int check2 = 0;
             for (int i = 0; i < Day.values().length * Controller.getController().getClassrooms().size() + Day.values().length; i++) {
@@ -33,7 +33,7 @@ public final class ObjectManager {
                      check++;
                  } else {
                      base.get(i).add(Controller.getController().getClassrooms().get(check2));
-                     for (int y = 1; y < EMPTY; y++) {
+                     for (int y = 1; y < ObjectManager.EMPTY; y++) {
                          base.get(i).add("");
                      }
                      if (check2 == Controller.getController().getClassrooms().size() - 1) {
@@ -79,7 +79,7 @@ public final class ObjectManager {
             return base;
         }
         
-        if (searchType == PARTIAL) {
+        if (searchType == ObjectManager.PARTIAL) {
             for (int i = 0; i < Day.values().length + 1; i++) {
                 base.add(new ArrayList<>());
                 if (i == 0) {
@@ -125,7 +125,7 @@ public final class ObjectManager {
     }
     
     public static ILesson setNewLessonValues(final int type, final int row, final int column, final ILesson lesson) {
-        if (type == COMPLETE) {
+        if (type == ObjectManager.COMPLETE) {
             lesson.setHour(Hour.values()[column - 1]);
             Controller.getController().getClassrooms().forEach(x -> {
                 if (x.equals(lesson.getClassRoom())) { // forse funziona
@@ -135,7 +135,7 @@ public final class ObjectManager {
             // da pensare bene come identificare sia il giorno che l'aula
         }
         
-        if (type == PARTIAL) {
+        if (type == ObjectManager.PARTIAL) {
             lesson.setDay(Day.values()[row - 1]);
             lesson.setHour(Hour.values()[column - 1]);
         }

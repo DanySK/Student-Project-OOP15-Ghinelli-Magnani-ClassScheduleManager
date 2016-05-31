@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 import model.SchedulesModel;
 import model_interface.ISchedulesModel;
 
-public class IDataManegerImpl implements IDataManager {
+public class DataManegerImpl implements IDataManager {
     
     private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");
 

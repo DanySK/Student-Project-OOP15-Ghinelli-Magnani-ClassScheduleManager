@@ -29,7 +29,7 @@ import model_interface.ILesson;
 import view.utility.ColorUtility;
 import view.utility.ObjectManager;
 
-public class IViewImpl extends JFrame implements IView {
+public class ViewImpl extends JFrame implements IView {
     
     /**
      * 
@@ -52,10 +52,9 @@ public class IViewImpl extends JFrame implements IView {
     private final JButton slot1 = new JButton();
     private final JButton slot2 = new JButton();
     private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
-    private int searchType = 0;
     
 
-    public IViewImpl() {
+    public ViewImpl() {
         super();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
@@ -92,7 +91,7 @@ public class IViewImpl extends JFrame implements IView {
             } else {
                 final Object lessonTmp = this.table.getValueAt(rowValTmp, colValTmp);
                 if (lessonTmp instanceof ILesson) {
-                    if (!this.slot1.isVisible()) {
+                    if (!this.slot1.isVisible()) { // controllare i casi di piazzamento, arrivano messaggi quando non dovrebbero
                         this.table.setValueAt("", rowValTmp, colValTmp);
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
@@ -101,7 +100,7 @@ public class IViewImpl extends JFrame implements IView {
                             final int colVal = this.cellCoordinates.getY();
                             final Object lesson = this.table.getValueAt(rowVal, colVal);
                             if (lesson instanceof ILesson) {
-                                Controller.getController().errorMessage("You can't place this lesson over another one!");
+                                Controller.getController().errorMessage("You can't place this lesson over another one!"); // arriva troppe volte questo messaggio
                             } else {
                                 if (!lesson.toString().equals("")) {
                                     Controller.getController().errorMessage("You can't place this lesson here!");
@@ -186,7 +185,6 @@ public class IViewImpl extends JFrame implements IView {
 
     @Override
     public void addData(final int type, final List<ILesson> list) {
-        this.searchType = type;
         this.tableModel.setModel(ObjectManager.getStruct(type, list));
     }
 

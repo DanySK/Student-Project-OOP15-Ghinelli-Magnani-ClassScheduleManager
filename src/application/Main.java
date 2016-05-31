@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import controller.Controller;
 import view.IView;
-import view.IViewImpl;
+import view.ViewImpl;
 
 public final class Main {
     
@@ -20,7 +20,7 @@ public final class Main {
         } catch (IOException e) {
             Logger.getGlobal().log(Level.SEVERE, "Error:", e);
         }
-        final IView view = new IViewImpl();
+        final IView view = new ViewImpl();
         view.addData(0, null);
         Controller.getController().setView(view);
     }
