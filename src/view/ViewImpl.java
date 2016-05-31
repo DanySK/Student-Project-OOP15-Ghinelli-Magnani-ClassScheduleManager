@@ -52,6 +52,8 @@ public class ViewImpl extends JFrame implements IView {
     private final JButton slot1 = new JButton();
     private final JButton slot2 = new JButton();
     private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
+    private ILesson lessonSlot1;
+    private ILesson lessonSlot2;
     
 
     public ViewImpl() {
@@ -91,53 +93,55 @@ public class ViewImpl extends JFrame implements IView {
             } else {
                 final Object lessonTmp = this.table.getValueAt(rowValTmp, colValTmp);
                 if (lessonTmp instanceof ILesson) {
-                    if (!this.slot1.isVisible()) { // controllare i casi di piazzamento, arrivano messaggi quando non dovrebbero
+                    if (!this.slot1.isVisible()) {
                         this.table.setValueAt("", rowValTmp, colValTmp);
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
-                        this.slot1.addActionListener(e1 -> {
-                            final int rowVal = this.cellCoordinates.getX();
-                            final int colVal = this.cellCoordinates.getY();
-                            final Object lesson = this.table.getValueAt(rowVal, colVal);
-                            if (lesson instanceof ILesson) {
-                                Controller.getController().errorMessage("You can't place this lesson over another one!"); // arriva troppe volte questo messaggio
-                            } else {
-                                if (!lesson.toString().equals("")) {
-                                    Controller.getController().errorMessage("You can't place this lesson here!");
-                                } else {
-                                    this.table.setValueAt(lessonTmp, rowVal, colVal); // da togliere una volta finita la funzione
-                                    // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
-                                    this.slot1.setVisible(false);
-                                }
-                            }
-                        });
+                        this.lessonSlot1 = (ILesson) lessonTmp;
                     } else {
                         if (!this.slot2.isVisible()) {
                             this.table.setValueAt("", rowValTmp, colValTmp);
                             this.slot2.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                             this.slot2.setVisible(true);
-                            this.slot2.addActionListener(e2 -> {
-                                final int rowVal = this.cellCoordinates.getX();
-                                final int colVal = this.cellCoordinates.getY();
-                                final Object lesson = this.table.getValueAt(rowVal, colVal);
-                                if (lesson instanceof ILesson) {
-                                    Controller.getController().errorMessage("You can't place this lesson over another one!");
-                                } else {
-                                    if (!lesson.toString().equals("")) {
-                                        Controller.getController().errorMessage("You can't place this lesson here!");
-                                    } else {
-                                        this.table.setValueAt(lessonTmp, rowVal, colVal); // da togliere una volta finita la funzione
-                                        // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
-                                        this.slot2.setVisible(false);
-                                    }
-                                }
-                            });
+                            this.lessonSlot2 = (ILesson) lessonTmp;
                         } else {
                             Controller.getController().errorMessage("You can't take another lesson, place one of which you got at least!");
                         }
                     }
                 } else {
                     Controller.getController().errorMessage("You can't take this element, it's not a lesson!");
+                }
+            }
+        });
+        this.slot1.addActionListener(e1 -> {
+            final int rowVal = this.cellCoordinates.getX();
+            final int colVal = this.cellCoordinates.getY();
+            final Object lesson = this.table.getValueAt(rowVal, colVal);
+            if (lesson instanceof ILesson) {
+                Controller.getController().errorMessage("You can't place this lesson over another one!");
+            } else {
+                if (!lesson.toString().equals("")) {
+                    Controller.getController().errorMessage("You can't place this lesson here!");
+                } else {
+                    this.table.setValueAt(this.lessonSlot1, rowVal, colVal); // da togliere una volta finita la funzione
+                    // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
+                    this.slot1.setVisible(false);
+                }
+            }
+        });
+        this.slot2.addActionListener(e2 -> {
+            final int rowVal = this.cellCoordinates.getX();
+            final int colVal = this.cellCoordinates.getY();
+            final Object lesson = this.table.getValueAt(rowVal, colVal);
+            if (lesson instanceof ILesson) {
+                Controller.getController().errorMessage("You can't place this lesson over another one!");
+            } else {
+                if (!lesson.toString().equals("")) {
+                    Controller.getController().errorMessage("You can't place this lesson here!");
+                } else {
+                    this.table.setValueAt(this.lessonSlot2, rowVal, colVal); // da togliere una volta finita la funzione
+                    // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
+                    this.slot2.setVisible(false);
                 }
             }
         });
