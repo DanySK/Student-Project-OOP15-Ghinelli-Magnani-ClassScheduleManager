@@ -154,4 +154,8 @@ public final class Controller {  // da riguardare per bene per il bel codice
         }
         this.searchBy(this.searchType, this.searchValue);
     }
+    
+    public void setChangements(final List<ILesson> list) {
+        // metodo del model
+    }
 }

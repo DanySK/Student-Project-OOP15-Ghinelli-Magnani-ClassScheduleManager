@@ -127,18 +127,19 @@ public final class ObjectManager {
     public static ILesson setNewLessonValues(final int type, final int row, final int column, final ILesson lesson) {
         if (type == ObjectManager.COMPLETE) {
             lesson.setHour(Hour.values()[column - 1]);
+            lesson.setClassRoom(Controller.getController().getClassrooms().get(row % (Controller.getController().getClassrooms().size() + 1) - 1));
             Controller.getController().getClassrooms().forEach(x -> {
-                if (x.equals(lesson.getClassRoom())) { // forse funziona
-                    lesson.setDay(Day.values()[(Controller.getController().getClassrooms().size() - Controller.getController().getClassrooms().indexOf(x) - 1) / Day.values().length]);
+                if (x.equals(lesson.getClassRoom())) {
+                    lesson.setDay(Day.values()[(row - Controller.getController().getClassrooms().indexOf(x) - 1) / Controller.getController().getClassrooms().size()]);
                 }
             });
-            // da pensare bene come identificare sia il giorno che l'aula
         }
         
         if (type == ObjectManager.PARTIAL) {
             lesson.setDay(Day.values()[row - 1]);
             lesson.setHour(Hour.values()[column - 1]);
         }
+        System.out.println(lesson.getClassRoom() + lesson.getDay().getDay() + lesson.getHour().getHour());
         return lesson;
     }
 

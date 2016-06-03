@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -37,8 +38,8 @@ public class ViewImpl extends JFrame implements IView {
     private static final long serialVersionUID = -7339167500714323687L;
     private final JMenuBar menuBar = new JMenuBar();
     private final BaseMenu menu = new BaseMenu(this);
-    private final JMenu menu2 = new AddMenu(this);
-    private final JMenu menu3 = new SemesterMenu();
+    private final JMenu addMenu = new AddMenu(this);
+    private final JMenu semesterMenu = new SemesterMenu();
     private final MyTableModel tableModel = new MyTableModel();
     private final JTable table = new JTable(tableModel);
     private final JScrollPane fullTable = new JScrollPane(this.table);
@@ -54,6 +55,7 @@ public class ViewImpl extends JFrame implements IView {
     private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
     private ILesson lessonSlot1;
     private ILesson lessonSlot2;
+    private int searchType = 0;
     
 
     public ViewImpl() {
@@ -70,8 +72,8 @@ public class ViewImpl extends JFrame implements IView {
         this.table.setRowSelectionAllowed(false);
         
         this.menuBar.add(menu);
-        this.menuBar.add(menu2);
-        this.menuBar.add(menu3);
+        this.menuBar.add(addMenu);
+        this.menuBar.add(semesterMenu);
         
         this.legenda.setBorder(new TitledBorder("Legenda"));
         GridBagConstraints cnst = new GridBagConstraints();
@@ -123,8 +125,7 @@ public class ViewImpl extends JFrame implements IView {
                 if (!lesson.toString().equals("")) {
                     Controller.getController().errorMessage("You can't place this lesson here!");
                 } else {
-                    this.table.setValueAt(this.lessonSlot1, rowVal, colVal); // da togliere una volta finita la funzione
-                    // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
+                    this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot1), rowVal, colVal);
                     this.slot1.setVisible(false);
                 }
             }
@@ -139,8 +140,7 @@ public class ViewImpl extends JFrame implements IView {
                 if (!lesson.toString().equals("")) {
                     Controller.getController().errorMessage("You can't place this lesson here!");
                 } else {
-                    this.table.setValueAt(this.lessonSlot2, rowVal, colVal); // da togliere una volta finita la funzione
-                    // this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) lessonTmp), rowVal, colVal);
+                    this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot2), rowVal, colVal);
                     this.slot2.setVisible(false);
                 }
             }
@@ -167,7 +167,15 @@ public class ViewImpl extends JFrame implements IView {
         this.editing.add(delete);
         this.done.addActionListener(e -> {
             this.editMode(false);
-            // mettere la funzione che conferma i cambiamenti e che vanno passati al model
+            final List<ILesson> changements = new ArrayList<>();
+            for (int i = 0; i < this.table.getColumnCount(); i++) {
+                for (int y = 0; y < this.table.getRowCount(); y++) {
+                    if (this.table.getValueAt(y, i) instanceof ILesson) {
+                        changements.add((ILesson) this.table.getValueAt(y, i));
+                    }
+                }
+            }
+            Controller.getController().setChangements(changements);
         });
         this.done.setEnabled(false);
         this.editing.add(done);
@@ -189,11 +197,15 @@ public class ViewImpl extends JFrame implements IView {
 
     @Override
     public void addData(final int type, final List<ILesson> list) {
+        this.searchType = type;
         this.tableModel.setModel(ObjectManager.getStruct(type, list));
     }
 
     @Override
     public void editMode(final boolean set) {
+        this.menu.setEnabled(!set);
+        this.addMenu.setEnabled(!set);
+        this.semesterMenu.setEnabled(!set);
         this.keep.setEnabled(set);
         this.delete.setEnabled(set);
         this.done.setEnabled(set);
