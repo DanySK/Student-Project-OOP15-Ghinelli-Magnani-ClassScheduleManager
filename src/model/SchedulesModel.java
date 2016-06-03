@@ -40,7 +40,7 @@ public class SchedulesModel implements ISchedulesModel {
     }
     
     @Override
-    public IProfessor addProfessor(final String name) {
+    public IProfessor addProfessor(final String name) throws IllegalArgumentException {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -61,7 +61,7 @@ public class SchedulesModel implements ISchedulesModel {
     }
     
     @Override
-    public void addTeaching(final String name, final Year year, final Court court) {
+    public void addTeaching(final String name, final Year year, final Court court) throws IllegalArgumentException {
         if (name==null || year==null || court==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -80,7 +80,7 @@ public class SchedulesModel implements ISchedulesModel {
     }
     
     @Override
-    public void addClassroom(final String name) {
+    public void addClassroom(final String name) throws IllegalArgumentException {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -98,7 +98,7 @@ public class SchedulesModel implements ISchedulesModel {
     }
 
     @Override
-    public void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
+    public void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException, NoSuchElementException {
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -121,7 +121,7 @@ public class SchedulesModel implements ISchedulesModel {
     }
     
     @Override
-    public void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) {
+    public void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException {
         if (prof==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -130,6 +130,13 @@ public class SchedulesModel implements ISchedulesModel {
             professor = this.addProfessor(prof);
         }
         this.addLesson(professor, teaching, semester, classroom, hour, day, duration);
+    }
+    
+    public void addLesson(final ILesson l) throws IllegalArgumentException {
+        if (l == null) {
+            throw new IllegalArgumentException("The values can't be null!"); 
+        }            
+        this.addLesson(l.getProfessor(), l.getSubject(), l.getSemester(), l.getClassRoom(), l.getHour(), l.getDay(), l.getDuration());
     }
     
     @Override
@@ -143,12 +150,12 @@ public class SchedulesModel implements ISchedulesModel {
     }
         
     @Override 
-    public boolean deleteLesson(final ILesson lesson) {
+    public boolean deleteLesson(final ILesson lesson) throws NoSuchElementException {
         if (this.lessonsList.contains(lesson)) {
             return this.lessonsList.remove(lesson);
         }
         else {
-            throw new IllegalArgumentException();
+            throw new NoSuchElementException("The lesson isn't present!");
         }
     }
     
@@ -217,5 +224,46 @@ public class SchedulesModel implements ISchedulesModel {
             }
         }
         return clActive;
+    }
+
+    @Override
+    public boolean checkChanges(List<ILesson> lessonModified) throws IllegalArgumentException {
+        if (lessonModified != null) {
+            List<ILesson> tempLesson = new ArrayList<>();
+            for( final ILesson l : lessonModified) {
+                ILesson lesson = this.getLesson(l.getID());
+                if (lesson != null) {
+                    tempLesson.add(lesson);
+                }
+            }
+            try{
+                for (final ILesson l : lessonModified) {
+                    this.deleteLesson(l);
+                }
+            }catch (NoSuchElementException e1) {
+                try {
+                    for (final ILesson l : lessonModified) {
+                        this.addLesson(l);
+                    }
+                }catch (IllegalArgumentException e2) {
+                    for (final ILesson l : tempLesson) {
+                        this.addLesson(l);
+                    }
+                    throw e2;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public ILesson getLesson(final int id) {
+        for (final ILesson l: this.lessonsList) {
+             if (l.getID() == id) {
+                 return l;
+             }  
+        }
+        return null;
     }
 }

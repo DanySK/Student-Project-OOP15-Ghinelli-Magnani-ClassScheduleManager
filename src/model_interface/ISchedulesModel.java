@@ -4,9 +4,12 @@
 package model_interface;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import model.Court;
 import model.Day;
 import model.Hour;
+import model.Lesson;
 import model.Semester;
 import model.Year;
 
@@ -21,7 +24,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          the new professor
      * @return Professor
      */
-    IProfessor addProfessor(final String name);
+    IProfessor addProfessor(final String name) throws IllegalArgumentException;
     
     /**
      * Method that returns the list professors
@@ -39,7 +42,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @param cour
      *          the court of the subject
      */
-    void addTeaching(final String name, final Year year, final Court court);
+    void addTeaching(final String name, final Year year, final Court court) throws IllegalArgumentException;
     
     /**
      * Method that returns the list of teachings
@@ -53,7 +56,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @param prof
      *          the new classroom
      */
-    void addClassroom(final String name);
+    void addClassroom(final String name) throws IllegalArgumentException;
     
     /**
      * Method that returns the list of classrooms
@@ -79,7 +82,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @param duration
      *          duration of the lesson  
      */
-    void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration);
+    void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException, NoSuchElementException;
     
     /**
      * Method that add a lesson in the list of lessons
@@ -98,8 +101,13 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @param durata
      *          durata of the lesson  
      */
-    void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration);
-    
+    void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException;
+    /**
+     * Method that add a lesson in the list of lessons
+     * @param l
+     *          new lesson
+     */
+    void addLesson(final ILesson l) throws IllegalArgumentException;
     /**
      * Method that returns (if exists) the object Professor whose name matches the string prof
      * @param prof
@@ -119,7 +127,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          false
      *                  if lesson does not exist
      */
-    boolean deleteLesson(final ILesson lesson);
+    boolean deleteLesson(final ILesson lesson) throws NoSuchElementException;
     
     /**
      * Method that returns the list of filtered lessons according to the parameters that are passed
@@ -159,4 +167,25 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          list of classroom
      */
     List<String> getClassRoomActive();
+    
+    /**
+     * Method that check the changes proposed for some lessons. If they are correct, the list of classes is updated with the new ones. 
+     * If even only one of them is wrong, the entire block is reset to the initial situation
+     * @param lessonModified
+     *          new list of lesson 
+     * @return  
+     *          true - if the operation is successful
+     *          false - if the operation is not carried out because of conflicts
+     * @throws IllegalArgumentException
+     */
+    boolean checkChanges(final List<ILesson> lessonModified) throws IllegalArgumentException;
+    
+    /**
+     * Method that return a lesson
+     * @param id
+     *          id of the lesson we want find
+     * @return
+     *          lesson interested
+     */
+    ILesson getLesson(final int id);
 }
