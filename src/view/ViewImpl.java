@@ -53,13 +53,15 @@ public class ViewImpl extends JFrame implements IView {
     private final JButton slot1 = new JButton();
     private final JButton slot2 = new JButton();
     private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
-    private ILesson lessonSlot1;
-    private ILesson lessonSlot2;
-    private int searchType = 0;
+    private ILesson lessonSlot1; //
+    private ILesson lessonSlot2; //    controllare per bene questi campi
+    private int searchType; //
     
 
     public ViewImpl() {
         super();
+        this.addData(0, null);
+        Controller.getController().setView(this);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Orario Lezioni");

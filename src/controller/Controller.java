@@ -30,7 +30,11 @@ public final class Controller {  // da riguardare per bene per il bel codice
     private String searchValue = "Total";
 
     private Controller() {
-        
+        try {
+            this.readConfiguration();
+        } catch (IOException e) {
+            Logger.getGlobal().log(Level.SEVERE, "Error:", e);
+        }
     }
 
     public static Controller getController() {
