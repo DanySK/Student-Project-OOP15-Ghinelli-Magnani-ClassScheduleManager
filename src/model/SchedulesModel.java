@@ -230,29 +230,26 @@ public class SchedulesModel implements ISchedulesModel {
     public boolean checkChanges(List<ILesson> lessonModified) throws IllegalArgumentException {
         if (lessonModified != null) {
             List<ILesson> tempLesson = new ArrayList<>();
-            for( final ILesson l : lessonModified) {
+            for (final ILesson l : lessonModified) {
                 ILesson lesson = this.getLesson(l.getID());
                 if (lesson != null) {
                     tempLesson.add(lesson);
                 }
             }
-            try{
-                for (final ILesson l : lessonModified) {
+            for (final ILesson l : lessonModified) {
                     this.deleteLesson(l);
-                }
-            }catch (NoSuchElementException e1) {
-                try {
-                    for (final ILesson l : lessonModified) {
-                        this.addLesson(l);
-                    }
-                }catch (IllegalArgumentException e2) {
-                    for (final ILesson l : tempLesson) {
-                        this.addLesson(l);
-                    }
-                    throw e2;
-                }
-                return true;
             }
+            try {
+                 for (final ILesson l : lessonModified) {
+                      this.addLesson(l);
+                 }
+            }catch (IllegalArgumentException e2) {
+                for (final ILesson l : tempLesson) {
+                    this.addLesson(l);
+                }                
+                throw e2;
+            }
+             return true;
         }
         return false;
     }
