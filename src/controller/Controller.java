@@ -156,6 +156,10 @@ public final class Controller {  // da riguardare per bene per il bel codice
     }
     
     public void setChangements(final List<ILesson> list) {
-        // metodo del model
+        try {
+            this.model.checkChanges(list);
+        } catch (IllegalArgumentException e) {
+            this.errorMessage(e.getMessage());
+        }
     }
 }
