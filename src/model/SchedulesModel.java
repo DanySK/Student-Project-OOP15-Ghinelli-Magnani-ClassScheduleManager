@@ -35,8 +35,6 @@ public class SchedulesModel implements ISchedulesModel {
         this.lessonsList = new ArrayList<>();
         this.classroomsList = new ArrayList<>();
         this.counter = 0;
-        System.out.println("schedulesmodel");
-
     }
     
     @Override
@@ -119,7 +117,6 @@ public class SchedulesModel implements ISchedulesModel {
         else {
             throw new NoSuchElementException("");       
         }
-        System.out.println("Ho aggiunto una lezione con semestre uguale a: " + semester);
         return id;
     }
     
@@ -192,7 +189,6 @@ public class SchedulesModel implements ISchedulesModel {
             }
             finalList.add(l);
         }
-        System.out.println("Sto tornando la lezione con semestre uguale a: " + semester);
         return finalList;
     }
     
