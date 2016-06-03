@@ -102,7 +102,7 @@ public final class Controller {  // da riguardare per bene per il bel codice
         if ("By Year".equals(typeValue)) {
             Year year = null;
             for (int i = 0; i < Year.values().length; i++) {
-                if (Court.values()[i].getDef().equals(valueM)) {
+                if (Year.values()[i].getYear().equals(valueM)) {
                     year = Year.values()[i];
                 }
             }
