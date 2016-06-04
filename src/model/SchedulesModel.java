@@ -107,6 +107,7 @@ public class SchedulesModel implements ISchedulesModel {
                     throw new IllegalArgumentException("The classroom is already used!");
                 }
                 if (l.getProfessor().equals(prof) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
+//                    System.out.println("Professore già occupato: " + prof + " Altro professore: " + l.getProfessor() + " " + l.getDay() + " " +l.getClassRoom() + " " + l.getHour() + " " + l.getID());
                     throw new IllegalArgumentException("The professor is already engaged!");
                 }
             }
@@ -227,32 +228,45 @@ public class SchedulesModel implements ISchedulesModel {
 
     @Override
     public boolean checkChanges(List<ILesson> lessonModified) throws IllegalArgumentException {
+//        for ( final ILesson lesson : this.lessonsList) {
+//                    System.out.println(" " + lesson.getID() + "Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
+//        }
         List<Integer> nuoviID = new ArrayList<>();
         if (lessonModified != null) {
+//            System.out.println(" " + lessonModified.size());
             List<ILesson> tempLesson = new ArrayList<>();
             for (final ILesson l : lessonModified) {
                 ILesson lesson = this.getLesson(l.getID());
                 if (lesson != null) {
                     tempLesson.add(lesson);
+//                    System.out.println("COPIO - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
                 }
             }
             for (final ILesson l : lessonModified) {
                     this.deleteLesson(l);
+//                    System.out.println("ELIMINO - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom());
             }
+//            System.out.println("Check - ho eliminato le lezioni da modificare | Lezioni in lista: " + this.lessonsList.size());
             try {
                  for (final ILesson l : lessonModified) {
                       nuoviID.add(this.addLesson(l));
+//                      System.out.println("AGGIUNGO NUOVI ID - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom() + " Professore: " + l.getProfessor());
                  }
             }catch (IllegalArgumentException e2) {
+//                System.out.println("Check - Entro nel catch");
                 for (final Integer i : nuoviID) {
                     ILesson lesson = this.getLesson(i);
                     if (lesson != null) {
                         this.deleteLesson(lesson);
+//                        System.out.println("ELIMINO NUOVI ID - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
                     }
-                }
+                }                
+//                System.out.println("Check - riaggiungo le lezioni precedenti");
                 for (final ILesson l : tempLesson) {
                     this.addLesson(l);
-                }                
+//                    System.out.println("RIPRISTINO VECCHIE - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom());
+
+                }
                 throw e2;
             }
              return true;
