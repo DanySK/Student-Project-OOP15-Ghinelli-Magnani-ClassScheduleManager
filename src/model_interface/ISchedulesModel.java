@@ -82,7 +82,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @param duration
      *          duration of the lesson  
      */
-    void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException, NoSuchElementException;
+    int addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException, NoSuchElementException;
     
     /**
      * Method that add a lesson in the list of lessons
@@ -101,13 +101,13 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @param durata
      *          durata of the lesson  
      */
-    void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException;
+    int addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException;
     /**
      * Method that add a lesson in the list of lessons
      * @param l
      *          new lesson
      */
-    void addLesson(final ILesson l) throws IllegalArgumentException;
+    int addLesson(final ILesson l) throws IllegalArgumentException;
     /**
      * Method that returns (if exists) the object Professor whose name matches the string prof
      * @param prof

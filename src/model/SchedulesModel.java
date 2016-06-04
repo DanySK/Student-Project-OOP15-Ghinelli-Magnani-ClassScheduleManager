@@ -35,8 +35,6 @@ public class SchedulesModel implements ISchedulesModel {
         this.lessonsList = new ArrayList<>();
         this.classroomsList = new ArrayList<>();
         this.counter = 0;
-        System.out.println("schedulesmodel");
-
     }
     
     @Override
@@ -98,7 +96,8 @@ public class SchedulesModel implements ISchedulesModel {
     }
 
     @Override
-    public void addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException, NoSuchElementException {
+    public int addLesson(final IProfessor prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException, NoSuchElementException {
+        int id = -1;
         if (prof==null || teaching==null || semester==null || classroom==null || hour==null || day==null || duration<1) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -108,20 +107,22 @@ public class SchedulesModel implements ISchedulesModel {
                     throw new IllegalArgumentException("The classroom is already used!");
                 }
                 if (l.getProfessor().equals(prof) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
+//                    System.out.println("Professore già occupato: " + prof + " Altro professore: " + l.getProfessor() + " " + l.getDay() + " " +l.getClassRoom() + " " + l.getHour() + " " + l.getID());
                     throw new IllegalArgumentException("The professor is already engaged!");
                 }
             }
             this.lessonsList.add(new Lesson(prof,teaching,semester,classroom,hour,day,duration, counter));
+            id = counter;
             this.counter++;
         }
         else {
             throw new NoSuchElementException("");       
         }
-        System.out.println("Ho aggiunto una lezione con semestre uguale a: " + semester);
+        return id;
     }
     
     @Override
-    public void addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException {
+    public int addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException {
         if (prof==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
@@ -129,14 +130,14 @@ public class SchedulesModel implements ISchedulesModel {
         if (professor==null) {
             professor = this.addProfessor(prof);
         }
-        this.addLesson(professor, teaching, semester, classroom, hour, day, duration);
+        return this.addLesson(professor, teaching, semester, classroom, hour, day, duration);
     }
     
-    public void addLesson(final ILesson l) throws IllegalArgumentException {
+    public int addLesson(final ILesson l) throws IllegalArgumentException {
         if (l == null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }            
-        this.addLesson(l.getProfessor(), l.getSubject(), l.getSemester(), l.getClassRoom(), l.getHour(), l.getDay(), l.getDuration());
+        return this.addLesson(l.getProfessor(), l.getSubject(), l.getSemester(), l.getClassRoom(), l.getHour(), l.getDay(), l.getDuration());
     }
     
     @Override
@@ -189,7 +190,6 @@ public class SchedulesModel implements ISchedulesModel {
             }
             finalList.add(l);
         }
-        System.out.println("Sto tornando la lezione con semestre uguale a: " + semester);
         return finalList;
     }
     
@@ -228,25 +228,45 @@ public class SchedulesModel implements ISchedulesModel {
 
     @Override
     public boolean checkChanges(List<ILesson> lessonModified) throws IllegalArgumentException {
+//        for ( final ILesson lesson : this.lessonsList) {
+//                    System.out.println(" " + lesson.getID() + "Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
+//        }
+        List<Integer> nuoviID = new ArrayList<>();
         if (lessonModified != null) {
+//            System.out.println(" " + lessonModified.size());
             List<ILesson> tempLesson = new ArrayList<>();
             for (final ILesson l : lessonModified) {
                 ILesson lesson = this.getLesson(l.getID());
                 if (lesson != null) {
                     tempLesson.add(lesson);
+//                    System.out.println("COPIO - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
                 }
             }
             for (final ILesson l : lessonModified) {
                     this.deleteLesson(l);
+//                    System.out.println("ELIMINO - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom());
             }
+//            System.out.println("Check - ho eliminato le lezioni da modificare | Lezioni in lista: " + this.lessonsList.size());
             try {
                  for (final ILesson l : lessonModified) {
-                      this.addLesson(l);
+                      nuoviID.add(this.addLesson(l));
+//                      System.out.println("AGGIUNGO NUOVI ID - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom() + " Professore: " + l.getProfessor());
                  }
             }catch (IllegalArgumentException e2) {
+//                System.out.println("Check - Entro nel catch");
+                for (final Integer i : nuoviID) {
+                    ILesson lesson = this.getLesson(i);
+                    if (lesson != null) {
+                        this.deleteLesson(lesson);
+//                        System.out.println("ELIMINO NUOVI ID - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
+                    }
+                }                
+//                System.out.println("Check - riaggiungo le lezioni precedenti");
                 for (final ILesson l : tempLesson) {
                     this.addLesson(l);
-                }                
+//                    System.out.println("RIPRISTINO VECCHIE - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom());
+
+                }
                 throw e2;
             }
              return true;
