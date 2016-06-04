@@ -54,7 +54,8 @@ public class SchedulesModel implements ISchedulesModel {
     
     @Override
     public List<IProfessor> getProfessorsList() {
-        final List<IProfessor> difensiveListProfessor = this.professorsList;
+        List<IProfessor> difensiveListProfessor = new ArrayList<>();
+        difensiveListProfessor = this.professorsList;
         return difensiveListProfessor;
     }
     
@@ -73,7 +74,8 @@ public class SchedulesModel implements ISchedulesModel {
     
     @Override
     public List<ITeaching> getTeachingsList() {
-        final List<ITeaching> difensiveListTeaching = this.teachingsList;
+        List<ITeaching> difensiveListTeaching = new ArrayList<>();
+        difensiveListTeaching = this.teachingsList;
         return difensiveListTeaching;
     }
     
@@ -188,7 +190,8 @@ public class SchedulesModel implements ISchedulesModel {
             if (day!=null && !l.getDay().equals(day)) {
                 continue;
             }
-            finalList.add(l);
+            ILesson lesson = new Lesson(l.getProfessor(), l.getSubject(), l.getSemester(), l.getClassRoom(), l.getHour(), l.getDay(), l.getDuration(), l.getID());
+            finalList.add(lesson);
         }
         return finalList;
     }
@@ -282,5 +285,31 @@ public class SchedulesModel implements ISchedulesModel {
              }  
         }
         return null;
+    }
+
+    @Override
+    public boolean deleteProfessor(IProfessor prof) throws IllegalArgumentException, NoSuchElementException {
+        if(prof==null || !this.professorsList.contains(prof)) {
+            throw new IllegalArgumentException("The value can't be null!");
+        }
+        for(final ILesson l : this.lessonsList){
+            if (l.getProfessor().equals(prof)) {
+                throw new IllegalArgumentException("The professor can't be deleted because he has active lessons!");
+            }
+        }
+        return this.professorsList.remove(prof);
+    }
+
+    @Override
+    public boolean deleteTeaching(ITeaching teaching) throws IllegalArgumentException, NoSuchElementException {
+        if(teaching==null || !this.teachingsList.contains(teaching)) {
+            throw new IllegalArgumentException("The value can't be null!");
+        }
+        for(final ILesson l : this.lessonsList){
+            if (l.getSubject().equals(teaching)) {
+                throw new IllegalArgumentException("The subject can't be deleted because it has active lessons!");
+            }
+        }
+        return this.teachingsList.remove(teaching);
     }
 }
