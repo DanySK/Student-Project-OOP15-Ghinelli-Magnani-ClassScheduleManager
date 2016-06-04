@@ -1,7 +1,8 @@
 package view;
-  
-import java.awt.GridBagConstraints;    
+
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,14 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddTeachingDialog extends AbstractAddDeleteDialog {
+public class DeleteTeachingDialog extends AbstractAddDeleteDialog {
+
     /**
      * 
      */
-    private static final long serialVersionUID = -6489822172457272017L;
-    
-    public AddTeachingDialog(final JFrame frame) {
+    private static final long serialVersionUID = -5302750499917415659L;
+
+    public DeleteTeachingDialog(final JFrame frame) throws HeadlessException {
         super(frame);
     }
 
@@ -29,15 +31,15 @@ public class AddTeachingDialog extends AbstractAddDeleteDialog {
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        Controller.getController().getCoursesValues().forEach((x, y) -> {
-            final JLabel label = new JLabel(x.getX());
+        Controller.getController().deleteTeachingValues().forEach((x, y) -> {
+            final JLabel label = new JLabel(x);
             cnst.anchor = GridBagConstraints.WEST;
             panelNord.add(label, cnst);
             final JComboBox<String> field = new JComboBox<>();
             y.forEach(z -> {
                 field.addItem(z);
             });
-            field.setEditable(x.getY());
+            field.setEditable(false);
             super.getBoxList().add(field);
             cnst.anchor = GridBagConstraints.EAST;
             panelNord.add(field, cnst);
@@ -50,13 +52,11 @@ public class AddTeachingDialog extends AbstractAddDeleteDialog {
     public JButton setOkButton() {
         final JButton button = new JButton("Ok");
         button.addActionListener(e -> {
-            final List<String> retValue = new ArrayList<>();
-            for (final JComboBox<String> a : super.getBoxList()) {
-                retValue.add(a.getSelectedItem().toString());
-            }
-            Controller.getController().addCourse(retValue);
+            final String value = super.getBoxList().get(0).getSelectedItem().toString();
+            // controller delete teaching
             this.setVisible(false);
         });
         return button;
     }
+
 }

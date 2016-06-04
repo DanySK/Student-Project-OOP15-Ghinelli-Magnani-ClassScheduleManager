@@ -12,7 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public abstract class AbstractAddDialog extends JDialog implements IAddDialog {
+public abstract class AbstractAddDeleteDialog extends JDialog implements IAddDialog {
 
     /**
      * 
@@ -22,7 +22,7 @@ public abstract class AbstractAddDialog extends JDialog implements IAddDialog {
     private final List<JComboBox<String>> boxList = new ArrayList<>();
     private final JFrame mainFrame;
     
-    public AbstractAddDialog(final JFrame frame) throws HeadlessException {
+    public AbstractAddDeleteDialog(final JFrame frame) throws HeadlessException {
         super();
         this.mainFrame = frame;
         this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);

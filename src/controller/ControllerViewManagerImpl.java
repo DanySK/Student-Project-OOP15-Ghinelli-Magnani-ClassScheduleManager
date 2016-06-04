@@ -130,5 +130,19 @@ public class ControllerViewManagerImpl implements IControllerViewManager {
             }
         }
     }
+   
+    @Override
+    public Map<String, List<String>> getProfessorValues() {
+        final Map<String, List<String>> returnValue = new HashMap<>();
+        returnValue.put("Select the professor to delete", Controller.getController().getProfessors());
+        return returnValue;
+    }
+
+    @Override
+    public Map<String, List<String>> getTeachingValues(final ISchedulesModel model) {
+        final Map<String, List<String>> returnValue = new HashMap<>();
+        returnValue.put("Select the teaching to delete", model.getTeachingsList().stream().map(x -> x.getName()).collect(Collectors.toList()));
+        return returnValue;
+    }
 
 }

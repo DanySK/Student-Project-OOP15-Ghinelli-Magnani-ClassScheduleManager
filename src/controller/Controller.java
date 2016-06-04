@@ -165,5 +165,14 @@ public final class Controller {  // da riguardare per bene per il bel codice
         } catch (IllegalArgumentException e) {
             this.errorMessage(e.getMessage());
         }
+        this.searchBy(searchType, searchValue);
+    }
+    
+    public Map<String, List<String>> deleteProfessorValues() {
+        return this.manager.getProfessorValues();
+    }
+    
+    public Map<String, List<String>> deleteTeachingValues() {
+        return this.manager.getTeachingValues(model);
     }
 }

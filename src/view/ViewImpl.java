@@ -39,6 +39,7 @@ public class ViewImpl extends JFrame implements IView {
     private final JMenuBar menuBar = new JMenuBar();
     private final BaseMenu menu = new BaseMenu(this);
     private final JMenu addMenu = new AddMenu(this);
+    // private final JMenu deleteMenu
     private final JMenu semesterMenu = new SemesterMenu();
     private final MyTableModel tableModel = new MyTableModel();
     private final JTable table = new JTable(tableModel);
@@ -61,7 +62,6 @@ public class ViewImpl extends JFrame implements IView {
     public ViewImpl() {
         super();
         this.addData(0, null);
-        Controller.getController().setView(this);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setTitle("Orario Lezioni");

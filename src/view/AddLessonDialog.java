@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddLessonDialog extends AbstractAddDialog {
+public class AddLessonDialog extends AbstractAddDeleteDialog {
     
     /**
      * 

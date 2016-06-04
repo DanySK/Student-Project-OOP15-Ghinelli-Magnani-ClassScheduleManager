@@ -14,6 +14,10 @@ public interface IControllerViewManager {
     
     Map<String, List<String>> getSearchValues(final ISchedulesModel model);
     
+    Map<String, List<String>> getProfessorValues();
+    
+    Map<String, List<String>> getTeachingValues(final ISchedulesModel model);
+    
     void addCourse(final List<String> values, final ISchedulesModel model);
     
     void addLesson(final List<String> values, final ISchedulesModel model);

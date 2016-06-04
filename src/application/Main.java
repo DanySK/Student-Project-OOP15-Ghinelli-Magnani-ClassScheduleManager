@@ -1,5 +1,6 @@
 package application;
 
+import controller.Controller;
 import view.ViewImpl;
 
 public final class Main {
@@ -9,6 +10,6 @@ public final class Main {
     }
     
     public static void main(final String... args) {
-        new ViewImpl();
+        Controller.getController().setView(new ViewImpl());
     }
 }
