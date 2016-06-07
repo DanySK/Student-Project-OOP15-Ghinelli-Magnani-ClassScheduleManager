@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddTeachingDialog extends AbstractAddDeleteDialog {
+public class AddTeachingDialog extends AbstractDialog {
     /**
      * 
      */

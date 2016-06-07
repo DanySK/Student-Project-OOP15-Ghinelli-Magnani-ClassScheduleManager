@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
+import controller.Controller;
 import model.Hour;
 
 public class MyTableModel extends AbstractTableModel {
@@ -41,10 +42,14 @@ public class MyTableModel extends AbstractTableModel {
     
     public void setModel(final List<List<Object>> list) {
         if (list == null) {
-                throw new IllegalArgumentException("The TableModel can't be null!");
+                Controller.getController().errorMessage("The table model can't be null!");
         }
         base = list;
         fireTableDataChanged();
+    }
+    
+    public List<List<Object>> getModel() {
+        return this.base;
     }
     
 }

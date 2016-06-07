@@ -1,14 +1,16 @@
 package view.utility;
 
+import controller.utility.Pair;
+
 public class Originator {
 
-    private String state;
+    private Pair<Object, Pair<Integer, Integer>> state;
     
-    public void setState(final String status) {
+    public void setState(final Pair<Object, Pair<Integer, Integer>> status) {
         this.state = status;
     }
 
-    public String getState() {
+    public Pair<Object, Pair<Integer, Integer>> getState() {
         return state;
     }
 

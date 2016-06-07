@@ -1,16 +1,22 @@
 package view;
 
 
-import java.awt.BorderLayout;  
+import java.awt.BorderLayout;    
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,15 +28,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
 
 import controller.Controller;
 import controller.utility.Pair;
 import model_interface.ILesson;
+import view.utility.CareTaker;
 import view.utility.ColorUtility;
+import view.utility.Memento;
 import view.utility.ObjectManager;
+import view.utility.Originator;
 
-public class ViewImpl extends JFrame implements IView {
+public class ViewImpl extends JFrame implements IView { // iniziare a frammentarla, troppo grande
     
     /**
      * 
@@ -39,7 +50,7 @@ public class ViewImpl extends JFrame implements IView {
     private final JMenuBar menuBar = new JMenuBar();
     private final BaseMenu menu = new BaseMenu(this);
     private final JMenu addMenu = new AddMenu(this);
-    // private final JMenu deleteMenu
+    private final JMenu deleteMenu = new DeleteMenu(this);
     private final JMenu semesterMenu = new SemesterMenu();
     private final MyTableModel tableModel = new MyTableModel();
     private final JTable table = new JTable(tableModel);
@@ -57,6 +68,9 @@ public class ViewImpl extends JFrame implements IView {
     private ILesson lessonSlot1; //
     private ILesson lessonSlot2; //    controllare per bene questi campi
     private int searchType; //
+    private KeyEventDispatcher undoRedo;
+    private final CareTaker careTaker = new CareTaker();
+    private final Originator originator = new Originator();
     
 
     public ViewImpl() {
@@ -75,6 +89,7 @@ public class ViewImpl extends JFrame implements IView {
         
         this.menuBar.add(menu);
         this.menuBar.add(addMenu);
+        this.menuBar.add(deleteMenu);
         this.menuBar.add(semesterMenu);
         
         this.legenda.setBorder(new TitledBorder("Legenda"));
@@ -98,18 +113,22 @@ public class ViewImpl extends JFrame implements IView {
                 final Object lessonTmp = this.table.getValueAt(rowValTmp, colValTmp);
                 if (lessonTmp instanceof ILesson) {
                     if (!this.slot1.isVisible()) {
+                        this.originator.setState(new Pair<>(lessonTmp, new Pair<>(rowValTmp, colValTmp))); //
+                        this.careTaker.add(originator.saveStateToMemento()); // memento
                         this.table.setValueAt("", rowValTmp, colValTmp);
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
                         this.lessonSlot1 = (ILesson) lessonTmp;
                     } else {
                         if (!this.slot2.isVisible()) {
+                            this.originator.setState(new Pair<>(lessonTmp, new Pair<>(rowValTmp, colValTmp))); //
+                            this.careTaker.add(originator.saveStateToMemento()); // memento
                             this.table.setValueAt("", rowValTmp, colValTmp);
                             this.slot2.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                             this.slot2.setVisible(true);
                             this.lessonSlot2 = (ILesson) lessonTmp;
                         } else {
-                            Controller.getController().errorMessage("You can't take another lesson, place one of which you got at least!");
+                            Controller.getController().errorMessage("You can't take another lesson, place one of which you have got at least!");
                         }
                     }
                 } else {
@@ -142,6 +161,7 @@ public class ViewImpl extends JFrame implements IView {
                 if (!lesson.toString().equals("")) {
                     Controller.getController().errorMessage("You can't place this lesson here!");
                 } else {
+                    
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot2), rowVal, colVal);
                     this.slot2.setVisible(false);
                 }
@@ -158,7 +178,10 @@ public class ViewImpl extends JFrame implements IView {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
                 if (lesson instanceof ILesson) {
                     if (JOptionPane.showConfirmDialog(this, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
-                        Controller.getController().deleteLesson((ILesson) lesson);
+                        this.originator.setState(new Pair<>(lesson, new Pair<>(rowVal, colVal))); //
+                        this.careTaker.add(originator.saveStateToMemento()); // memento
+                        //Controller.getController().deleteLesson((ILesson) lesson);
+                        this.table.setValueAt("", rowVal, colVal); // chiedere alla marti come vorrebbe fare
                     }
                 } else {
                     Controller.getController().errorMessage("You can't delete this element, it's not a lesson!");
@@ -207,6 +230,7 @@ public class ViewImpl extends JFrame implements IView {
     public void editMode(final boolean set) {
         this.menu.setEnabled(!set);
         this.addMenu.setEnabled(!set);
+        this.deleteMenu.setEnabled(!set);
         this.semesterMenu.setEnabled(!set);
         this.keep.setEnabled(set);
         this.delete.setEnabled(set);
@@ -214,14 +238,84 @@ public class ViewImpl extends JFrame implements IView {
         this.table.setCellSelectionEnabled(set);
         if (set) {
             this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            final MouseListener clickCell = new MouseAdapter() {
+            this.table.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
                     cellCoordinates = new Pair<>(table.rowAtPoint(e.getPoint()), table.columnAtPoint(e.getPoint()));
-                    
+                }
+            });
+            this.undoRedo = new KeyEventDispatcher() {
+                
+                private final Set<Integer> pressed = new HashSet<>();
+                private final CareTaker redoCareTaker = new CareTaker();
+                private Object mementoStateTmp;
+                @Override
+                public boolean dispatchKeyEvent(final KeyEvent e) {
+                    if (e.getID() == KeyEvent.KEY_RELEASED) {
+                        pressed.remove(e.getKeyCode());
+                    }
+                    if (e.getID() == KeyEvent.KEY_PRESSED) {
+                        pressed.add(e.getKeyCode());
+                        if (pressed.size() == 2) {
+                            if (pressed.contains(KeyEvent.VK_CONTROL) && pressed.contains(KeyEvent.VK_Z)) {
+                                if (careTaker.mementoListSize() == 0) {
+                                    System.out.println("nessun undo possibile da fare");
+                                    return false;
+                                }
+                                final Memento mementoTmp = careTaker.get(careTaker.mementoListSize() - 1);
+                                this.mementoStateTmp = table.getValueAt(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
+                                originator.setState(new Pair<>(this.mementoStateTmp, new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
+                                this.redoCareTaker.add(originator.saveStateToMemento());
+                                table.setValueAt(mementoTmp.getState().getX(), mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
+                                careTaker.removeUsedMemento(careTaker.mementoListSize() - 1);
+                                /*} else {
+                                    System.out.println("undo su spostamento");
+                                    table.setValueAt(careTaker.get(mementoIndex).getState().getX(), careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY());
+                                    mementoIndex--;
+                                    if (lastSlotUsed) {
+                                        slot1.setVisible(false);
+                                        lastSlotUsed = false;
+                                    } else {
+                                        slot2.setVisible(false);
+                                        lastSlotUsed = true;
+                                    }
+                                }*/
+                            }
+                            if (pressed.contains(KeyEvent.VK_CONTROL) && pressed.contains(KeyEvent.VK_Y)) {
+                                if (this.redoCareTaker.mementoListSize() == 0) {
+                                    System.out.println("nessun redo possibile da fare");
+                                    return false;
+                                }
+                                final Memento mementoTmp = this.redoCareTaker.get(this.redoCareTaker.mementoListSize() - 1);
+                                this.mementoStateTmp = table.getValueAt(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
+                                originator.setState(new Pair<>(this.mementoStateTmp, new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
+                                careTaker.add(originator.saveStateToMemento());
+                                table.setValueAt(mementoTmp.getState().getX(), mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
+                                this.redoCareTaker.removeUsedMemento(this.redoCareTaker.mementoListSize() - 1);
+                                /*originator.setState(new Pair<>(table.getValueAt(careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY()), new Pair<>(careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY()))); //
+                                //careTaker.add(originator.saveStateToMemento()); // memento
+                                //redoDone = true;
+                                System.out.println("redo su cancellazione");
+                                table.setValueAt(careTaker.get(mementoIndex).getState().getX(), careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY());
+                                } else {
+                                    table.setValueAt(careTaker.get(mementoIndex).getState().getX(), careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY());
+                                    if (!lastSlotUsed) {
+                                       slot1.setVisible(true);
+                                       lastSlotUsed = true;
+                                    } else {
+                                       slot2.setVisible(true);
+                                       lastSlotUsed = false;
+                                    }
+                                }*/
+                            }
+                        }
+                    }
+                    return false;
                 }
             };
-            this.table.addMouseListener(clickCell);
+            KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(undoRedo);
+        } else {
+            KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(undoRedo);
         }
     }
 

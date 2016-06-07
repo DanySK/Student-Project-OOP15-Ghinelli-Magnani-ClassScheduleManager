@@ -1,14 +1,16 @@
 package view.utility;
 
+import controller.utility.Pair;
+
 public class Memento {
     
-    private final String state;
+    private final Pair<Object, Pair<Integer, Integer>> state;
     
-    public Memento(final String status) {
+    public Memento(final Pair<Object, Pair<Integer, Integer>> status) {
         this.state = status;
     }
     
-    public String getState() {
+    public Pair<Object, Pair<Integer, Integer>> getState() {
         return this.state;
     }
 }

@@ -175,4 +175,12 @@ public final class Controller {  // da riguardare per bene per il bel codice
     public Map<String, List<String>> deleteTeachingValues() {
         return this.manager.getTeachingValues(model);
     }
+    
+    /*public void deleteProfessor(final String prof) {
+        this.model.deleteProfessor(prof);
+    }
+    
+    public void deleteTeaching(final String teaching) {
+        this.model.deleteTeaching(teaching);
+    }*/
 }

@@ -14,4 +14,12 @@ public class CareTaker {
     public Memento get(final int index) {
        return this.mementoList.get(index);
     }
+    
+    public int mementoListSize() {
+        return this.mementoList.size();
+    }
+    
+    public void removeUsedMemento(final int index) {
+        this.mementoList.remove(index);
+    }
 }
