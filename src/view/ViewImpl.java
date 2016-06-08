@@ -16,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -113,7 +114,7 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                 final Object lessonTmp = this.table.getValueAt(rowValTmp, colValTmp);
                 if (lessonTmp instanceof ILesson) {
                     if (!this.slot1.isVisible()) {
-                        this.originator.setState(new Pair<>(lessonTmp, new Pair<>(rowValTmp, colValTmp))); //
+                        this.originator.setState(new Pair<>(new Pair<>(lessonTmp, Optional.of(0)), new Pair<>(rowValTmp, colValTmp))); //
                         this.careTaker.add(originator.saveStateToMemento()); // memento
                         this.table.setValueAt("", rowValTmp, colValTmp);
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
@@ -121,7 +122,7 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                         this.lessonSlot1 = (ILesson) lessonTmp;
                     } else {
                         if (!this.slot2.isVisible()) {
-                            this.originator.setState(new Pair<>(lessonTmp, new Pair<>(rowValTmp, colValTmp))); //
+                            this.originator.setState(new Pair<>(new Pair<>(lessonTmp, Optional.of(0)), new Pair<>(rowValTmp, colValTmp))); //
                             this.careTaker.add(originator.saveStateToMemento()); // memento
                             this.table.setValueAt("", rowValTmp, colValTmp);
                             this.slot2.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
@@ -146,6 +147,8 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                 if (!lesson.toString().equals("")) {
                     Controller.getController().errorMessage("You can't place this lesson here!");
                 } else {
+                    this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.of(1)), new Pair<>(rowVal, colVal))); //
+                    this.careTaker.add(originator.saveStateToMemento()); // memento
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot1), rowVal, colVal);
                     this.slot1.setVisible(false);
                 }
@@ -161,7 +164,8 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                 if (!lesson.toString().equals("")) {
                     Controller.getController().errorMessage("You can't place this lesson here!");
                 } else {
-                    
+                    this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.of(2)), new Pair<>(rowVal, colVal))); //
+                    this.careTaker.add(originator.saveStateToMemento()); // memento
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot2), rowVal, colVal);
                     this.slot2.setVisible(false);
                 }
@@ -178,10 +182,10 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
                 if (lesson instanceof ILesson) {
                     if (JOptionPane.showConfirmDialog(this, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
-                        this.originator.setState(new Pair<>(lesson, new Pair<>(rowVal, colVal))); //
+                        this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.empty()), new Pair<>(rowVal, colVal))); //
                         this.careTaker.add(originator.saveStateToMemento()); // memento
-                        //Controller.getController().deleteLesson((ILesson) lesson);
-                        this.table.setValueAt("", rowVal, colVal); // chiedere alla marti come vorrebbe fare
+                        Controller.getController().deleteLesson((ILesson) lesson);
+                        //this.table.setValueAt("", rowVal, colVal); // chiedere alla marti come vorrebbe fare
                     }
                 } else {
                     Controller.getController().errorMessage("You can't delete this element, it's not a lesson!");
@@ -249,6 +253,7 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                 private final Set<Integer> pressed = new HashSet<>();
                 private final CareTaker redoCareTaker = new CareTaker();
                 private Object mementoStateTmp;
+                
                 @Override
                 public boolean dispatchKeyEvent(final KeyEvent e) {
                     if (e.getID() == KeyEvent.KEY_RELEASED) {
@@ -264,22 +269,27 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                                 }
                                 final Memento mementoTmp = careTaker.get(careTaker.mementoListSize() - 1);
                                 this.mementoStateTmp = table.getValueAt(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
-                                originator.setState(new Pair<>(this.mementoStateTmp, new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
+                                originator.setState(new Pair<>(new Pair<>(this.mementoStateTmp, mementoTmp.getState().getX().getY()), new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
                                 this.redoCareTaker.add(originator.saveStateToMemento());
-                                table.setValueAt(mementoTmp.getState().getX(), mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
+                                table.setValueAt(mementoTmp.getState().getX().getX(), mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
                                 careTaker.removeUsedMemento(careTaker.mementoListSize() - 1);
-                                /*} else {
-                                    System.out.println("undo su spostamento");
-                                    table.setValueAt(careTaker.get(mementoIndex).getState().getX(), careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY());
-                                    mementoIndex--;
-                                    if (lastSlotUsed) {
-                                        slot1.setVisible(false);
-                                        lastSlotUsed = false;
+                                if (mementoTmp.getState().getX().getY().isPresent()) {
+                                    if (mementoTmp.getState().getX().getY().get() == 0) {
+                                        if (slot2.isVisible()) {
+                                            slot2.setVisible(false);
+                                        } else {
+                                            if (slot1.isVisible()) {
+                                                slot1.setVisible(false);
+                                            }
+                                        }
                                     } else {
-                                        slot2.setVisible(false);
-                                        lastSlotUsed = true;
+                                        if (mementoTmp.getState().getX().getY().get() == 1) {
+                                            slot1.setVisible(true);
+                                        } else {
+                                            slot2.setVisible(true);
+                                        }
                                     }
-                                }*/
+                                }
                             }
                             if (pressed.contains(KeyEvent.VK_CONTROL) && pressed.contains(KeyEvent.VK_Y)) {
                                 if (this.redoCareTaker.mementoListSize() == 0) {
@@ -288,25 +298,27 @@ public class ViewImpl extends JFrame implements IView { // iniziare a frammentar
                                 }
                                 final Memento mementoTmp = this.redoCareTaker.get(this.redoCareTaker.mementoListSize() - 1);
                                 this.mementoStateTmp = table.getValueAt(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
-                                originator.setState(new Pair<>(this.mementoStateTmp, new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
+                                originator.setState(new Pair<>(new Pair<>(this.mementoStateTmp, mementoTmp.getState().getX().getY()), new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
                                 careTaker.add(originator.saveStateToMemento());
-                                table.setValueAt(mementoTmp.getState().getX(), mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
+                                table.setValueAt(mementoTmp.getState().getX().getX(), mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
                                 this.redoCareTaker.removeUsedMemento(this.redoCareTaker.mementoListSize() - 1);
-                                /*originator.setState(new Pair<>(table.getValueAt(careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY()), new Pair<>(careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY()))); //
-                                //careTaker.add(originator.saveStateToMemento()); // memento
-                                //redoDone = true;
-                                System.out.println("redo su cancellazione");
-                                table.setValueAt(careTaker.get(mementoIndex).getState().getX(), careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY());
-                                } else {
-                                    table.setValueAt(careTaker.get(mementoIndex).getState().getX(), careTaker.get(mementoIndex).getState().getY().getX(), careTaker.get(mementoIndex).getState().getY().getY());
-                                    if (!lastSlotUsed) {
-                                       slot1.setVisible(true);
-                                       lastSlotUsed = true;
+                                if (mementoTmp.getState().getX().getY().isPresent()) {
+                                    /*if (mementoTmp.getState().getX().getY().get() == 0) {
+                                        if (slot2.isVisible()) {
+                                            slot2.setVisible(false);
+                                        } else {
+                                            if (slot1.isVisible()) {
+                                                slot1.setVisible(false);
+                                            }
+                                        }
                                     } else {
-                                       slot2.setVisible(true);
-                                       lastSlotUsed = false;
-                                    }
-                                }*/
+                                        if (mementoTmp.getState().getX().getY().get() == 1) {
+                                            slot1.setVisible(true);
+                                        } else {
+                                            slot2.setVisible(true);
+                                        }
+                                    }*/
+                                }
                             }
                         }
                     }
