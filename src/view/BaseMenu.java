@@ -26,12 +26,7 @@ public class BaseMenu extends JMenu {
         menuItem.addActionListener(e -> {
             final int retVal = this.fileChooser.showOpenDialog(this);
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                try {
-                    Controller.getController().loadData(this.fileChooser.getSelectedFile());
-                } catch (IOException e1) {
-                    frame.errorDialog(e1.getMessage());
-                    Logger.getGlobal().log(Level.SEVERE, "Error:", e);
-                }
+                Controller.getController().loadData(this.fileChooser.getSelectedFile());
             }
         });
         this.add(menuItem);
@@ -39,12 +34,7 @@ public class BaseMenu extends JMenu {
         menuItem.addActionListener(e -> {
             final int retVal = this.fileChooser.showSaveDialog(this);
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                try {
-                    Controller.getController().saveData(this.fileChooser.getSelectedFile());
-                } catch (IOException e1) {
-                    frame.errorDialog(e1.getMessage());
-                    Logger.getGlobal().log(Level.SEVERE, "Error:", e);
-                }
+                Controller.getController().saveData(this.fileChooser.getSelectedFile());
             }
         });
         this.add(menuItem);

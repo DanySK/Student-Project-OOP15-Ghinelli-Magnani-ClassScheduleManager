@@ -30,11 +30,7 @@ public final class Controller {  // da riguardare per bene per il bel codice
     private String searchValue = "Total";
 
     private Controller() {
-        try {
-            this.readConfiguration();
-        } catch (IOException e) {
-            Logger.getGlobal().log(Level.SEVERE, "Error:", e);
-        }
+        this.readConfiguration();
     }
 
     public static Controller getController() {
@@ -50,19 +46,30 @@ public final class Controller {  // da riguardare per bene per il bel codice
         this.view = Optional.of(viewValue);
     }
     
-    public void readConfiguration() throws IOException {
-        data.readConfig(this.model);
+    public void readConfiguration() {
+        try {
+            data.readConfig(this.model);
+        } catch (IOException e) {
+            this.errorMessage(e.getMessage());
+        }
     }
     
-    public void saveData(final File file) throws IOException {
-        data.saveFile(file.getPath(), model);
+    public void saveData(final File file) {
+        try {
+            data.saveFile(file.getPath(), model);
+        } catch (IOException e) {
+            this.errorMessage(e.getMessage());
+        }
     }
     
-    public void loadData(final File file) throws IOException {
+    public void loadData(final File file) {
+        
         try {
             this.model = data.openFile(file.getPath());
         } catch (ClassNotFoundException e) {
-            Logger.getGlobal().log(Level.SEVERE, "Error:", e);
+            this.errorMessage(e.getMessage());
+        } catch (IOException e) {
+            this.errorMessage(e.getMessage());
         }
         this.searchBy(this.searchType, this.searchValue);
     }
