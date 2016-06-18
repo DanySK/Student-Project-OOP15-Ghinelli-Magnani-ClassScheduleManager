@@ -28,6 +28,10 @@ import view.utility.Originator;
 
 public class EditPanel extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2977645584952090514L;
     private final JTable table;
     private final JPanel editing = new JPanel();
     private final JPanel slots = new JPanel(new BorderLayout());
