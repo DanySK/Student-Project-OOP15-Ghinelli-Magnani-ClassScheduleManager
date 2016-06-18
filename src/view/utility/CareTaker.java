@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CareTaker {
     
-    private final List<Memento> mementoList = new ArrayList<Memento>();
+    private List<Memento> mementoList = new ArrayList<>();
 
     public void add(final Memento state) {
        this.mementoList.add(state);
@@ -21,5 +21,9 @@ public class CareTaker {
     
     public void removeUsedMemento(final int index) {
         this.mementoList.remove(index);
+    }
+    
+    public void cleanMementoList() {
+        this.mementoList = new ArrayList<>();
     }
 }

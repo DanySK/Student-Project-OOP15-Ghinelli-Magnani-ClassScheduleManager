@@ -183,6 +183,10 @@ public final class Controller {  // da riguardare per bene per il bel codice
         return this.manager.getTeachingValues(model);
     }
     
+    public void editMode(final boolean set) {
+        this.view.get().editMode(set);
+    }
+    
     /*public void deleteProfessor(final String prof) {
         this.model.deleteProfessor(prof);
     }
