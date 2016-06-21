@@ -1,6 +1,8 @@
 package controller;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +13,15 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.swing.JTable;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+
 import model.SchedulesModel;
+import model_interface.ILesson;
 import model_interface.ISchedulesModel;
 
 public class DataManegerImpl implements IDataManager {
@@ -63,6 +73,34 @@ public class DataManegerImpl implements IDataManager {
             final SchedulesModel model = (SchedulesModel) ois.readObject();
             ois.close();
             return model;
+    }
+    @Override
+    public void exportInExcel(final JTable table) {
+        final HSSFWorkbook workbook = new HSSFWorkbook();
+        final HSSFSheet sheet = workbook.createSheet("List of lessons");
+        final CellStyle cellStyle = workbook.createCellStyle();
+        cellStyle.setWrapText(true);
+        for (int i = 0; i < table.getRowCount(); i++) {
+            final Row rows = sheet.createRow(i);
+            for (int y = 0; y < table.getColumnCount(); y++) {
+                if (table.getValueAt(i, y) instanceof ILesson) {
+                    rows.createCell(y).setCellValue(((ILesson) table.getValueAt(i, y)).getSubject().getName() + System.lineSeparator() + ((ILesson) table.getValueAt(i, y)).getProfessor().getName());
+                } else {
+                    rows.createCell(y).setCellValue(table.getValueAt(i, y).toString());
+                }
+                rows.getCell(y).setCellStyle(cellStyle);
+                sheet.autoSizeColumn(y);
+            }
+        }
+        try (final FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + File.separator + "Lessons.xls"))) {
+            workbook.write(out);
+            workbook.close();
+            System.out.println("Export successful");
+        } catch (FileNotFoundException e) {
+            Controller.getController().errorMessage("File not found!");
+        } catch (IOException e) {
+           Controller.getController().errorMessage("IO errors!");
+        }
     }
 
 }

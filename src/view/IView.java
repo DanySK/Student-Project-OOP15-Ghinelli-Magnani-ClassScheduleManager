@@ -13,5 +13,7 @@ public interface IView {
     void refreshSearchList();
     
     void errorDialog(final String message);
+    
+    void exportData();
 
 }

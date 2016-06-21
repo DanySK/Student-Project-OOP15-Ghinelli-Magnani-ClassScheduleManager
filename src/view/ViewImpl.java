@@ -1,7 +1,7 @@
 package view;
 
 
-import java.awt.BorderLayout;     
+import java.awt.BorderLayout;      
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
+import controller.Controller;
 import model_interface.ILesson;
 import view.utility.ColorUtility;
 import view.utility.ObjectManager;
@@ -107,6 +108,11 @@ public class ViewImpl extends JFrame implements IView {
     @Override
     public void errorDialog(final String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+
+    @Override
+    public void exportData() {
+        Controller.getController().excelExport(table);
     }
 
 }

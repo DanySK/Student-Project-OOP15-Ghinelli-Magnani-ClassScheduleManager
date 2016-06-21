@@ -1,9 +1,5 @@
 package view;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JFileChooser; 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -41,6 +37,12 @@ public class BaseMenu extends JMenu {
         menuItem = new JMenuItem("Edit");
         menuItem.addActionListener(e -> {
             Controller.getController().editMode(true);
+        });
+        this.add(menuItem);
+        
+        menuItem = new JMenuItem("Export as Excel file");
+        menuItem.addActionListener(e -> {
+            frame.exportData();
         });
         this.add(menuItem);
         

@@ -22,7 +22,7 @@ public class MyRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         if (value instanceof ILesson) {
-            cell.setText(((ILesson) value).getSubject().getName() + System.getProperties().getProperty("line.separator") + ((ILesson) value).getProfessor().getName());
+            cell.setText(((ILesson) value).getSubject().getName() + System.lineSeparator() + ((ILesson) value).getProfessor().getName());
             ColorUtility.getColorsByYear().forEach(x -> {
                 if (x.getX().equals(((ILesson) value).getSubject().getYear().getYear())) {
                     cell.setBackground(x.getY());

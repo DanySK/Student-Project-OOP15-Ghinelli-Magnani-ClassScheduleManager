@@ -1,13 +1,20 @@
 package controller;
 
-import java.io.File;    
-import java.io.IOException; 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import javax.swing.JTable;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
 
 import controller.utility.Pair;
 import model.Court;
@@ -18,7 +25,7 @@ import model_interface.ILesson;
 import model_interface.ISchedulesModel;
 import view.IView;
 
-public final class Controller {  // da riguardare per bene per il bel codice
+public final class Controller {
     
     private static Optional<Controller> singleton = Optional.empty();
     private ISchedulesModel model = new SchedulesModel();
@@ -72,6 +79,10 @@ public final class Controller {  // da riguardare per bene per il bel codice
             this.errorMessage(e.getMessage());
         }
         this.searchBy(this.searchType, this.searchValue);
+    }
+    
+    public void excelExport(final JTable table) {
+        data.exportInExcel(table);
     }
 
     public List<String> getCourseName() {
