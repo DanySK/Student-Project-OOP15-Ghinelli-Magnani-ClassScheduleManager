@@ -8,6 +8,13 @@ import model.Day;
 import model.Hour;
 import model_interface.ILesson;
 
+/**
+ * 
+ * Utility class used to prepare the list of ILesson for the table or to change the values of an object ILesson
+ * used to place it in the table.
+ *
+ */
+
 public final class ObjectManager {
     
     private static final int COMPLETE = 0;
@@ -18,6 +25,13 @@ public final class ObjectManager {
         
     }
 
+    /**
+     * Static method which returns a list of object which is combined with object ILesson and strings.
+     * @param searchType Table's type of view used to understand which list needs to be returned.
+     * @param list List of objects ILesson.
+     * @return The list of objects used by the table.
+     */
+    
     public static List<List<Object>> getStruct(final int searchType, final List<ILesson> list) {
         final List<List<Object>> base = new ArrayList<>();
         if (searchType == ObjectManager.COMPLETE) {
@@ -73,9 +87,6 @@ public final class ObjectManager {
                 }
                 base.get(classVal + dayVal).set(hourVal, lesson);
             }
-            
-            
-            
             return base;
         }
         
@@ -116,13 +127,19 @@ public final class ObjectManager {
                 }
                 base.get(dayVal).set(hourVal, lesson);
             }
-            
-            
-            
             return base;
         }
         return null;
     }
+    
+    /**
+     * Method which change the values of an object ILesson to place it in another cell of the table.
+     * @param type Table's type of view used to understand the actual view of the table.
+     * @param row Future row of the object in the table.
+     * @param column Future column of the object in the table.
+     * @param lesson The object ILesson which needs to be moved.
+     * @return The object ILesson with the new fields used to change is position on the table.
+     */
     
     public static ILesson setNewLessonValues(final int type, final int row, final int column, final ILesson lesson) {
         if (type == ObjectManager.COMPLETE) {

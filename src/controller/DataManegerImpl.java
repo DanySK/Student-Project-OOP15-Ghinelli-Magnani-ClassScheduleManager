@@ -75,23 +75,7 @@ public class DataManegerImpl implements IDataManager {
             return model;
     }
     @Override
-    public void exportInExcel(final JTable table) {
-        final HSSFWorkbook workbook = new HSSFWorkbook();
-        final HSSFSheet sheet = workbook.createSheet("List of lessons");
-        final CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setWrapText(true);
-        for (int i = 0; i < table.getRowCount(); i++) {
-            final Row rows = sheet.createRow(i);
-            for (int y = 0; y < table.getColumnCount(); y++) {
-                if (table.getValueAt(i, y) instanceof ILesson) {
-                    rows.createCell(y).setCellValue(((ILesson) table.getValueAt(i, y)).getSubject().getName() + System.lineSeparator() + ((ILesson) table.getValueAt(i, y)).getProfessor().getName());
-                } else {
-                    rows.createCell(y).setCellValue(table.getValueAt(i, y).toString());
-                }
-                rows.getCell(y).setCellStyle(cellStyle);
-                sheet.autoSizeColumn(y);
-            }
-        }
+    public void exportInExcel(final HSSFWorkbook workbook) {
         try (final FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + File.separator + "Lessons.xls"))) {
             workbook.write(out);
             workbook.close();

@@ -18,10 +18,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+
 import controller.Controller;
 import model_interface.ILesson;
+import view.menu.AddMenu;
+import view.menu.BaseMenu;
+import view.menu.DeleteMenu;
+import view.menu.SemesterMenu;
 import view.utility.ColorUtility;
 import view.utility.ObjectManager;
+
+/**
+ * 
+ * Class which represents the main frame of the program.
+ *
+ */
 
 public class ViewImpl extends JFrame implements IView {
     
@@ -41,8 +56,11 @@ public class ViewImpl extends JFrame implements IView {
     private final JPanel legenda = new JPanel(new GridBagLayout());
     private final EditPanel editing = new EditPanel(table);
     private int searchType;
-    
 
+    /**
+     * Constructor of the main frame.
+     */
+    
     public ViewImpl() {
         super();
         this.addData(0, null);
@@ -112,7 +130,23 @@ public class ViewImpl extends JFrame implements IView {
 
     @Override
     public void exportData() {
-        Controller.getController().excelExport(table);
+        final HSSFWorkbook workbook = new HSSFWorkbook();
+        final HSSFSheet sheet = workbook.createSheet("List of lessons");
+        final CellStyle cellStyle = workbook.createCellStyle();
+        cellStyle.setWrapText(true);
+        for (int i = 0; i < table.getRowCount(); i++) {
+            final Row rows = sheet.createRow(i);
+            for (int y = 0; y < table.getColumnCount(); y++) {
+                if (table.getValueAt(i, y) instanceof ILesson) {
+                    rows.createCell(y).setCellValue(((ILesson) table.getValueAt(i, y)).getSubject().getName() + System.lineSeparator() + ((ILesson) table.getValueAt(i, y)).getProfessor().getName());
+                } else {
+                    rows.createCell(y).setCellValue(table.getValueAt(i, y).toString());
+                }
+                rows.getCell(y).setCellStyle(cellStyle);
+                sheet.autoSizeColumn(y);
+            }
+        }
+        Controller.getController().excelExport(workbook);
     }
 
 }

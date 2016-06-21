@@ -81,8 +81,8 @@ public final class Controller {
         this.searchBy(this.searchType, this.searchValue);
     }
     
-    public void excelExport(final JTable table) {
-        data.exportInExcel(table);
+    public void excelExport(final HSSFWorkbook workbook) {
+        data.exportInExcel(workbook);
     }
 
     public List<String> getCourseName() {

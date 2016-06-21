@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
@@ -26,6 +26,12 @@ import view.utility.Memento;
 import view.utility.ObjectManager;
 import view.utility.Originator;
 
+/**
+ * 
+ * A panel which manages all the editing of the table.
+ *
+ */
+
 public class EditPanel extends JPanel {
     
     /**
@@ -40,13 +46,18 @@ public class EditPanel extends JPanel {
     private final JButton done = new JButton("Done");
     private final JButton slot1 = new JButton();
     private final JButton slot2 = new JButton();
-    private Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
-    private ILesson lessonSlot1; //
-    private ILesson lessonSlot2; //    controllare per bene questi campi
-    private int searchType; //
-    private KeyEventDispatcher undoRedo;
-    private final CareTaker careTaker = new CareTaker();
-    private final Originator originator = new Originator();
+    private transient Pair<Integer, Integer> cellCoordinates = new Pair<>(0, 0);
+    private Object lessonSlot1;
+    private Object lessonSlot2;
+    private int searchType;
+    private transient KeyEventDispatcher undoRedo;
+    private final transient CareTaker careTaker = new CareTaker();
+    private final transient Originator originator = new Originator();
+    
+    /**
+     * Constructor of the panel, sets his buttons and the actionlistener of them.
+     * @param actualTable The table of the main frame.
+     */
     
     public EditPanel(final JTable actualTable) {
         this.table = actualTable;
@@ -95,7 +106,7 @@ public class EditPanel extends JPanel {
                 } else {
                     this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.of(1)), new Pair<>(rowVal, colVal))); //
                     this.careTaker.add(originator.saveStateToMemento()); // memento
-                    this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot1), rowVal, colVal);
+                    this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot1), rowVal, colVal);
                     this.slot1.setVisible(false);
                 }
             }
@@ -112,7 +123,7 @@ public class EditPanel extends JPanel {
                 } else {
                     this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.of(2)), new Pair<>(rowVal, colVal))); //
                     this.careTaker.add(originator.saveStateToMemento()); // memento
-                    this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, this.lessonSlot2), rowVal, colVal);
+                    this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot2), rowVal, colVal);
                     this.slot2.setVisible(false);
                 }
             }
@@ -166,6 +177,13 @@ public class EditPanel extends JPanel {
         this.add(editing, BorderLayout.NORTH);
         this.add(slots, BorderLayout.SOUTH);
     }
+    
+    /**
+     * Method which enables or disables the button of editing and adds or removes the listeners for the mouse,
+     * used to select the cells and for the keyboard used for the functions of undo and redo.
+     * @param set Says if the panel change in edit mode or not.
+     * @param actualSearchType Actual table's view type.
+     */
     
     public void editMode(final boolean set, final int actualSearchType) {
         this.searchType = actualSearchType;

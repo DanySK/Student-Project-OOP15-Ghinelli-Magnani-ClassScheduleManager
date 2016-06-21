@@ -1,12 +1,11 @@
-package view;
-
-import java.awt.GridBagConstraints;   
+package view.dialog;
+  
+import java.awt.GridBagConstraints;     
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,17 +13,26 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class AddLessonDialog extends AbstractDialog {
-    
+/**
+ * 
+ *Dialog used to add the teachings to the program.
+ *
+ */
+
+public class AddTeachingDialog extends AbstractDialog {
     /**
      * 
      */
-    private static final long serialVersionUID = -4379958406580048097L;
+    private static final long serialVersionUID = -6489822172457272017L;
     
-    public AddLessonDialog(final JFrame frame) throws HeadlessException {
+    /**
+     * Constructor of the dialog.
+     * @param frame The main frame of the program.
+     */
+    
+    public AddTeachingDialog(final JFrame frame) {
         super(frame);
     }
-
 
     @Override
     public JPanel setFields() {
@@ -32,7 +40,7 @@ public class AddLessonDialog extends AbstractDialog {
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        Controller.getController().getLessonsValues().forEach((x, y) -> {
+        Controller.getController().getCoursesValues().forEach((x, y) -> {
             final JLabel label = new JLabel(x.getX());
             cnst.anchor = GridBagConstraints.WEST;
             panelNord.add(label, cnst);
@@ -49,18 +57,15 @@ public class AddLessonDialog extends AbstractDialog {
         return panelNord;
     }
 
-
     @Override
-    public JButton setOkButton() {
-        final JButton button = new JButton("Ok");
-        button.addActionListener(e -> {
+    public ActionListener setOkListener() {
+        return e -> {
             final List<String> retValue = new ArrayList<>();
             for (final JComboBox<String> a : super.getBoxList()) {
                 retValue.add(a.getSelectedItem().toString());
             }
-            Controller.getController().addLesson(retValue);
+            Controller.getController().addCourse(retValue);
             this.setVisible(false);
-        });
-        return button;
+        };
     }
 }

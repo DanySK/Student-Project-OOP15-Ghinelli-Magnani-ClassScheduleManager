@@ -1,10 +1,9 @@
-package view;
+package view.dialog;
 
-import java.awt.GridBagConstraints; 
+import java.awt.GridBagConstraints;  
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,14 +11,25 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
+/**
+ * 
+ * Dialog used to delete a certain teaching from the program.
+ *
+ */
+
 public class DeleteTeachingDialog extends AbstractDialog {
 
     /**
      * 
      */
     private static final long serialVersionUID = -5302750499917415659L;
+    
+    /**
+     * Constructor of the dialog.
+     * @param frame The main frame of the program.
+     */
 
-    public DeleteTeachingDialog(final JFrame frame) throws HeadlessException {
+    public DeleteTeachingDialog(final JFrame frame) {
         super(frame);
     }
 
@@ -47,14 +57,12 @@ public class DeleteTeachingDialog extends AbstractDialog {
     }
 
     @Override
-    public JButton setOkButton() {
-        final JButton button = new JButton("Ok");
-        button.addActionListener(e -> {
+    public ActionListener setOkListener() {
+        return e -> {
             final String value = super.getBoxList().get(0).getSelectedItem().toString();
             // controller delete teaching
             this.setVisible(false);
-        });
-        return button;
+        };
     }
 
 }

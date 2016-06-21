@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.swing.JTable;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import model.SchedulesModel;
 import model_interface.ISchedulesModel;
 
@@ -15,5 +17,5 @@ public interface IDataManager {
     
     SchedulesModel openFile(final String fileName) throws IOException, ClassNotFoundException;
     
-    void exportInExcel(final JTable table);
+    void exportInExcel(final HSSFWorkbook workbook);
 }

@@ -10,6 +10,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import model_interface.ILesson;
 import view.utility.ColorUtility;
 
+/**
+ * 
+ * Class used to render the cells of the table.
+ *
+ */
+
 public class MyRenderer extends DefaultTableCellRenderer {
 
     /**

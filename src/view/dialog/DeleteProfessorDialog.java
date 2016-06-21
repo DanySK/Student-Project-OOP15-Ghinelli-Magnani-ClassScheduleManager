@@ -1,10 +1,9 @@
-package view;
+package view.dialog;
 
-import java.awt.GridBagConstraints; 
+import java.awt.GridBagConstraints;  
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,14 +11,25 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
+/**
+ * 
+ * Dialog used to delete a certain professor from the program.
+ *
+ */
+
 public class DeleteProfessorDialog extends AbstractDialog {
 
     /**
      * 
      */
     private static final long serialVersionUID = 754603152453800261L;
+    
+    /**
+     * Constructor of the dialog.
+     * @param frame The main frame of the program.
+     */
 
-    public DeleteProfessorDialog(final JFrame frame) throws HeadlessException {
+    public DeleteProfessorDialog(final JFrame frame) {
         super(frame);
     }
 
@@ -47,14 +57,12 @@ public class DeleteProfessorDialog extends AbstractDialog {
     }
 
     @Override
-    public JButton setOkButton() {
-        final JButton button = new JButton("Ok");
-        button.addActionListener(e -> {
+    public ActionListener setOkListener() {
+        return e -> {
             final String value = super.getBoxList().get(0).getSelectedItem().toString();
             // controller delete prof
             this.setVisible(false);
-        });
-        return button;
+        };
     }
 
 }

@@ -1,10 +1,18 @@
-package view;
+package view.menu;
 
 import javax.swing.JFileChooser; 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import controller.Controller;
+import view.IView;
+
+/**
+ * 
+ * Class which represents the main menu, used for the saving and loading of files, the exporting as excel files.
+ * It's also used to enter in edit mode and change the table's types of view.
+ *
+ */
 
 public class BaseMenu extends JMenu {
 
@@ -15,6 +23,11 @@ public class BaseMenu extends JMenu {
     private final JFileChooser fileChooser = new JFileChooser();
     private JMenu refreshSearch;
     private static final String TOTAL = "Total";
+    
+    /**
+     * Constructor of the menu.
+     * @param frame The main frame of the program.
+     */
 
     public BaseMenu(final IView frame) {
         super("Menu");
@@ -66,6 +79,10 @@ public class BaseMenu extends JMenu {
         });
         this.add(subMenu);
     }
+    
+    /**
+     * Method which update the table's types and elements of view.
+     */
     
     public void refreshSearchList() {
         this.remove(refreshSearch);

@@ -7,6 +7,12 @@ import java.util.List;
 import controller.utility.Pair;
 import model.Year;
 
+/**
+ * 
+ * Utility class used to pair color with years.
+ *
+ */
+
 public final class ColorUtility {
     
     private static List<Pair<String, Color>> colors;
@@ -14,6 +20,11 @@ public final class ColorUtility {
     private ColorUtility() {
         
     }
+    
+    /**
+     * Static method which pairs the colors with the year of the lessons.
+     * @return The list of pairs of color and year.
+     */
     
     public static List<Pair<String, Color>> getColorsByYear() {
         if (colors != null) {
