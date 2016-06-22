@@ -17,5 +17,10 @@ public interface IDataManager {
     
     SchedulesModel openFile(final String fileName) throws IOException, ClassNotFoundException;
     
+    /**
+     * Method which takes a HSSFWorkbook object and saves it in the home directory of the user.
+     * @param workbook The workbook containing the table.
+     */
+    
     void exportInExcel(final HSSFWorkbook workbook);
 }

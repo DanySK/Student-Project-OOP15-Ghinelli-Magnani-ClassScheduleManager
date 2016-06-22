@@ -16,7 +16,16 @@ import model.Year;
 import model_interface.ISchedulesModel;
 import model_interface.ITeaching;
 
+/**
+ * 
+ * Class of the interface IControllerViewManagerImpl.
+ *
+ */
+
 public class ControllerViewManagerImpl implements IControllerViewManager {
+    
+    private static final int SEMESTERINDEX = 6;
+    private static final int CLASSROOMINDEX = 5;
 
     @Override
     public Map<Pair<String, Boolean>, List<String>> getLessonsValues(final ISchedulesModel model) {
@@ -74,6 +83,20 @@ public class ControllerViewManagerImpl implements IControllerViewManager {
         returnValue.put("By Classroom", Controller.getController().getClassrooms());
         return returnValue;
     }
+   
+    @Override
+    public Map<String, List<String>> getProfessorValues() {
+        final Map<String, List<String>> returnValue = new HashMap<>();
+        returnValue.put("Select the professor to delete", Controller.getController().getProfessors());
+        return returnValue;
+    }
+
+    @Override
+    public Map<String, List<String>> getTeachingValues(final ISchedulesModel model) {
+        final Map<String, List<String>> returnValue = new HashMap<>();
+        returnValue.put("Select the teaching to delete", model.getTeachingsList().stream().map(x -> x.getName()).collect(Collectors.toList()));
+        return returnValue;
+    }
 
     @Override
     public void addCourse(final List<String> values, final ISchedulesModel model) {
@@ -103,7 +126,7 @@ public class ControllerViewManagerImpl implements IControllerViewManager {
         Day day = null;
         Hour hour = null;
         final Integer duration = Integer.valueOf(values.get(2));
-        if (values.get(6).equals("1")) {
+        if (values.get(SEMESTERINDEX).equals("1")) {
             semester = Semester.values()[0];
         } else {
             semester = Semester.values()[1];
@@ -122,27 +145,13 @@ public class ControllerViewManagerImpl implements IControllerViewManager {
                 for (check = 0; check < duration; check++) {
                     hour = Hour.values()[i + check];
                     try {
-                        model.addLesson(values.get(1), teaching, semester, values.get(5), hour, day, 1);
+                        model.addLesson(values.get(1), teaching, semester, values.get(CLASSROOMINDEX), hour, day, 1);
                     } catch (Exception e) {
                         Controller.getController().errorMessage(e.getMessage());
                     }
                 }
             }
         }
-    }
-   
-    @Override
-    public Map<String, List<String>> getProfessorValues() {
-        final Map<String, List<String>> returnValue = new HashMap<>();
-        returnValue.put("Select the professor to delete", Controller.getController().getProfessors());
-        return returnValue;
-    }
-
-    @Override
-    public Map<String, List<String>> getTeachingValues(final ISchedulesModel model) {
-        final Map<String, List<String>> returnValue = new HashMap<>();
-        returnValue.put("Select the teaching to delete", model.getTeachingsList().stream().map(x -> x.getName()).collect(Collectors.toList()));
-        return returnValue;
     }
 
 }

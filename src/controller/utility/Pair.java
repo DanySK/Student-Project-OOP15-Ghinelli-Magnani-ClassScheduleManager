@@ -1,7 +1,11 @@
 package controller.utility;
 
-/*
- * A standard generic Pair<X,Y>, with getters, hashCode, equals, and toString well implemented. 
+/**
+ * 
+ * A standard generic Pair<X,Y>, with getters, hashCode, equals, and toString well implemented.
+ *
+ * @param <X> First object.
+ * @param <Y> Second object.
  */
 
 public class Pair<X, Y> {
@@ -11,15 +15,31 @@ public class Pair<X, Y> {
 	
 	private static final int PRIME = 31;
 	
+	/**
+	 * Constructor of the pair object.
+	 * @param xValue Value which will be assigned as first object of the pair.
+	 * @param yValue Value which will be assigned as second object of the pair.
+	 */
+	
 	public Pair(final X xValue, final Y yValue) {
 		super();
 		this.x = xValue;
 		this.y = yValue;
 	}
+	
+	/**
+	 * Gives the first object of the pair.
+	 * @return The first object.
+	 */
 
 	public X getX() {
 		return x;
 	}
+	
+	/**
+	 * Gives the second object of the pair.
+	 * @return The second object.
+	 */
 
 	public Y getY() {
 		return y;
