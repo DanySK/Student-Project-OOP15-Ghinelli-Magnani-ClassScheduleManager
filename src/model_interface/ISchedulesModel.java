@@ -218,8 +218,8 @@ public interface ISchedulesModel extends java.io.Serializable {
 //    boolean setLessonList(final List<ILesson> newList);
     
     public boolean copy(final ISchedulesModel other);
-    
-    void addUndoState();
-    boolean undo();
-    boolean redo();
+//    
+//    void addUndoState();
+//    boolean undo();
+//    boolean redo();
 }
