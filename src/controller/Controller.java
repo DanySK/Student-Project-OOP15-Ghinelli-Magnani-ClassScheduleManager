@@ -261,7 +261,7 @@ public final class Controller {
     
     public void setChangements(final List<ILesson> list) {
         try {
-            this.model.checkChanges(list);
+            this.model.checkChanges(list, this.sem);
         } catch (IllegalArgumentException e) {
             this.errorMessage(e.getMessage());
         }
@@ -295,11 +295,11 @@ public final class Controller {
         this.view.get().editMode(set);
     }
     
-    /*public void deleteProfessor(final String prof) {
+    public void deleteProfessor(final String prof) {
         this.model.deleteProfessor(prof);
     }
     
     public void deleteTeaching(final String teaching) {
         this.model.deleteTeaching(teaching);
-    }*/
+    }
 }
