@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import model.Court;
 import model.Day;
 import model.Hour;
-import model.Lesson;
 import model.Semester;
 import model.Year;
 
@@ -212,4 +211,15 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          lesson interested
      */
     ILesson getLesson(final int id);
+    
+//    boolean setProfessorsList(final List<IProfessor> newList);
+//    boolean setTeachingList(final List<ITeaching> newList);
+//    boolean setClassRoomList(final List<String> newList);
+//    boolean setLessonList(final List<ILesson> newList);
+    
+    public boolean copy(final ISchedulesModel other);
+    
+    void addUndoState();
+    boolean undo();
+    boolean redo();
 }
