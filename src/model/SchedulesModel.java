@@ -337,6 +337,26 @@ public class SchedulesModel implements ISchedulesModel {
 //        this.addUndoState();
         return this.teachingsList.remove(teaching);
     }
+    
+    public boolean deleteProfessor(final String name) {
+        for(final IProfessor p : this.professorsList) {
+            if ((p.getName()).equals(name)) {
+                this.deleteProfessor(p);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean deleteTeaching(final String name) {
+        for(final ITeaching t : this.teachingsList) {
+            if ((t.getName()).equals(name)) {
+                this.deleteTeaching(t);
+                return true;
+            }
+        }
+        return false;
+    }
 
 //    @Override
 //    public void addUndoState() {
