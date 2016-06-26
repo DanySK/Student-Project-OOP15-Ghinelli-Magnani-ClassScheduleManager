@@ -201,7 +201,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          false - if the operation is not carried out because of conflicts
      * @throws IllegalArgumentException
      */
-    boolean checkChanges(final List<ILesson> lessonModified) throws IllegalArgumentException;
+    boolean checkChanges(final List<ILesson> lessonModified, final Semester semester) throws IllegalArgumentException;
     
     /**
      * Method that return a lesson

@@ -274,9 +274,9 @@ public class SchedulesModel implements ISchedulesModel {
     }
 
     @Override
-    public boolean checkChanges(List<ILesson> lessonModified) throws IllegalArgumentException {
-        for ( final ILesson lesson : lessonModified) {
-                    System.out.println(" " + lesson.getID() + "Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
+    public boolean checkChanges(List<ILesson> lessonModified, final Semester semester) throws IllegalArgumentException {
+        for (final ILesson lesson : lessonModified) {
+             System.out.println(" " + lesson.getID() + "Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
         }
         List<ILesson> tempLesson = new ArrayList<>();
         for (final ILesson l : this.lessonsList) {              //Copio tutte le lezioni in tempLesson per salvarle
@@ -285,7 +285,11 @@ public class SchedulesModel implements ISchedulesModel {
                 tempLesson.add(lesson);
             }
         }
-        this.lessonsList.clear();                              //Elimino le lezioni per sostituirle con quelle modificate
+        for (final ILesson l : this.lessonsList) {              //Copio tutte le lezioni in tempLesson per salvarle
+            if (l.getSemester() == semester) {                  //Elimino le lezioni per sostituirle con quelle modificate
+                this.deleteLesson(l);
+            }
+        }
         try {
              for (final ILesson l : lessonModified) {
                   this.addLesson(l);
