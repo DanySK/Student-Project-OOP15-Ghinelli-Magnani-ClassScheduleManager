@@ -139,7 +139,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @throws NoSuchElementException
      */
     boolean deleteProfessor(final IProfessor prof) throws IllegalArgumentException, NoSuchElementException;
-    
+    boolean deleteProfessor(final String name);
     /**
      * Method that delete a teaching in the list of professor
      * @param teaching
@@ -151,7 +151,7 @@ public interface ISchedulesModel extends java.io.Serializable {
      * @throws NoSuchElementException
      */
     boolean deleteTeaching(final ITeaching teaching) throws IllegalArgumentException, NoSuchElementException;
-    
+    boolean deleteTeaching(final String name);
     /**
      * Method that returns the list of filtered lessons according to the parameters that are passed
      * If these are NULL means that I do not want to filter according to those objects

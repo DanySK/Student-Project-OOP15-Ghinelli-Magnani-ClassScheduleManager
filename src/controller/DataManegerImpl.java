@@ -29,21 +29,26 @@ public class DataManegerImpl implements IDataManager {
     private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");
 
     public void readConfig(final ISchedulesModel model) throws IOException {
-        final List<String> contentFile = Files.readAllLines(this.configPath);
-        for (final String s : contentFile) {
-            final StringTokenizer st = new StringTokenizer(s, ":");
-            if (st.countTokens() == 2) {
-                final String temp = st.nextToken();
-                if ("aula".equals(temp)) {
-                    model.addClassroom(st.nextToken());
+        try {
+            final List<String> contentFile = Files.readAllLines(this.configPath);
+    
+            for (final String s : contentFile) {
+                final StringTokenizer st = new StringTokenizer(s, ":");
+                if (st.countTokens() == 2) {
+                    final String temp = st.nextToken();
+                    if ("aula".equals(temp)) {
+                        model.addClassroom(st.nextToken());
+                    }
+                    /*if ("anno".equals(temp)) {
+                        model.addYears(st.nextToken());
+                    }
+                    if ("prof".equals(temp)) {
+                        model.addProfessor(st.nextToken());
+                    }*/
                 }
-                /*if ("anno".equals(temp)) {
-                    model.addYears(st.nextToken());
-                }
-                if ("prof".equals(temp)) {
-                    model.addProfessor(st.nextToken());
-                }*/
             }
+        } catch (IOException e) {
+            throw new IOException("Illegal configuration file format");
         }
     }
     /**
@@ -69,10 +74,14 @@ public class DataManegerImpl implements IDataManager {
      * @author Martina Magnani
      */
     public SchedulesModel openFile(final String fileName) throws IOException, ClassNotFoundException {
+        try{
             final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
             final SchedulesModel model = (SchedulesModel) ois.readObject();
             ois.close();
             return model;
+        } catch (IOException e) {
+            throw new IOException("Illegal file format");
+        }
     }
     @Override
     public void exportInExcel(final HSSFWorkbook workbook) {
