@@ -11,7 +11,6 @@ import model_interface.ILesson;
 import model_interface.IProfessor;
 import model_interface.ISchedulesModel;
 import model_interface.ITeaching;
-//import model_interface.IUndoRedo;
 
 /**
  * This class handles all the lists useful to the application that are: a list of professors, a list of subjects and a list of lessons.
@@ -28,7 +27,6 @@ public class SchedulesModel implements ISchedulesModel {
     private List<ITeaching> teachingsList;
     private List<String> classroomsList;
     private List<ILesson> lessonsList;
-//    private static IUndoRedo undoredo;
     private int counter;
     
     public SchedulesModel() {
@@ -36,52 +34,14 @@ public class SchedulesModel implements ISchedulesModel {
         this.teachingsList = new ArrayList<>();
         this.lessonsList = new ArrayList<>();
         this.classroomsList = new ArrayList<>();
-//        this.undoredo = new UndoRedo();
         this.counter = 0;
     }
-    
-//    @Override
-//    public boolean setProfessorsList(final List<IProfessor> newList) {
-//        if (newList == null) {
-//           return false;
-//       }
-//       this.professorsList = newList;
-//       return true;
-//   }
-//   
-//   @Override
-//   public boolean setTeachingList(final List<ITeaching> newList) {
-//       if (newList == null) {
-//           return false;
-//       }
-//       this.teachingsList = newList;
-//        return true;
-//    }
-//    
-//    @Override
-//   public boolean setClassRoomList(final List<String> newList) {
-//        if (newList == null) {
-//            return false;
-//        }
-//        this.classroomsList = newList;
-//        return true;
-//    }
-//    
-//   @Override
-//   public boolean setLessonList(final List<ILesson> newList) {
-//       if (newList == null) {
-//           return false;
-//       }
-//       this.lessonsList = newList;
-//       return true;
-//   }
-    
+
     @Override
     public IProfessor addProfessor(final String name) throws IllegalArgumentException {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-//        this.addUndoState();
         for (final IProfessor p : this.professorsList) {
             if (p.getName().equals(name)) {
                 throw new IllegalArgumentException();
@@ -104,7 +64,6 @@ public class SchedulesModel implements ISchedulesModel {
         if (name==null || year==null || court==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-//        this.addUndoState();
         for (final ITeaching t : this.teachingsList) {
             if (t.getName().equals(name)) {
                 throw new IllegalArgumentException();
@@ -125,7 +84,6 @@ public class SchedulesModel implements ISchedulesModel {
         if (name==null) {
             throw new IllegalArgumentException("The values can't be null!"); 
         }
-//        this.addUndoState();
         for (final String s : this.classroomsList) {
             if (s.equals(name)) {
                 throw new IllegalArgumentException();
@@ -151,11 +109,9 @@ public class SchedulesModel implements ISchedulesModel {
                     throw new IllegalArgumentException("The classroom is already used!");
                 }
                 if (l.getProfessor().equals(prof) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
-//                    System.out.println("Professore già occupato: " + prof + " Altro professore: " + l.getProfessor() + " " + l.getDay() + " " +l.getClassRoom() + " " + l.getHour() + " " + l.getID());
                     throw new IllegalArgumentException("The professor is already engaged!");
                 }
             }
-//            this.addUndoState();
             this.lessonsList.add(new Lesson(prof,teaching,semester,classroom,hour,day,duration, counter));
             id = counter;
             this.counter++;
@@ -198,7 +154,6 @@ public class SchedulesModel implements ISchedulesModel {
     @Override 
     public boolean deleteLesson(final ILesson lesson) throws NoSuchElementException {
         if (this.lessonsList.contains(lesson)) {
-//            this.addUndoState();
             return this.lessonsList.remove(lesson);
         }
         else {
@@ -324,7 +279,6 @@ public class SchedulesModel implements ISchedulesModel {
                 throw new IllegalArgumentException("The professor can't be deleted because he has active lessons!");
             }
         }
-//        this.addUndoState();
         return this.professorsList.remove(prof);
     }
 
@@ -338,7 +292,6 @@ public class SchedulesModel implements ISchedulesModel {
                 throw new IllegalArgumentException("The subject can't be deleted because it has active lessons!");
             }
         }
-//        this.addUndoState();
         return this.teachingsList.remove(teaching);
     }
     
@@ -362,24 +315,6 @@ public class SchedulesModel implements ISchedulesModel {
         return false;
     }
 
-//    @Override
-//    public void addUndoState() {
-//        SchedulesModel.undoredo.setModel(this);
-//        SchedulesModel.undoredo.addUndoState();
-//    }
-//
-//    
-//    public boolean undo() {
-//        SchedulesModel.undoredo.setModel(this);
-//        return this.copy(SchedulesModel.undoredo.undo());
-//    }
-//    
-//    @Override
-//    public boolean redo() {
-//        SchedulesModel.undoredo.setModel(this);
-//        return this.copy(SchedulesModel.undoredo.redo());
-//    }
-//    
     @Override
     public boolean copy(final ISchedulesModel other) {
         if (other == null) {

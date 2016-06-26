@@ -7,6 +7,8 @@ import model.Hour;
 import model.Semester;
 
 /**
+ * Interface that represents a lesson used by the model
+ * 
  * @author Martina Magnani
  *
  */

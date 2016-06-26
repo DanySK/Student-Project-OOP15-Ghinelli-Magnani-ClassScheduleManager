@@ -4,6 +4,8 @@
 package model_interface;
 
 /**
+ * Interface that represents a professor used by the model
+ * 
  * @author Martina Magnani
  *
  */

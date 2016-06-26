@@ -7,6 +7,8 @@ import model.Court;
 import model.Year;
 
 /**
+ * Interface that represents a teaching used by the model
+ * 
  * @author Martina Magnani
  *  
  */

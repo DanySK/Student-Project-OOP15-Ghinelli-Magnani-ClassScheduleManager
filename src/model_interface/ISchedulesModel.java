@@ -13,6 +13,9 @@ import model.Semester;
 import model.Year;
 
 /**
+ * Interface that defines the complete weekly timetable and manage the list of every course of the faculty
+ * of informatics science and technology in Cesena. It represents the Model in the architectural pattern MVC.
+ * 
  * @author Martina Magnani
  *
  */
@@ -101,12 +104,14 @@ public interface ISchedulesModel extends java.io.Serializable {
      *          durata of the lesson  
      */
     int addLesson(final String prof, final ITeaching teaching, final Semester semester, final String classroom, final Hour hour, final Day day, final int duration) throws IllegalArgumentException;
+    
     /**
      * Method that add a lesson in the list of lessons
      * @param l
      *          new lesson
      */
     int addLesson(final ILesson l) throws IllegalArgumentException;
+    
     /**
      * Method that returns (if exists) the object Professor whose name matches the string prof
      * @param prof
@@ -131,7 +136,9 @@ public interface ISchedulesModel extends java.io.Serializable {
     /**
      * Method that delete a professor in the list of professor
      * @param prof
-     *          Professor you must delete
+     *          Professor to delete
+     * @param name 
+     *          Name of the professor to delete
      * @return
      *          true - if the professor was deleted
      *          false - if the professor wasn't deleted
@@ -143,7 +150,9 @@ public interface ISchedulesModel extends java.io.Serializable {
     /**
      * Method that delete a teaching in the list of professor
      * @param teaching
-     *          teaching you must delete
+     *          teaching to delete
+     * @param name
+     *          name of the teaching to delete
      * @return
      *          true - if the teaching was deleted
      *          false - if the teaching wasn't deleted
@@ -212,14 +221,13 @@ public interface ISchedulesModel extends java.io.Serializable {
      */
     ILesson getLesson(final int id);
     
-//    boolean setProfessorsList(final List<IProfessor> newList);
-//    boolean setTeachingList(final List<ITeaching> newList);
-//    boolean setClassRoomList(final List<String> newList);
-//    boolean setLessonList(final List<ILesson> newList);
-    
+    /**
+     * Method that set model
+     * @param other
+     *          new model
+     * @return
+     *          true - if the operation is completed
+     *          false - if the operation isn't completed
+     */
     public boolean copy(final ISchedulesModel other);
-//    
-//    void addUndoState();
-//    boolean undo();
-//    boolean redo();
 }
