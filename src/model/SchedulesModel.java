@@ -278,56 +278,26 @@ public class SchedulesModel implements ISchedulesModel {
         for ( final ILesson lesson : lessonModified) {
                     System.out.println(" " + lesson.getID() + "Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
         }
-        List<Integer> nuoviID = new ArrayList<>();
-        if (lessonModified != null) {
-//            System.out.println(" " + lessonModified.size());
-            List<ILesson> tempLesson = new ArrayList<>();
-            for (final ILesson l : this.lessonsList) {
-                ILesson lesson = this.getLesson(l.getID());
-                if (lesson != null) {
-                    tempLesson.add(lesson);
-//                    System.out.println("COPIO - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
-                }
+        List<ILesson> tempLesson = new ArrayList<>();
+        for (final ILesson l : this.lessonsList) {              //Copio tutte le lezioni in tempLesson per salvarle
+            ILesson lesson = this.getLesson(l.getID());
+            if (lesson != null) {
+                tempLesson.add(lesson);
             }
-            this.lessonsList.clear();
-//            for (final ILesson l : this.lessonsList.cl) {
-//                ILesson lesson = this.getLesson(l.getID());
-//                if (lesson != null) {
-//                    this.deleteLesson(l);
-//                  //System.out.println("COPIO - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
-//                }
-//                else{
-//                    System.out.println("LA LEZIONE DA MODIFICARE NON ESISTE, ID: " + l.getID());
-//                }
-////                    System.out.println("ELIMINO - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom());
-//            }
-//            System.out.println("Check - ho eliminato le lezioni da modificare | Lezioni in lista: " + this.lessonsList.size());
-            try {
-                 for (final ILesson l : lessonModified) {
-                      nuoviID.add(this.addLesson(l));
-//                      System.out.println("AGGIUNGO NUOVI ID - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom() + " Professore: " + l.getProfessor());
-                 }
-            }catch (IllegalArgumentException e2) {
-                this.lessonsList.clear();
-////                System.out.println("Check - Entro nel catch");
-//                for (final Integer i : nuoviID) {
-//                    ILesson lesson = this.getLesson(i);
-//                    if (lesson != null) {
-//                        this.deleteLesson(lesson);
-////                        System.out.println("ELIMINO NUOVI ID - Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
-//                    }
-//                }                
-////                System.out.println("Check - riaggiungo le lezioni precedenti");
-                for (final ILesson l : tempLesson) {
-                    this.addLesson(l);
-//                    System.out.println("RIPRISTINO VECCHIE - Giorno: " + l.getDay() + " Ora: " + l.getHour() + " Aula: " + l.getClassRoom());
-
-                }
-                throw e2;
-            }
-             return true;
         }
-        return false;
+        this.lessonsList.clear();                              //Elimino le lezioni per sostituirle con quelle modificate
+        try {
+             for (final ILesson l : lessonModified) {
+                  this.addLesson(l);
+             }
+        }catch (IllegalArgumentException e2) {                //In caso di errore ripristino le lezioni salvate
+            this.lessonsList.clear();
+            for (final ILesson l : tempLesson) {
+                this.addLesson(l);
+            }
+            throw e2;
+        }
+         return true;
     }
     
     @Override
