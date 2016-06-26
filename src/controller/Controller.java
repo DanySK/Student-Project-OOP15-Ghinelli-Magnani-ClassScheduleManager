@@ -295,9 +295,19 @@ public final class Controller {
         this.view.get().editMode(set);
     }
     
+    /**
+     * Method which deletes a professor from the list of professors.
+     * @param prof The prof which needs to be deleted.
+     */
+    
     public void deleteProfessor(final String prof) {
         this.model.deleteProfessor(prof);
     }
+    
+    /**
+     * Method which deletes a teaching from the list of teachings.
+     * @param teaching The teaching which needs to be deleted.
+     */
     
     public void deleteTeaching(final String teaching) {
         this.model.deleteTeaching(teaching);

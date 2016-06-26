@@ -168,6 +168,7 @@ public class EditPanel extends JPanel {
                     }
                 }
             }
+            System.out.println(changements.size());
             this.careTaker.cleanMementoList();
             Controller.getController().setChangements(changements);
         });

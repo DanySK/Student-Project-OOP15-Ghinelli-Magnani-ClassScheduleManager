@@ -60,7 +60,7 @@ public class DeleteProfessorDialog extends AbstractDialog {
     public ActionListener setOkListener() {
         return e -> {
             final String value = super.getBoxList().get(0).getSelectedItem().toString();
-            // controller delete prof
+            Controller.getController().deleteProfessor(value);
             this.setVisible(false);
         };
     }
