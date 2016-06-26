@@ -255,20 +255,6 @@ public final class Controller {
     }
     
     /**
-     * Method which deletes a lesson in the model.
-     * @param lesson The lesson which will be deleted.
-     */
-    
-    public void deleteLesson(final ILesson lesson) {
-        try {
-            this.model.deleteLesson(lesson);
-        } catch (IllegalArgumentException e) {
-            this.errorMessage(e.getMessage());
-        }
-        this.searchBy(this.searchType, this.searchValue);
-    }
-    
-    /**
      * Method used to confirm the changements in the view's table.
      * @param list The list of ILessons suitably changed.
      */
