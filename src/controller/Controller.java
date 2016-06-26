@@ -296,10 +296,10 @@ public final class Controller {
     }
     
     /*public void deleteProfessor(final String prof) {
-        this.model.deleteProfessor(prof);
+        this.model.de
     }
     
     public void deleteTeaching(final String teaching) {
-        this.model.deleteTeaching(teaching);
+        this.model.
     }*/
 }
