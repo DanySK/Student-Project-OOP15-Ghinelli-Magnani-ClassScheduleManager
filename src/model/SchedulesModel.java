@@ -295,7 +295,7 @@ public class SchedulesModel implements ISchedulesModel {
         return this.teachingsList.remove(teaching);
     }
     
-    public boolean deleteProfessor(final String name) {
+    public boolean deleteProfessor(final String name) throws IllegalArgumentException, NoSuchElementException {
         for(final IProfessor p : this.professorsList) {
             if ((p.getName()).equals(name)) {
                 this.deleteProfessor(p);
@@ -305,7 +305,7 @@ public class SchedulesModel implements ISchedulesModel {
         return false;
     }
     
-    public boolean deleteTeaching(final String name) {
+    public boolean deleteTeaching(final String name) throws IllegalArgumentException, NoSuchElementException {
         for(final ITeaching t : this.teachingsList) {
             if ((t.getName()).equals(name)) {
                 this.deleteTeaching(t);
