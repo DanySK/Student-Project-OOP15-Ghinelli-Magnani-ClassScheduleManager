@@ -54,7 +54,7 @@ public class ViewImpl extends JFrame implements IView {
     private final JScrollPane fullTable = new JScrollPane(this.table);
     private final JPanel combo = new JPanel(new BorderLayout());
     private final JPanel legenda = new JPanel(new GridBagLayout());
-    private final EditPanel editing = new EditPanel(table);
+    private final EditPanel editing = new EditPanel(table, this);
     private int searchType;
 
     /**

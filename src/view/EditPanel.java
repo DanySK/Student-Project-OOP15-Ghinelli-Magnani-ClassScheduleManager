@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -57,9 +58,10 @@ public class EditPanel extends JPanel {
     /**
      * Constructor of the panel, sets his buttons and the actionlistener of them.
      * @param actualTable The table of the main frame.
+     * @param mainFrame The main frame of the program.
      */
     
-    public EditPanel(final JTable actualTable) {
+    public EditPanel(final JTable actualTable, final JFrame mainFrame) {
         this.table = actualTable;
         this.setLayout(new BorderLayout());
         this.keep.addActionListener(e -> {
@@ -138,11 +140,10 @@ public class EditPanel extends JPanel {
             } else {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
                 if (lesson instanceof ILesson) {
-                    if (JOptionPane.showConfirmDialog(this, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
+                    if (JOptionPane.showConfirmDialog(mainFrame, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
                         this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.empty()), new Pair<>(rowVal, colVal))); //
                         this.careTaker.add(originator.saveStateToMemento()); // memento
-                        Controller.getController().deleteLesson((ILesson) lesson); // se la cancello dopo averla spostata mi ritorna dove era prima
-                        //this.table.setValueAt("", rowVal, colVal); // chiedere alla marti come vorrebbe fare
+                        this.table.setValueAt("", rowVal, colVal);
                     }
                 } else {
                     Controller.getController().errorMessage("You can't delete this element, it's not a lesson!");
