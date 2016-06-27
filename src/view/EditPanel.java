@@ -75,7 +75,6 @@ public class EditPanel extends JPanel {
                     if (!this.slot1.isVisible()) {
                         this.originator.setState(new Pair<>(new Pair<>(lessonTmp, Optional.of(0)), new Pair<>(rowValTmp, colValTmp))); //
                         this.careTaker.add(originator.saveStateToMemento()); // memento
-                        System.out.println("Keep" + this.originator.getState().getX().getX().toString());
                         this.table.setValueAt("", rowValTmp, colValTmp);
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
@@ -109,7 +108,6 @@ public class EditPanel extends JPanel {
                 } else {
                     this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.of(1)), new Pair<>(rowVal, colVal))); //
                     this.careTaker.add(originator.saveStateToMemento()); // memento
-                    System.out.println("Slot 1" + this.originator.getState().getX().getX().toString());
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot1), rowVal, colVal);
                     this.slot1.setVisible(false);
                 }
@@ -168,7 +166,6 @@ public class EditPanel extends JPanel {
                     }
                 }
             }
-            System.out.println(changements.size());
             this.careTaker.cleanMementoList();
             Controller.getController().setChangements(changements);
         });
@@ -223,7 +220,6 @@ public class EditPanel extends JPanel {
                                     return false;
                                 }
                                 final Memento mementoTmp = careTaker.get(careTaker.mementoListSize() - 1);
-                                System.out.println("Redo" + mementoTmp.getState().getX().getX().toString());
                                 this.mementoStateTmp = table.getValueAt(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
                                 originator.setState(new Pair<>(new Pair<>(this.mementoStateTmp, mementoTmp.getState().getX().getY()), new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
                                 this.redoCareTaker.add(originator.saveStateToMemento());

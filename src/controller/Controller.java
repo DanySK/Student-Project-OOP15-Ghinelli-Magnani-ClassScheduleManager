@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.File;
+import java.io.File; 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -301,7 +301,11 @@ public final class Controller {
      */
     
     public void deleteProfessor(final String prof) {
-        this.model.deleteProfessor(prof);
+        try {
+            this.model.deleteProfessor(prof);
+        } catch (Exception e) {
+            this.errorMessage(e.getMessage());
+        }
     }
     
     /**
@@ -310,6 +314,10 @@ public final class Controller {
      */
     
     public void deleteTeaching(final String teaching) {
-        this.model.deleteTeaching(teaching);
+        try {
+            this.model.deleteTeaching(teaching);
+        } catch (Exception e) {
+            this.errorMessage(e.getMessage());
+        }
     }
 }
