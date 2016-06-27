@@ -106,7 +106,7 @@ public class SchedulesModel implements ISchedulesModel {
         if (this.professorsList.contains(prof) && this.teachingsList.contains(teaching) && this.classroomsList.contains(classroom)) {
             for (final ILesson l : this.lessonsList) {
                 if (l.getClassRoom().equals(classroom) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
-                    throw new IllegalArgumentException("The classroom is already used!");
+                    throw new IllegalArgumentException(l.getDay().getDay() + l.getHour().getHour() + "the classroom is already used!");
                 }
                 if (l.getProfessor().equals(prof) && l.getDay()==day && l.getHour()==hour && l.getSemester()==semester) {
                     throw new IllegalArgumentException("The professor is already engaged!");
@@ -230,6 +230,7 @@ public class SchedulesModel implements ISchedulesModel {
 
     @Override
     public boolean checkChanges(List<ILesson> lessonModified, final Semester semester) throws IllegalArgumentException {
+        System.out.println(semester);
         for (final ILesson lesson : lessonModified) {
              System.out.println(" " + lesson.getID() + "Giorno: " + lesson.getDay() + " Ora: " + lesson.getHour() + " Aula: " + lesson.getClassRoom());
         }
@@ -240,10 +241,15 @@ public class SchedulesModel implements ISchedulesModel {
                 tempLesson.add(lesson);
             }
         }
-        for (final ILesson l : this.lessonsList) {              //Copio tutte le lezioni in tempLesson per salvarle
-            if (l.getSemester() == semester) {                  //Elimino le lezioni per sostituirle con quelle modificate
-                this.deleteLesson(l);
-            }
+//        for (final ILesson l : this.lessonsList) {
+//            if (l.getSemester() == semester) {                  //Elimino le lezioni per sostituirle con quelle modificate
+//                this.deleteLesson(l);
+//            }
+//        }
+        this.lessonsList.clear();                               //Elimino le lezioni di questo semestre per sostituirle con quelle modificate
+        for (final ILesson l : tempLesson) {
+            if (l.getSemester() != semester)
+                this.addLesson(l);
         }
         try {
              for (final ILesson l : lessonModified) {
