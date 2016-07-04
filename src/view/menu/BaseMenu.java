@@ -70,7 +70,7 @@ public class BaseMenu extends JMenu {
         this.refreshSearch = subMenu;
         menuItem = new JMenuItem(TOTAL);
         menuItem.addActionListener(e -> {
-            Controller.getController().searchBy(TOTAL, TOTAL);
+            Controller.getController().searchBy(TOTAL);
         });
         subMenu.add(menuItem);
         this.getSearchValues().forEach((x, y) -> {
@@ -78,7 +78,7 @@ public class BaseMenu extends JMenu {
             y.forEach(z -> {
                 final JMenuItem menuItem2 = new JMenuItem(z);
                 menuItem2.addActionListener(e -> {
-                    Controller.getController().searchBy(x, z);
+                    Controller.getController().searchBy(z);
                 });
                 subSubMenu.add(menuItem2);
             });
@@ -96,7 +96,7 @@ public class BaseMenu extends JMenu {
         this.refreshSearch = new JMenu("Search");
         final JMenuItem menuItem = new JMenuItem(TOTAL);
         menuItem.addActionListener(e -> {
-            Controller.getController().searchBy(TOTAL, TOTAL);
+            Controller.getController().searchBy(TOTAL);
         });
         refreshSearch.add(menuItem);
         this.getSearchValues().forEach((x, y) -> {
@@ -104,7 +104,7 @@ public class BaseMenu extends JMenu {
             y.forEach(z -> {
                 final JMenuItem menuItem2 = new JMenuItem(z);
                 menuItem2.addActionListener(e -> {
-                    Controller.getController().searchBy(x, z);
+                    Controller.getController().searchBy(z);
                 });
                 subSubMenu.add(menuItem2);
             });

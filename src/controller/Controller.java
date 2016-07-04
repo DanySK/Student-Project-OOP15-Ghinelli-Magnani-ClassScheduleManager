@@ -30,7 +30,6 @@ public final class Controller {
     private final IDataManager data = new DataManegerImpl();
     private final IControllerViewManager manager = new ControllerViewManagerImpl();
     private Semester sem = Semester.FIRST_SEMESTER;
-    private String searchType = "Total";
     private String searchValue = "Total";
 
     private Controller() {
@@ -99,7 +98,7 @@ public final class Controller {
         } catch (IOException e) {
             this.errorMessage(e.getMessage());
         }
-        this.searchBy(this.searchType, this.searchValue);
+        this.searchBy(this.searchValue);
     }
     
     /**
@@ -172,48 +171,51 @@ public final class Controller {
     
     public void addLesson(final List<String> values) {
         manager.addLesson(values, model);
-        this.searchBy(this.searchType, this.searchValue);
+        this.searchBy(this.searchValue);
     }
     
     /**
      * Method which change the table's type of view.
-     * @param typeValue The type of view.
-     * @param valueM The element of the type.
+     * @param value The element of the type.
      */
     
-    public void searchBy(final String typeValue, final String valueM) {
-        this.searchType = typeValue;
-        this.searchValue = valueM;
-        if ("By Year".equals(typeValue)) {
-            Year year = null;
-            for (int i = 0; i < Year.values().length; i++) {
-                if (Year.values()[i].getYear().equals(valueM)) {
-                    year = Year.values()[i];
-                }
+    public void searchBy(final String value) {
+        this.searchValue = value;
+        Year year = null;
+        for (int i = 0; i < Year.values().length; i++) {
+            if (Year.values()[i].getYear().equals(value)) {
+                year = Year.values()[i];
+                this.view.get().addData(0, this.model.getLessons(null, null, year, null, this.sem, null, null, null));
+                return;
             }
-            this.view.get().addData(0, this.model.getLessons(null, null, year, null, this.sem, null, null, null));
         }
-        if ("By Court".equals(typeValue)) {
-            Court court = null;
-            for (int i = 0; i < Court.values().length; i++) {
-                if (Court.values()[i].getDef().equals(valueM)) {
-                    court = Court.values()[i];
-                }
+        Court court = null;
+        for (int i = 0; i < Court.values().length; i++) {
+            if (Court.values()[i].getDef().equals(value)) {
+                court = Court.values()[i];
+                this.view.get().addData(0, this.model.getLessons(null, null, null, court, this.sem, null, null, null));
+                return;
             }
-            this.view.get().addData(0, this.model.getLessons(null, null, null, court, this.sem, null, null, null));
         }
-        if ("By Prof.".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(valueM, null, null, null, this.sem, null, null, null));
+        for (int i = 0; i < this.getActiveProfessors().size(); i++) {
+            if (this.getActiveProfessors().get(i).equals(value)) {
+                this.view.get().addData(0, this.model.getLessons(value, null, null, null, this.sem, null, null, null));
+                return;
+            }
         }
-        if ("By Teaching".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(null, valueM, null, null, this.sem, null, null, null));
+        for (int i = 0; i < this.getActiveTeachings().size(); i++) {
+            if (this.getActiveTeachings().get(i).equals(value)) {
+                this.view.get().addData(0, this.model.getLessons(null, value, null, null, this.sem, null, null, null));
+                return;
+            }
         }
-        if ("By Classroom".equals(typeValue)) {
-            this.view.get().addData(1, this.model.getLessons(null, null, null, null, this.sem, valueM, null, null));
+        for (int i = 0; i < this.getClassrooms().size(); i++) {
+            if (this.getClassrooms().get(i).equals(value)) {
+                this.view.get().addData(1, this.model.getLessons(null, null, null, null, this.sem, value, null, null));
+                return;
+            }
         }
-        if ("Total".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(null, null, null, null, this.sem, null, null, null));
-        }
+        this.view.get().addData(0, this.model.getLessons(null, null, null, null, this.sem, null, null, null));
         this.view.get().refreshSearchList();
     }
     
@@ -225,10 +227,10 @@ public final class Controller {
     public void setSemester(final int semester) {
         if (semester == 1) {
             this.sem = Semester.FIRST_SEMESTER;
-            this.searchBy(this.searchType, this.searchValue);
+            this.searchBy(this.searchValue);
         } else {
             this.sem = Semester.SECOND_SEMESTER;
-            this.searchBy(this.searchType, this.searchValue);
+            this.searchBy(this.searchValue);
         }
     }
     
@@ -252,7 +254,7 @@ public final class Controller {
         } catch (IllegalArgumentException e) {
             this.errorMessage(e.getMessage());
         }
-        this.searchBy(searchType, searchValue);
+        this.searchBy(searchValue);
     }
     
     /**
