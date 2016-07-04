@@ -79,6 +79,7 @@ public class EditPanel extends JPanel {
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
                         this.lessonSlot1 = (ILesson) lessonTmp;
+                        this.cellCoordinates = new Pair<>(0, 0);
                     } else {
                         if (!this.slot2.isVisible()) {
                             this.originator.setState(new Pair<>(new Pair<>(lessonTmp, Optional.of(0)), new Pair<>(rowValTmp, colValTmp))); //
@@ -87,6 +88,7 @@ public class EditPanel extends JPanel {
                             this.slot2.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                             this.slot2.setVisible(true);
                             this.lessonSlot2 = (ILesson) lessonTmp;
+                            this.cellCoordinates = new Pair<>(0, 0);
                         } else {
                             Controller.getController().errorMessage("You can't take another lesson, place one of which you have got at least!");
                         }
@@ -110,6 +112,7 @@ public class EditPanel extends JPanel {
                     this.careTaker.add(originator.saveStateToMemento()); // memento
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot1), rowVal, colVal);
                     this.slot1.setVisible(false);
+                    this.cellCoordinates = new Pair<>(0, 0);
                 }
             }
         });
@@ -127,6 +130,7 @@ public class EditPanel extends JPanel {
                     this.careTaker.add(originator.saveStateToMemento()); // memento
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot2), rowVal, colVal);
                     this.slot2.setVisible(false);
+                    this.cellCoordinates = new Pair<>(0, 0);
                 }
             }
         });
