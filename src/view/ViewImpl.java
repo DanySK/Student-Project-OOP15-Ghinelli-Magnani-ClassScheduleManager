@@ -55,7 +55,7 @@ public class ViewImpl extends JFrame implements IView {
     private final JPanel combo = new JPanel(new BorderLayout());
     private final JPanel legenda = new JPanel(new GridBagLayout());
     private final EditPanel editing = new EditPanel(table, this);
-    private int searchType;
+    private int dataType;
 
     /**
      * Constructor of the main frame.
@@ -105,7 +105,7 @@ public class ViewImpl extends JFrame implements IView {
 
     @Override
     public void addData(final int type, final List<ILesson> list) {
-        this.searchType = type;
+        this.dataType = type;
         this.tableModel.setModel(ObjectManager.getStruct(type, list));
     }
 
@@ -115,7 +115,7 @@ public class ViewImpl extends JFrame implements IView {
         this.addMenu.setEnabled(!set);
         this.deleteMenu.setEnabled(!set);
         this.semesterMenu.setEnabled(!set);
-        this.editing.editMode(set, this.searchType);
+        this.editing.editMode(set, this.dataType);
     }
 
     @Override

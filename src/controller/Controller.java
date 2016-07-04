@@ -1,15 +1,13 @@
 package controller;
 
-import java.io.File; 
+import java.io.File;  
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import controller.utility.Pair;
 import model.Court;
 import model.SchedulesModel;
 import model.Semester;
@@ -141,32 +139,21 @@ public final class Controller {
     }
     
     /**
-     * Method which provides to the view the lessons of the model for the add dialog of JComboBoxs.
-     * @return The map containing a pair of a string and boolean containing the name of the information,
-     *  if the JComboBox is writable or not, and the list of values.
+     * Method which gives the list of professors which have a lesson in the current moment.
+     * @return The list of professors.
      */
     
-    public Map<Pair<String, Boolean>, List<String>> getLessonsValues() {
-        return manager.getLessonsValues(model);
+    public List<String> getActiveProfessors() {
+        return model.getProfessorsActive().stream().map(x -> x.getName()).collect(Collectors.toList());
     }
     
     /**
-     * Method which provides to the view the courses of the model for the add dialog of JComboBoxs.
-     * @return The map containing a pair of a string and boolean containing the name of the information,
-     *  if the JComboBox is writable or not, and the list of values.
+     * Method which gives the list of teachings which are present in the current moment.
+     * @return The list of teachings.
      */
     
-    public Map<Pair<String, Boolean>, List<String>> getCoursesValues() {
-        return manager.getCoursesValues();
-    }
-    
-    /**
-     * Method which provides to the view the search types and elements to update them dynamically.
-     * @return The map containing the string of the search types and his list of the elements.
-     */
-    
-    public Map<String, List<String>> getSearchValues() {
-        return manager.getSearchValues(model);
+    public List<String> getActiveTeachings() {
+        return model.getTeachingActive().stream().map(x -> x.getName()).collect(Collectors.toList());
     }
     
     /**
@@ -266,24 +253,6 @@ public final class Controller {
             this.errorMessage(e.getMessage());
         }
         this.searchBy(searchType, searchValue);
-    }
-    
-    /**
-     * Method which provides to the view the professors of the model for the delete dialog of a single JComboBox.
-     * @return The map containing the string as the name of the information and the list of professors.
-     */
-    
-    public Map<String, List<String>> deleteProfessorValues() {
-        return this.manager.getProfessorValues();
-    }
-    
-    /**
-     * Method which provides to the view the teachings(courses) of the model for the delete dialog of a single JComboBox.
-     * @return The map containing the string as the name of the information and the list of teachings.
-     */
-    
-    public Map<String, List<String>> deleteTeachingValues() {
-        return this.manager.getTeachingValues(model);
     }
     
     /**

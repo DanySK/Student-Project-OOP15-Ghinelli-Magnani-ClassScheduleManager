@@ -1,10 +1,17 @@
 package view.menu;
 
+import java.util.ArrayList; 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.JFileChooser; 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import controller.Controller;
+import model.Court;
+import model.Year;
 import view.IView;
 
 /**
@@ -66,7 +73,7 @@ public class BaseMenu extends JMenu {
             Controller.getController().searchBy(TOTAL, TOTAL);
         });
         subMenu.add(menuItem);
-        Controller.getController().getSearchValues().forEach((x, y) -> {
+        this.getSearchValues().forEach((x, y) -> {
             final JMenu subSubMenu = new JMenu(x);
             y.forEach(z -> {
                 final JMenuItem menuItem2 = new JMenuItem(z);
@@ -92,7 +99,7 @@ public class BaseMenu extends JMenu {
             Controller.getController().searchBy(TOTAL, TOTAL);
         });
         refreshSearch.add(menuItem);
-        Controller.getController().getSearchValues().forEach((x, y) -> {
+        this.getSearchValues().forEach((x, y) -> {
             final JMenu subSubMenu = new JMenu(x);
             y.forEach(z -> {
                 final JMenuItem menuItem2 = new JMenuItem(z);
@@ -104,6 +111,29 @@ public class BaseMenu extends JMenu {
             refreshSearch.add(subSubMenu);
         });
         this.add(refreshSearch);
+    }
+    
+    /**
+     * Method which provides to the menu the search types and elements to create the list and to update them dynamically.
+     * @return The map containing the string of the search types and his list of the elements.
+     */
+    
+    public Map<String, List<String>> getSearchValues() {
+        final Map<String, List<String>> returnValue = new HashMap<>();
+        final List<String> courts = new ArrayList<>();
+        final List<String> years = new ArrayList<>();
+        for (int i = 0; i < Court.values().length; i++) {
+            courts.add(Court.values()[i].getDef());
+        }
+        for (int i = 0; i < Year.values().length; i++) {
+            years.add(Year.values()[i].getYear());
+        }
+        returnValue.put("By Year", years);
+        returnValue.put("By Court", courts);
+        returnValue.put("By Prof.", Controller.getController().getActiveProfessors());
+        returnValue.put("By Teaching", Controller.getController().getActiveTeachings());
+        returnValue.put("By Classroom", Controller.getController().getClassrooms());
+        return returnValue;
     }
 
     
