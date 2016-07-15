@@ -75,11 +75,11 @@ public class EditPanel extends JPanel {
                     if (!this.slot1.isVisible()) {
                         this.originator.setState(new Pair<>(new Pair<>(lessonTmp, Optional.of(0)), new Pair<>(rowValTmp, colValTmp))); //
                         this.careTaker.add(originator.saveStateToMemento()); // memento
-                        System.out.println("Keep" + this.originator.getState().getX().getX().toString());
                         this.table.setValueAt("", rowValTmp, colValTmp);
                         this.slot1.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                         this.slot1.setVisible(true);
                         this.lessonSlot1 = (ILesson) lessonTmp;
+                        this.cellCoordinates = new Pair<>(0, 0);
                     } else {
                         if (!this.slot2.isVisible()) {
                             this.originator.setState(new Pair<>(new Pair<>(lessonTmp, Optional.of(0)), new Pair<>(rowValTmp, colValTmp))); //
@@ -88,6 +88,7 @@ public class EditPanel extends JPanel {
                             this.slot2.setText(((ILesson) lessonTmp).getSubject().getName() + "/" + ((ILesson) lessonTmp).getProfessor().getName());
                             this.slot2.setVisible(true);
                             this.lessonSlot2 = (ILesson) lessonTmp;
+                            this.cellCoordinates = new Pair<>(0, 0);
                         } else {
                             Controller.getController().errorMessage("You can't take another lesson, place one of which you have got at least!");
                         }
@@ -109,9 +110,9 @@ public class EditPanel extends JPanel {
                 } else {
                     this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.of(1)), new Pair<>(rowVal, colVal))); //
                     this.careTaker.add(originator.saveStateToMemento()); // memento
-                    System.out.println("Slot 1" + this.originator.getState().getX().getX().toString());
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot1), rowVal, colVal);
                     this.slot1.setVisible(false);
+                    this.cellCoordinates = new Pair<>(0, 0);
                 }
             }
         });
@@ -129,6 +130,7 @@ public class EditPanel extends JPanel {
                     this.careTaker.add(originator.saveStateToMemento()); // memento
                     this.table.setValueAt(ObjectManager.setNewLessonValues(this.searchType, rowVal, colVal, (ILesson) this.lessonSlot2), rowVal, colVal);
                     this.slot2.setVisible(false);
+                    this.cellCoordinates = new Pair<>(0, 0);
                 }
             }
         });
@@ -168,7 +170,6 @@ public class EditPanel extends JPanel {
                     }
                 }
             }
-            System.out.println(changements.size());
             this.careTaker.cleanMementoList();
             Controller.getController().setChangements(changements);
         });
@@ -223,7 +224,6 @@ public class EditPanel extends JPanel {
                                     return false;
                                 }
                                 final Memento mementoTmp = careTaker.get(careTaker.mementoListSize() - 1);
-                                System.out.println("Redo" + mementoTmp.getState().getX().getX().toString());
                                 this.mementoStateTmp = table.getValueAt(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY());
                                 originator.setState(new Pair<>(new Pair<>(this.mementoStateTmp, mementoTmp.getState().getX().getY()), new Pair<>(mementoTmp.getState().getY().getX(), mementoTmp.getState().getY().getY())));
                                 this.redoCareTaker.add(originator.saveStateToMemento());

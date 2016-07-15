@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
+import view.utility.DialogManager;
 
 /**
  * 
@@ -40,7 +41,7 @@ public class AddTeachingDialog extends AbstractDialog {
         panelNord.setLayout(new GridBagLayout());
         GridBagConstraints cnst = new GridBagConstraints();
         cnst.gridy = 0;
-        Controller.getController().getCoursesValues().forEach((x, y) -> {
+        DialogManager.getCoursesValues().forEach((x, y) -> {
             final JLabel label = new JLabel(x.getX());
             cnst.anchor = GridBagConstraints.WEST;
             panelNord.add(label, cnst);

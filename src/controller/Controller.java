@@ -1,15 +1,13 @@
 package controller;
 
-import java.io.File;
+import java.io.File;  
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import controller.utility.Pair;
 import model.Court;
 import model.SchedulesModel;
 import model.Semester;
@@ -32,7 +30,6 @@ public final class Controller {
     private final IDataManager data = new DataManegerImpl();
     private final IControllerViewManager manager = new ControllerViewManagerImpl();
     private Semester sem = Semester.FIRST_SEMESTER;
-    private String searchType = "Total";
     private String searchValue = "Total";
 
     private Controller() {
@@ -101,7 +98,7 @@ public final class Controller {
         } catch (IOException e) {
             this.errorMessage(e.getMessage());
         }
-        this.searchBy(this.searchType, this.searchValue);
+        this.searchBy(this.searchValue);
     }
     
     /**
@@ -141,32 +138,21 @@ public final class Controller {
     }
     
     /**
-     * Method which provides to the view the lessons of the model for the add dialog of JComboBoxs.
-     * @return The map containing a pair of a string and boolean containing the name of the information,
-     *  if the JComboBox is writable or not, and the list of values.
+     * Method which gives the list of professors which have a lesson in the current moment.
+     * @return The list of professors.
      */
     
-    public Map<Pair<String, Boolean>, List<String>> getLessonsValues() {
-        return manager.getLessonsValues(model);
+    public List<String> getActiveProfessors() {
+        return model.getProfessorsActive().stream().map(x -> x.getName()).collect(Collectors.toList());
     }
     
     /**
-     * Method which provides to the view the courses of the model for the add dialog of JComboBoxs.
-     * @return The map containing a pair of a string and boolean containing the name of the information,
-     *  if the JComboBox is writable or not, and the list of values.
+     * Method which gives the list of teachings which are present in the current moment.
+     * @return The list of teachings.
      */
     
-    public Map<Pair<String, Boolean>, List<String>> getCoursesValues() {
-        return manager.getCoursesValues();
-    }
-    
-    /**
-     * Method which provides to the view the search types and elements to update them dynamically.
-     * @return The map containing the string of the search types and his list of the elements.
-     */
-    
-    public Map<String, List<String>> getSearchValues() {
-        return manager.getSearchValues(model);
+    public List<String> getActiveTeachings() {
+        return model.getTeachingActive().stream().map(x -> x.getName()).collect(Collectors.toList());
     }
     
     /**
@@ -185,48 +171,51 @@ public final class Controller {
     
     public void addLesson(final List<String> values) {
         manager.addLesson(values, model);
-        this.searchBy(this.searchType, this.searchValue);
+        this.searchBy(this.searchValue);
     }
     
     /**
      * Method which change the table's type of view.
-     * @param typeValue The type of view.
-     * @param valueM The element of the type.
+     * @param value The element of the type.
      */
     
-    public void searchBy(final String typeValue, final String valueM) {
-        this.searchType = typeValue;
-        this.searchValue = valueM;
-        if ("By Year".equals(typeValue)) {
-            Year year = null;
-            for (int i = 0; i < Year.values().length; i++) {
-                if (Year.values()[i].getYear().equals(valueM)) {
-                    year = Year.values()[i];
-                }
+    public void searchBy(final String value) {
+        this.searchValue = value;
+        Year year = null;
+        for (int i = 0; i < Year.values().length; i++) {
+            if (Year.values()[i].getYear().equals(value)) {
+                year = Year.values()[i];
+                this.view.get().addData(0, this.model.getLessons(null, null, year, null, this.sem, null, null, null));
+                return;
             }
-            this.view.get().addData(0, this.model.getLessons(null, null, year, null, this.sem, null, null, null));
         }
-        if ("By Court".equals(typeValue)) {
-            Court court = null;
-            for (int i = 0; i < Court.values().length; i++) {
-                if (Court.values()[i].getDef().equals(valueM)) {
-                    court = Court.values()[i];
-                }
+        Court court = null;
+        for (int i = 0; i < Court.values().length; i++) {
+            if (Court.values()[i].getDef().equals(value)) {
+                court = Court.values()[i];
+                this.view.get().addData(0, this.model.getLessons(null, null, null, court, this.sem, null, null, null));
+                return;
             }
-            this.view.get().addData(0, this.model.getLessons(null, null, null, court, this.sem, null, null, null));
         }
-        if ("By Prof.".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(valueM, null, null, null, this.sem, null, null, null));
+        for (int i = 0; i < this.getActiveProfessors().size(); i++) {
+            if (this.getActiveProfessors().get(i).equals(value)) {
+                this.view.get().addData(0, this.model.getLessons(value, null, null, null, this.sem, null, null, null));
+                return;
+            }
         }
-        if ("By Teaching".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(null, valueM, null, null, this.sem, null, null, null));
+        for (int i = 0; i < this.getActiveTeachings().size(); i++) {
+            if (this.getActiveTeachings().get(i).equals(value)) {
+                this.view.get().addData(0, this.model.getLessons(null, value, null, null, this.sem, null, null, null));
+                return;
+            }
         }
-        if ("By Classroom".equals(typeValue)) {
-            this.view.get().addData(1, this.model.getLessons(null, null, null, null, this.sem, valueM, null, null));
+        for (int i = 0; i < this.getClassrooms().size(); i++) {
+            if (this.getClassrooms().get(i).equals(value)) {
+                this.view.get().addData(1, this.model.getLessons(null, null, null, null, this.sem, value, null, null));
+                return;
+            }
         }
-        if ("Total".equals(typeValue)) {
-            this.view.get().addData(0, this.model.getLessons(null, null, null, null, this.sem, null, null, null));
-        }
+        this.view.get().addData(0, this.model.getLessons(null, null, null, null, this.sem, null, null, null));
         this.view.get().refreshSearchList();
     }
     
@@ -238,10 +227,10 @@ public final class Controller {
     public void setSemester(final int semester) {
         if (semester == 1) {
             this.sem = Semester.FIRST_SEMESTER;
-            this.searchBy(this.searchType, this.searchValue);
+            this.searchBy(this.searchValue);
         } else {
             this.sem = Semester.SECOND_SEMESTER;
-            this.searchBy(this.searchType, this.searchValue);
+            this.searchBy(this.searchValue);
         }
     }
     
@@ -265,25 +254,7 @@ public final class Controller {
         } catch (IllegalArgumentException e) {
             this.errorMessage(e.getMessage());
         }
-        this.searchBy(searchType, searchValue);
-    }
-    
-    /**
-     * Method which provides to the view the professors of the model for the delete dialog of a single JComboBox.
-     * @return The map containing the string as the name of the information and the list of professors.
-     */
-    
-    public Map<String, List<String>> deleteProfessorValues() {
-        return this.manager.getProfessorValues();
-    }
-    
-    /**
-     * Method which provides to the view the teachings(courses) of the model for the delete dialog of a single JComboBox.
-     * @return The map containing the string as the name of the information and the list of teachings.
-     */
-    
-    public Map<String, List<String>> deleteTeachingValues() {
-        return this.manager.getTeachingValues(model);
+        this.searchBy(searchValue);
     }
     
     /**
@@ -301,7 +272,11 @@ public final class Controller {
      */
     
     public void deleteProfessor(final String prof) {
-        this.model.deleteProfessor(prof);
+        try {
+            this.model.deleteProfessor(prof);
+        } catch (Exception e) {
+            this.errorMessage(e.getMessage());
+        }
     }
     
     /**
@@ -310,6 +285,10 @@ public final class Controller {
      */
     
     public void deleteTeaching(final String teaching) {
-        this.model.deleteTeaching(teaching);
+        try {
+            this.model.deleteTeaching(teaching);
+        } catch (Exception e) {
+            this.errorMessage(e.getMessage());
+        }
     }
 }

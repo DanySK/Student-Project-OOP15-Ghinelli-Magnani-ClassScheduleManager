@@ -156,7 +156,6 @@ public final class ObjectManager {
             lesson.setDay(Day.values()[row - 1]);
             lesson.setHour(Hour.values()[column - 1]);
         }
-        System.out.println(lesson.getClassRoom() + lesson.getDay().getDay() + lesson.getHour().getHour());
         return lesson;
     }
 
