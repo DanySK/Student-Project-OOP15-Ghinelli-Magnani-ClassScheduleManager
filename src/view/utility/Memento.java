@@ -2,8 +2,6 @@ package view.utility;
 
 import java.util.Optional;
 
-import controller.utility.Pair;
-
 /**
  * 
  * Class which determine the nature of the memento object.

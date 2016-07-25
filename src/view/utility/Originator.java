@@ -2,8 +2,6 @@ package view.utility;
 
 import java.util.Optional;
 
-import controller.utility.Pair;
-
 /**
  * 
  * Class used to create memento objects.

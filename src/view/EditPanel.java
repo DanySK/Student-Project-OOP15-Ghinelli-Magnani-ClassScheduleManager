@@ -20,12 +20,12 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import controller.Controller;
-import controller.utility.Pair;
 import model_interface.ILesson;
 import view.utility.CareTaker;
 import view.utility.Memento;
 import view.utility.ObjectManager;
 import view.utility.Originator;
+import view.utility.Pair;
 
 /**
  * 

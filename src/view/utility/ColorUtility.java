@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.utility.Pair;
 import model.Year;
 
 /**

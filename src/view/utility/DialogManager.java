@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import controller.Controller;
-import controller.utility.Pair;
 import model.Court;
 import model.Day;
 import model.Hour;
