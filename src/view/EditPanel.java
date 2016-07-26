@@ -61,7 +61,7 @@ public class EditPanel extends JPanel {
      * @param mainFrame The main frame of the program.
      */
     
-    public EditPanel(final JTable actualTable, final JFrame mainFrame) {
+    public EditPanel(final JTable actualTable, final IView mainFrame) {
         this.table = actualTable;
         this.setLayout(new BorderLayout());
         this.keep.addActionListener(e -> {
@@ -144,7 +144,7 @@ public class EditPanel extends JPanel {
             } else {
                 final Object lesson = this.table.getValueAt(rowVal, colVal);
                 if (lesson instanceof ILesson) {
-                    if (JOptionPane.showConfirmDialog(mainFrame, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
+                    if (JOptionPane.showConfirmDialog((JFrame) mainFrame, "Are you sure to delete this lesson?") == JOptionPane.YES_OPTION) {
                         this.originator.setState(new Pair<>(new Pair<>(lesson, Optional.empty()), new Pair<>(rowVal, colVal))); //
                         this.careTaker.add(originator.saveStateToMemento()); // memento
                         this.table.setValueAt("", rowVal, colVal);
@@ -161,7 +161,7 @@ public class EditPanel extends JPanel {
                 Controller.getController().errorMessage("You can't end the changements until you have placed every lesson taken!");
                 return;
             }
-            Controller.getController().editMode(false);
+            mainFrame.editMode(false);
             final List<ILesson> changements = new ArrayList<>();
             for (int i = 0; i < this.table.getColumnCount(); i++) {
                 for (int y = 0; y < this.table.getRowCount(); y++) {
