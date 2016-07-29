@@ -21,7 +21,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 
 import model.SchedulesModel;
-import model_interface.ILesson;
 import model_interface.ISchedulesModel;
 
 public class DataManegerImpl implements IDataManager {
