@@ -258,15 +258,6 @@ public final class Controller {
     }
     
     /**
-     * Method used to tell the view to change in edit mode or not.
-     * @param set Says if the view will change in edit mode or return in normal mode.
-     */
-    
-    public void editMode(final boolean set) {
-        this.view.get().editMode(set);
-    }
-    
-    /**
      * Method which deletes a professor from the list of professors.
      * @param prof The prof which needs to be deleted.
      */

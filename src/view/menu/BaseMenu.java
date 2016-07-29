@@ -56,7 +56,7 @@ public class BaseMenu extends JMenu {
         this.add(menuItem);
         menuItem = new JMenuItem("Edit");
         menuItem.addActionListener(e -> {
-            Controller.getController().editMode(true);
+            frame.editMode(true);
         });
         this.add(menuItem);
         
