@@ -87,7 +87,7 @@ public class DataManegerImpl implements IDataManager {
         try (final FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.home") + File.separator + "Lessons.xls"))) {
             workbook.write(out);
             workbook.close();
-            System.out.println("Export successful");
+            Controller.getController().errorMessage("Successful export!");
         } catch (FileNotFoundException e) {
             Controller.getController().errorMessage("File not found!");
         } catch (IOException e) {
