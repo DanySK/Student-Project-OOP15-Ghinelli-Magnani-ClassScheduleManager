@@ -6,7 +6,7 @@ import java.util.List;
 import controller.Controller;
 import model.Day;
 import model.Hour;
-import model_interface.ILesson;
+import model.interfaces.ILesson;
 
 /**
  * 

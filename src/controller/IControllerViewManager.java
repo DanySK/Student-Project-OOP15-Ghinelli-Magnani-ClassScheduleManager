@@ -1,8 +1,8 @@
 package controller;
 
-import java.util.List; 
+import java.util.List;
 
-import model_interface.ISchedulesModel;
+import model.interfaces.ISchedulesModel;
 
 /**
  * 

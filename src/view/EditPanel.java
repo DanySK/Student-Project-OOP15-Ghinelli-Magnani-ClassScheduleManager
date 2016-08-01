@@ -20,7 +20,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import controller.Controller;
-import model_interface.ILesson;
+import model.interfaces.ILesson;
 import view.utility.CareTaker;
 import view.utility.Memento;
 import view.utility.ObjectManager;

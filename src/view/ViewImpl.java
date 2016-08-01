@@ -24,7 +24,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 
 import controller.Controller;
-import model_interface.ILesson;
+import model.interfaces.ILesson;
 import view.menu.AddMenu;
 import view.menu.BaseMenu;
 import view.menu.DeleteMenu;
