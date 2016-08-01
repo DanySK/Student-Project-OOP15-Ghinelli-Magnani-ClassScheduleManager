@@ -7,8 +7,8 @@ import model.Day;
 import model.Hour;
 import model.Semester;
 import model.Year;
-import model_interface.ISchedulesModel;
-import model_interface.ITeaching;
+import model.interfaces.ISchedulesModel;
+import model.interfaces.ITeaching;
 
 /**
  * 

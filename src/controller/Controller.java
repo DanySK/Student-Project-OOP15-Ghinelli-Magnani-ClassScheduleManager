@@ -12,8 +12,8 @@ import model.Court;
 import model.SchedulesModel;
 import model.Semester;
 import model.Year;
-import model_interface.ILesson;
-import model_interface.ISchedulesModel;
+import model.interfaces.ILesson;
+import model.interfaces.ISchedulesModel;
 import view.IView;
 
 /**

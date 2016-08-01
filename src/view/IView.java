@@ -1,8 +1,8 @@
 package view;
 
-import java.util.List; 
+import java.util.List;
 
-import model_interface.ILesson;
+import model.interfaces.ILesson;
 
 /**
  * 

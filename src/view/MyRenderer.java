@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import model_interface.ILesson;
+import model.interfaces.ILesson;
 import view.utility.ColorUtility;
 
 /**
