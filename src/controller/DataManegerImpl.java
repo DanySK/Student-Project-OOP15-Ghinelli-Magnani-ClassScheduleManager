@@ -20,6 +20,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.swing.JTable;
+
 public class DataManegerImpl implements IDataManager {
     
   private final Path configPath = FileSystems.getDefault().getPath("res", "config.yml");

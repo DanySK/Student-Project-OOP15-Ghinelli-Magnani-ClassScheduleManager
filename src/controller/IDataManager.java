@@ -1,6 +1,5 @@
 package controller;
 
-
 import model.SchedulesModel;
 import model.interfaces.ISchedulesModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -8,6 +7,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import javax.swing.JTable;
 
 public interface IDataManager {
     
