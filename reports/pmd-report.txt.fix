@@ -1,0 +1,82 @@
+Violated encapsulation: 0
+
+Poor design: 3
+src/model/Lesson.java:49:	The String literal "The values can't be null!" appears 8 times in this file; the first occurrence is on line 49
+src/model/Lesson.java:103:	The String literal " | " appears 7 times in this file; the first occurrence is on line 103
+src/model/SchedulesModel.java:48:	The String literal "The values can't be null!" appears 6 times in this file; the first occurrence is on line 48
+
+Very bad code practices and potential bugs: 0
+
+Bad exception handling: 2
+src/controller/DataManegerImpl.java:44:	Avoid empty catch blocks
+src/controller/DataManegerImpl.java:70:	Avoid empty catch blocks
+
+Portability issues: 0
+
+Bad naming: 1
+src/model/interfaces/ISchedulesModel.java:281:	Avoid modifiers which are implied by the context
+
+Bad code practices: 9
+src/controller/DataManegerImpl.java:5:	Avoid unused imports such as 'org.apache.poi.hssf.usermodel.HSSFSheet'
+src/controller/DataManegerImpl.java:7:	Avoid unused imports such as 'org.apache.poi.ss.usermodel.CellStyle'
+src/controller/DataManegerImpl.java:8:	Avoid unused imports such as 'org.apache.poi.ss.usermodel.Row'
+src/controller/DataManegerImpl.java:30:	Avoid unused imports such as 'javax.swing.JTable'
+src/controller/DataManegerImpl.java:59:	Avoid assignments in operands
+src/controller/IDataManager.java:11:	Avoid unused imports such as 'javax.swing.JTable'
+src/model/Lesson.java:188:	Avoid unnecessary if..then..else statements when returning booleans
+src/model/SchedulesModel.java:110:	Avoid declaring a variable if it is unreferenced before a possible exit point.
+src/model/Teaching.java:81:	Avoid unnecessary if..then..else statements when returning booleans
+
+Use modern Java: 0
+
+Performance and resource waste: 0
+
+Potentially dangerous side effects: 0
+
+Use final: 29
+src/controller/DataManegerImpl.java:36:	Local variable 'path' could be declared final
+src/controller/DataManegerImpl.java:40:	Local variable 'theDir' could be declared final
+src/controller/DataManegerImpl.java:49:	Local variable 'configFile' could be declared final
+src/controller/DataManegerImpl.java:55:	Local variable 'in' could be declared final
+src/controller/DataManegerImpl.java:56:	Local variable 'file' could be declared final
+src/controller/DataManegerImpl.java:64:	Local variable 'out' could be declared final
+src/controller/DataManegerImpl.java:65:	Local variable 'writer' could be declared final
+src/model/JUnitTest.java:16:	Private field 'dominio' could be made final; it is only initialized in the declaration or constructor.
+src/model/Lesson.java:24:	Private field 'id' could be made final; it is only initialized in the declaration or constructor.
+src/model/Lesson.java:113:	Parameter 'prof' is not assigned and could be declared final
+src/model/Lesson.java:121:	Parameter 'teaching' is not assigned and could be declared final
+src/model/Lesson.java:129:	Parameter 'semester' is not assigned and could be declared final
+src/model/Lesson.java:137:	Parameter 'classroom' is not assigned and could be declared final
+src/model/Lesson.java:145:	Parameter 'hour' is not assigned and could be declared final
+src/model/Lesson.java:153:	Parameter 'day' is not assigned and could be declared final
+src/model/Lesson.java:161:	Parameter 'duration' is not assigned and could be declared final
+src/model/Lesson.java:177:	Parameter 'obj' is not assigned and could be declared final
+src/model/Lesson.java:187:	Local variable 'other' could be declared final
+src/model/Professor.java:50:	Parameter 'obj' is not assigned and could be declared final
+src/model/Professor.java:60:	Local variable 'other' could be declared final
+src/model/SchedulesModel.java:186:	Local variable 'finalList' could be declared final
+src/model/SchedulesModel.java:213:	Local variable 'lesson' could be declared final
+src/model/SchedulesModel.java:255:	Parameter 'lessonModified' is not assigned and could be declared final
+src/model/SchedulesModel.java:257:	Local variable 'tempLesson' could be declared final
+src/model/SchedulesModel.java:259:	Local variable 'lesson' could be declared final
+src/model/SchedulesModel.java:295:	Parameter 'prof' is not assigned and could be declared final
+src/model/SchedulesModel.java:322:	Parameter 'teaching' is not assigned and could be declared final
+src/model/Teaching.java:60:	Parameter 'obj' is not assigned and could be declared final
+src/model/Teaching.java:70:	Local variable 'other' could be declared final
+
+Complex code: 0
+
+Concurrency issues: 0
+
+Testing issues: 4
+src/model/JUnitTest.java:16:	Private field 'dominio' could be made final; it is only initialized in the declaration or constructor.
+src/model/JUnitTest.java:21:	Use assertTrue(x)/assertFalse(x) instead of assertEquals(true, x)/assertEquals(false, x)   or assertEquals(Boolean.TRUE, x)/assertEquals(Boolean.FALSE, x).
+src/model/JUnitTest.java:22:	Use assertTrue(x)/assertFalse(x) instead of assertEquals(true, x)/assertEquals(false, x)   or assertEquals(Boolean.TRUE, x)/assertEquals(Boolean.FALSE, x).
+src/model/JUnitTest.java:23:	Use assertTrue(x)/assertFalse(x) instead of assertEquals(true, x)/assertEquals(false, x)   or assertEquals(Boolean.TRUE, x)/assertEquals(Boolean.FALSE, x).
+
+Android-specific issues: 0
+
+Minor issues: 0
+
+Other errors: 0
+
